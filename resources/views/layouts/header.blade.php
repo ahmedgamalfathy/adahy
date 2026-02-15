@@ -4,13 +4,13 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
 							<div class="dashboard_bar">
-                                <?
+                                @php
  use Illuminate\Http;                         
 $arr = explode("/", Request::path(), 2);
 $first = $arr[0];
 echo @DB::table('pages')->where('name',$first)->first()->name_ar;
                                 
-                                ?> 
+                                @endphp 
                             </div>
                         </div>
                         

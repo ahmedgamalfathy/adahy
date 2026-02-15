@@ -285,13 +285,13 @@
   	
 </head>
 <body>
-  <?
+  @php
   use Jenssegers\Agent\Agent;
   use Illuminate\Http\Request;
   
     $agent = new Agent();
     $request = Request();
-  ?>
+  @endphp
   	
   	<div id="container" class="popup-overlay" >
     		<center>
@@ -355,14 +355,14 @@
             													        الكل
             													    </option>										    
               											    
-              							    <?
+              							    @php
               							    $get_type = DB::table('sak')->get();
               							    foreach($get_type as $g){
-              							    ?>
+              							    @endphp
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
                   									</div>
             						</div>
@@ -416,14 +416,14 @@
             													        الكل
             													    </option>
               											    
-              							    <?
+              							    @php
               							    $get_type = DB::table('days')->get();
               							    foreach($get_type as $g){
-              							    ?>
+              							    @endphp
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
             						</div>
           					</div> --}}
@@ -474,3 +474,4 @@
     		
     		</body>
 </html>
+

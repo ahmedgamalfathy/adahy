@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   
  // Http::get('https://hijri.habibur.com/api01/date/', ['date' => date("Y-m-d", strtotime($g->created_at))])
   
@@ -34,7 +33,7 @@ $x = date("D" , $dayss );
     if($x == "Thu"){return "الخميس";}
   
 }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -221,10 +220,10 @@ $x = date("D" , $dayss );
 					
 			
 			
-					<?
+					@php
 						$c1 = 1;//صرف
 						$c2 = 1;//استلام
-						?>
+						@endphp
 
                     
                     
@@ -426,20 +425,20 @@ $x = date("D" , $dayss );
                                                      <td>{{arday($g->created_at)}}</td>
                                                 <td>{{$g->created_at}}</td>
                                                 
-                                                <td><? if($g->type == 1){?>
+                                                <td>@if($g->type == 1)
                                                 		<a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block ">
 										        مدين
 										        </a> 
-                                                <?}else{?>
+                                                @else
                                                								    
 				<a href="javascript:void(0);" class="btn btn-danger d-sm-inline-block " >
 				    دائن
 				    </a> 
-                                                <?}?>
+                                                }
                                                 </td>
                                                  <td>{{$g->reason_t}}</td>
-                                                <td><? if($g->type == 1){?>{{$g->amount}}<?}else{echo 0;}?></td>
-                                                <td><? if($g->type != 1){?>{{$g->amount}}<?}else{echo 0;}?></td>
+                                                <td>@if($g->type == 1){{$g->amount}}@else 0 @endif</td>
+                                                <td>@if($g->type != 1){{$g->amount}}@else 0 @endif</td>
                                                
                                                 <td>{{$g->total}}</td>
                                                 <td>{{$g->nots}}</td>
@@ -532,10 +531,10 @@ $x = date("D" , $dayss );
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -552,11 +551,11 @@ $x = date("D" , $dayss );
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 <script>
@@ -645,3 +644,8 @@ $x = date("D" , $dayss );
 	
 </body>
 </html>
+
+
+
+
+

@@ -11,7 +11,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // تسجيل Services
+        $this->app->singleton(
+            \App\Services\Reservation\ReservationService::class
+        );
+        
+        $this->app->singleton(
+            \App\Services\Financial\TreasuryService::class
+        );
     }
 
     /**

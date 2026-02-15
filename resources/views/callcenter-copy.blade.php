@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
     use App\Models\adahyt;
     use App\Models\sak;
     use App\Models\adahy_type;
@@ -80,7 +79,7 @@
   foreach($followers as $v){
       $all_f .='<option value="'.$v->name.'">'.$v->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -507,11 +506,11 @@ font-weight: bold;">
                                                
                                         </thead>
                                         <tbody>
-                                            <?
+                                            @php
                                             $u_adhya = array(0);
-                                            ?>
+                                            @endphp
                                             @foreach($get as $g)
-                                        <?
+                                        @php
                                        	$c1 = DB::table('per')->where('page','del_trans')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                         
                                         $get_info = adahyt::where('id',$g->ad_id)->first();
@@ -522,12 +521,11 @@ font-weight: bold;">
                                       $l_total =(float) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
                                       
                                         $gs = DB::table('reservation')->where('code',$get_info->code)->first();
-                                        ?>
-                                        <?
-                                        if(in_array($get_info->code,$u_adhya)){
-                                        ?>
+                                        @endphp
+                                        @php
+                                        if(!in_array($get_info->code,$u_adhya)){
+                                        @endphp
                                         
-                                        <?}else{?>
                                         {{-- <tr>
                                             <td colspan="19" style="font-size: 19px;
    
@@ -584,7 +582,10 @@ font-weight: bold;">
                                             </tr>
                                         
                                         
-                                        <?array_push($u_adhya,$get_info->code);}?>
+                                        @php
+                                        array_push($u_adhya,$get_info->code);
+                                        }
+                                        @endphp
                                             <tr>
                                                 <td>{{ $g->code }}</td>
                                                 {{-- <td>
@@ -710,14 +711,14 @@ font-weight: bold;">
                         
                         
 <div class="parent2">
-    <?
+    @php
 
     $get_sak = DB::table('adahyt')->where('code',$get_info->code)->first()->sak_c;
      $selectedParts = DB::table('adahy_acc')
     ->where('code_adahy', $g->ad_id)
     ->pluck('name')
     ->toArray();
-    if($get_sak > 1){ ?>
+    if($get_sak > 1){ @endphp
 
 <!-- كارع4,كارع3,كارع1 ,كارع2-->
 <!-- المخ ,العكوة ,الطحال-->
@@ -746,7 +747,7 @@ font-weight: bold;">
     </script>
               							
               							
-              							<?}?>
+              							}
             						</div>
                         
                    
@@ -958,21 +959,18 @@ font-weight: bold;">
                                           </td>
                                           
                                                  <td>
-                                              <?
-                                              
-                                              if($g->retype > 0){
-                                              ?>
+                                              @if($g->retype > 0)
                                               {{getcase1($g->retype)}}
-                                              <?}else{?>
+                                              @else
                                                {{getcase2($g->code)}}
-                                              <?}?>
+                                              @endif
                                           </td>
                                          --}}
                                         
 
                                                
                                                 
-                                                <?
+                                                @php
                                                 $get_user = DB::connection('mysql2')->table('reservation')->where('mobile',$g->mobile)->count();
                                                 $gviewc = DB::table('callcenter')->where('re_id',$g->id)->whereNotNull('view')->count();
                                                
@@ -1000,14 +998,14 @@ font-weight: bold;">
                                                 // }
                                          
                                                 
-                                                ?>
+                                                @endphp
                                                 
                                                 <td>{{$g->name}}
-                                                <?
+                                                @php
                                                 if($get_user == 0){
-                                                ?>
+                                                @endphp
                                                 {{-- <span class="badge badge-danger">مضحى جديد</span> --}}
-                                                <?}?>
+                                                }
                                                 </td>
                                                 {{-- <td>{{$g->mobile}}</td>
                                                 <td>{{$g->mobile2}}</td>
@@ -1282,10 +1280,10 @@ font-weight: bold;">
 
 
 	</script>
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1302,11 +1300,11 @@ font-weight: bold;">
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 <script>
@@ -1348,7 +1346,7 @@ $(document).ready(function(){
                         <option value="">
                         اختر المشرف
                         </option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>         
                             </div>                                                           
@@ -1371,7 +1369,7 @@ $(document).ready(function(){
                         <option value="">
                         اختر المشرف
                         </option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>         
                             </div>                                                           
@@ -1434,3 +1432,6 @@ function activateTooltips() {
 	
 </body>
 </html>
+
+
+

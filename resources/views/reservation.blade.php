@@ -13,13 +13,12 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
 
     use App\Models\adahyt;
     use App\Models\sak;
   $theme1 = "theme1";
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -228,10 +227,10 @@
                              
 		 
 		 
-		 		 <?
+		 		 @php
 		 $c_per = DB::table('per')->where('page','sak_table')->where('u_id',Auth::user()->id)->count();
 		 if($c_per > 0){
-		 ?>
+		 @endphp
 		 
 		    <div class="row">
                     <div class="col-12" style="direction: rtl;">
@@ -270,13 +269,13 @@
                                         </thead>
                                         <tbody>
                                             @foreach($get as $g)
-                                              <?
+                                              @php
                                         $get_info = adahyt::where('id',$g->ad_id)->first();
                                         $sak_price = sak::where('name',$get_info->sak)->first()->price;
                                         $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
                                         
                                       $l_total =(int) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
-                                        ?>
+                                        @endphp
                                             <tr>
                                                     <td>
                                                   <div class="d-flex">
@@ -449,7 +448,7 @@
                  
 				</div>
 	
-		 <?}?>
+		 }
 		 </div>
         </div>
         <!--**********************************
@@ -497,10 +496,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -517,11 +516,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 
@@ -531,3 +530,5 @@
 	
 </body>
 </html>
+
+

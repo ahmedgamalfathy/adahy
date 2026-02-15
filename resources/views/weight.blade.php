@@ -13,15 +13,14 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
   
   $all_v = "";
   foreach($vendors as $v){
       $all_v .='<option value="'.$v->name.'">'.$v->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>صفحة اضافة الوزن </title>
 	
@@ -300,12 +299,12 @@
                             
                                               
                                          
-                                            <?
+                                            @php
                                             $check = opt::where('code',$g->code)->where('w_vendor','!=', "0")->count();
                                             if($check > 0){
                                                 $g_w = opt::where('code',$g->code)->where('w_vendor','!=', "0")->get();
                                                 
-                                            ?>
+                                            @endphp
                                             @foreach($g_w as $gs)
                                          
                                                  <td>
@@ -339,7 +338,7 @@
                                                        <div class="note-adahy">
                         <select class="form-control  @error('vendor') is-invalid @enderror" id="vendor" name="vendor"  Required>
                           <option value="{{$gs->w_vendor}}">{{$gs->w_vendor}}</option> 
-                  <? echo $all_v; ?>
+                  @php echo $all_v; @endphp
                             </select>
                                     </div>
                                                    @error('name')
@@ -398,7 +397,7 @@
                                          
                                             
                                             @endforeach
-                                             <?}else{?>
+                                             @else
                                              
                          
                                              
@@ -434,7 +433,7 @@
                                                        <div class="note-adahy">
                         <select class="form-control  @error('vendor') is-invalid @enderror" id="vendor" name="vendor"  Required>
                            
-                  <? echo $all_v; ?>
+                  @php echo $all_v; @endphp
                             </select>
                                     </div>
                                                    @error('name')
@@ -491,7 +490,7 @@
                                                
                                              </tr>
                                              
-                                             <?}?>
+                                             }
                                            
                                      @endforeach
                                  
@@ -556,10 +555,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -576,11 +575,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -650,3 +649,6 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+

@@ -13,10 +13,9 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
   $theme1 = "theme1";
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -377,12 +376,12 @@ font-weight: bold;">
 		 
 		 <div class="row">
 		     @foreach($get as $g)
-		              <?
+		              @php
                            $get_sak_info = DB::table('adahyt')->where('id',$g->ad_id)->first();
                             $get_sak = DB::table('sak')->where('name',$get_sak_info->sak)->first();
                            $adahy_type_info = DB::table('adahy_type')->where('name',$get_sak_info->adahy)->first();
                            $total = @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
-                           ?>
+                           @endphp
                     <div class="col-lg-12 col-xl-6">
                         <div class="card">
                             <div class="card-body">
@@ -428,9 +427,9 @@ font-weight: bold;">
                                             <div class="timeline-badge primary"></div>
                                             <a class="timeline-panel text-muted" href="#">
                                              
-                                                <?
+                                                @php
                                                 $get_info_client = DB::table('clients')->where('mob',$g->mobile)->first();
-                                                ?>
+                                                @endphp
                                                 <h6 class="mb-0"> 
                                                 {{$get_info_client->mob}}
                                                 {{$get_info_client->mob2}}</h6>
@@ -694,9 +693,9 @@ font-weight: bold;">
 										الفرع
 										</strong>
 										<span class="mb-0">
-										   <?
+										   @php
 										   echo DB::table('treasures')->where('id',$g->treasury_id)->first()->name;
-										   ?>
+										   @endphp
 										    
 										</span>
 									</li>
@@ -783,10 +782,10 @@ font-weight: bold;">
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -803,11 +802,11 @@ font-weight: bold;">
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 
@@ -817,3 +816,4 @@ font-weight: bold;">
 	
 </body>
 </html>
+

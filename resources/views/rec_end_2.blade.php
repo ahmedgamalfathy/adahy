@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
     use App\Models\adahyt;
     use App\Models\sak;
     use App\Models\adahy_type;
@@ -26,7 +25,7 @@
   foreach($followers as $v){
       $all_f .='<option value="'.$v->name.'">'.$v->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -443,11 +442,11 @@ font-weight: bold;">
                                                
                                         </thead>
                                         <tbody>
-                                            <?
+                                            @php
                                             $u_adhya = array(0);
-                                            ?>
+                                            @endphp
                                             @foreach($get as $g)
-                                        <?
+                                        @php
                                        	$c1 = DB::table('per')->where('page','del_trans')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                         
                                         $get_info = adahyt::where('id',$g->ad_id)->first();
@@ -456,12 +455,8 @@ font-weight: bold;">
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
                                         
                                       $l_total =(float) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
-                                        ?>
-                                        <?
-                                        if(in_array($get_info->code,$u_adhya)){
-                                        ?>
-                                        
-                                        <?}else{?>
+                                        @endphp
+                                        @php if(!in_array($get_info->code,$u_adhya)){ @endphp
                                         <tr>
                                             <td colspan="19" style="font-size: 19px;
    
@@ -510,7 +505,7 @@ font-weight: bold;">
                                             </tr>
                                         
                                         
-                                        <?array_push($u_adhya,$get_info->code);}?>
+                                        @php array_push($u_adhya,$get_info->code); } @endphp
                                             <tr>
                                                 <td>
                                  تم التسليم
@@ -532,8 +527,8 @@ font-weight: bold;">
                                                  <td>{{(float)$get_info->kilo_s * $adahy_type_info->price}}</td>
                                                 <td>{{(float)$sak_price2}}</td>
                                                 <td>{{$l_total}}</td>
-                                                 <? $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ;?>
-                                                <td <? if($total < 0){?>style="color:red"<?}?>>
+                                                 @php $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ; @endphp
+                                                <td @if($total < 0)style="color:red"}>
                                                    
                                                  {{number_format((float)$total, 2, '.', '')}}   
                                                     </td>
@@ -612,10 +607,10 @@ font-weight: bold;">
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -632,11 +627,11 @@ font-weight: bold;">
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 <script>
@@ -681,7 +676,7 @@ $(document).ready(function(){
                         <option value="">
                         اختر المشرف
                         </option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>         
                             </div>                                                           
@@ -704,7 +699,7 @@ $(document).ready(function(){
                         <option value="">
                         اختر المشرف
                         </option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>         
                             </div>                                                           
@@ -744,3 +739,9 @@ $(document).ready(function(){
 	
 </body>
 </html>
+
+
+
+
+
+

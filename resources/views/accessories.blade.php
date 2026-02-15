@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -500,12 +499,12 @@
                                         </div>
                                     </div>
                                          </td>
-                                            <?
+                                            @php
                                      
                                             if($g->s_room != 0){
                                           
                                                 
-                                            ?>
+                                            @endphp
                                
                                          
                                                  <td>
@@ -535,7 +534,7 @@
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="s_entry_date" id="s_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="s_entry_date" id="s_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('s_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -555,12 +554,12 @@
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('s_room') is-invalid @enderror" id="s_room" name="s_room"  Required>
-                          <option value="1" <? if($g->s_room == "1"){echo "selected";}?>>1</option> 
-                          <option value="2" <? if($g->s_room == "2"){echo "selected";}?>>2</option> 
-                          <option value="3" <? if($g->s_room == "3"){echo "selected";}?>>3</option> 
-                          <option value="4" <? if($g->s_room == "4"){echo "selected";}?>>4</option> 
-                          <option value="5" <? if($g->s_room == "5"){echo "selected";}?>>5</option> 
-                          <option value="6" <? if($g->s_room == "6"){echo "selected";}?>>6</option> 
+                          <option value="1" @php if($g->s_room == "1"){echo "selected";} @endphp>1</option> 
+                          <option value="2" @php if($g->s_room == "2"){echo "selected";} @endphp>2</option> 
+                          <option value="3" @php if($g->s_room == "3"){echo "selected";} @endphp>3</option> 
+                          <option value="4" @php if($g->s_room == "4"){echo "selected";} @endphp>4</option> 
+                          <option value="5" @php if($g->s_room == "5"){echo "selected";} @endphp>5</option> 
+                          <option value="6" @php if($g->s_room == "6"){echo "selected";} @endphp>6</option> 
                  
                             </select>
                                     </div>
@@ -579,7 +578,7 @@
                         
                           <select class="form-control  @error('s_follower') is-invalid @enderror" id="s_follower" name="s_follower"  Required>
                                <option value="{{$g->s_follower}}">{{$g->s_follower}}</option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -694,7 +693,7 @@
                                          
                                             
                                       
-                                             <?}else{?>
+                                             @else
                                              
                                                                       <!-- Modal edit-->
                                     <div class="modal fade" id="Modaladd{{$g->id}}">
@@ -716,7 +715,7 @@
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="s_entry_date" id="s_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="s_entry_date" id="s_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('s_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -736,12 +735,12 @@
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('s_room') is-invalid @enderror" id="s_room" name="s_room"  Required>
-                          <option value="1" <? if($g->s_room == "1"){echo "selected";}?>>1</option> 
-                          <option value="2" <? if($g->s_room == "2"){echo "selected";}?>>2</option> 
-                          <option value="3" <? if($g->s_room == "3"){echo "selected";}?>>3</option> 
-                          <option value="4" <? if($g->s_room == "4"){echo "selected";}?>>4</option> 
-                          <option value="5" <? if($g->s_room == "5"){echo "selected";}?>>5</option> 
-                          <option value="6" <? if($g->s_room == "6"){echo "selected";}?>>6</option> 
+                          <option value="1" @php if($g->s_room == "1"){echo "selected";} @endphp>1</option> 
+                          <option value="2" @php if($g->s_room == "2"){echo "selected";} @endphp>2</option> 
+                          <option value="3" @php if($g->s_room == "3"){echo "selected";} @endphp>3</option> 
+                          <option value="4" @php if($g->s_room == "4"){echo "selected";} @endphp>4</option> 
+                          <option value="5" @php if($g->s_room == "5"){echo "selected";} @endphp>5</option> 
+                          <option value="6" @php if($g->s_room == "6"){echo "selected";} @endphp>6</option> 
                  
                             </select>
                                     </div>
@@ -759,7 +758,7 @@
                                                 <label class="form-label">المشرف *</label>
                         
                           <select class="form-control  @error('s_follower') is-invalid @enderror" id="s_follower" name="s_follower"  Required>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -871,7 +870,7 @@
                                         <td>{{$g->s_deff_date}} دقيقة</td>
                                              </tr>
                                              
-                                             <?}?>
+                                             }
                                            
                                      @endforeach
                                  
@@ -935,10 +934,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -955,11 +954,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -1029,3 +1028,7 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+
+

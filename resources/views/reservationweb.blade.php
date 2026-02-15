@@ -158,7 +158,7 @@
   	</style>
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap" />
   	
-     <?
+     @php
   use Jenssegers\Agent\Agent;
   use Illuminate\Http\Request;
   
@@ -176,7 +176,7 @@
 //     if($c_sak > $info->free){$c_sak = $info->free;}
   
 //     if($c_persons > $c_sak){$c_persons = $c_sak;}
-  ?> 	
+  @endphp 	
 </head>
 <body>
   <center>	
@@ -195,10 +195,10 @@
         				</b>
       			</div>
       				<div class="frame-group">
-      			<?
+      			@php
       			$get = DB::table('reservation')->where('resnum',$id)->get();
       			foreach($get as $g){
-      			?>
+      			@endphp
       		
         				<div class="frame-container">
           					<div class="frame" style="direction: rtl;">
@@ -212,7 +212,7 @@
         				</div>
         			
         				
-        				<?}?>
+        				}
       			</div>
       			<div class="wrapper3">
         				<div class="div1">
@@ -269,3 +269,4 @@
 
 </body>
 </html>
+

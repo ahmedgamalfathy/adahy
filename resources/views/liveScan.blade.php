@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="/theme1/css/style.css">
     
     	<meta http-equiv="refresh" content="300">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   date_default_timezone_set("Africa/Kampala"); 
     use App\Models\treasury_sak;
     use App\Models\adahyt;
@@ -28,7 +27,7 @@
      use App\Models\reservation;
      use App\Models\adahy_type;
   
-  ?>
+  @endphp
   
   <style>
 .rtl-input-text {
@@ -334,3 +333,4 @@
 </body>
 
 </html>
+

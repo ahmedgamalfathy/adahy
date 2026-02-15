@@ -13,9 +13,8 @@
 	<meta property="og:description" content="Dompet : Payment Admin Template" />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Dompet : Payment Admin Template</title>
 	
@@ -783,3 +782,4 @@
 	
 </body>
 </html>
+

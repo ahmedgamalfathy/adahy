@@ -12,9 +12,8 @@
 	<meta property="og:description" content="Dompet : Payment Admin Template" />
 	<meta property="og:image" content="https://dompet.dexignlab.com/xhtml/social-image.png" />
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    $theme1 = "theme1";
-    ?>
+    @php $theme1 = "theme1";
+    @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin</title>
 	
@@ -274,3 +273,4 @@
 </body>
 
 </html>
+

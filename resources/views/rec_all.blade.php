@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
     use App\Models\adahyt;
     use App\Models\sak;
     use App\Models\opt;
@@ -80,7 +79,7 @@
   foreach($followers as $v){
       $all_f .='<option value="'.$v->name.'">'.$v->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -537,11 +536,11 @@ font-weight: bold;">
                                                
                                         </thead>
                                         <tbody>
-                                            <?
+                                            @php
                                             $u_adhya = array(0);
-                                            ?>
+                                            @endphp
                                             @foreach($get as $g)
-                                        <?
+                                        @php
                                        	$c1 = DB::table('per')->where('page','del_trans')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                         
                                         $get_info = adahyt::where('id',$g->ad_id)->first();
@@ -551,12 +550,8 @@ font-weight: bold;">
                                         $get_opt = opt::where('code',$g->code)->first();
                                         
                                       $l_total =(float) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
-                                        ?>
-                                        <?
-                                        if(in_array($get_info->code,$u_adhya)){
-                                        ?>
-                                        
-                                        <?}else{?>
+                                        @endphp
+                                        @php if(!in_array($get_info->code,$u_adhya)){ @endphp
                                         <tr>
                                             <td colspan="19" style="font-size: 19px;
    
@@ -605,7 +600,7 @@ font-weight: bold;">
                                             </tr>
                                         
                                         
-                                        <?array_push($u_adhya,$get_info->code);}?>
+                                        @php array_push($u_adhya,$get_info->code); } @endphp
                                         
                                         
                                             <tr>
@@ -616,10 +611,10 @@ font-weight: bold;">
                                                       
 												
 												  
-										<?
+										@php
 										$check_agreement = agreement::where('r_id',$g->id)->count();
 										if($check_agreement > 0){
-										?>
+										@endphp
 														
 														<a href="#" data-bs-toggle="modal" data-bs-target="#Modaltransfer{{$g->id}}">
 														    <span class="me-2 oi-icon bgl-success">
@@ -637,13 +632,13 @@ font-weight: bold;">
 													</span>
 														    
 														</a>
-														<?}else{?>
+														@else
 																<a href="#" >
 														<span class="badge badge-danger" data-bs-toggle="modal" data-bs-target="#Modaltransfer{{$g->id}}">
 														    انتظار موافقة الحسابات
 														</span>
 														</a>
-														<?}?>
+														}
 														            <!-- Modal transfer-->
                                     <div class="modal fade" id="Modaltransfer{{$g->id}}">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -663,14 +658,14 @@ font-weight: bold;">
     font-weight: bold;">
                                                     <div>
                     <select class="form-control "  id="action{{$g->id}}" name="action"  Required>
-                        <?
+                        @php
                         if($check_agreement > 0){
-                        ?>
+                        @endphp
                         <option value="5">تسليم</option>
                         <option value="6">التسليم مع التبرع</option>
-                        <?}else{?>
+                        @else
                         <option value="">اختر</option>
-                        <?}?>
+                        }
                         <option value="2">تحويل ثلاجة</option>
                         <option value="3">توصيل</option>
                         <option value="4">التبرع بالكامل</option>
@@ -712,7 +707,7 @@ font-weight: bold;">
                                                 
                                                 <td>{{$g->name}}</td>
                                           <td>
-                                                <?
+                                                @php
                                                        $adahyt_sak = DB::table('adahyt')->where('code',$g->code)->first()->sak_c;
                                                    
                                                        $adahyt_opt = DB::table('opt')->where('code',$g->code)->first();
@@ -721,17 +716,17 @@ font-weight: bold;">
                                                           echo number_format(($adahyt_opt->f_weight + $adahyt_opt->f_weight2) / $adahyt_sak, 2);
                                                        }
                                                        }
-                                                       ?>
+                                                       @endphp
                                               
                                           </td>
                                           <td>
-                                              <?
+                                              @php
                                                 $acc = "";
                                                 $parts = DB::table('adahy_acc')->where('r_id',$g->rec)->select('name')->distinct()->get();
                                                 foreach ($parts as $part){
                                                 $acc .= $part->name." + ";   
                                                 }
-                                              ?>
+                                              @endphp
                                             @if ($acc)
                                             <span class="badge badge-primary">{{$acc}}</span>    
                                             @else
@@ -740,7 +735,7 @@ font-weight: bold;">
                                           </td>
                                       
                                              
-                                                 <? $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ;?>
+                                                 @php $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ; @endphp
                                                 
                                                  <td>{{get_tcall($g->id,6)}}</td>                     
                           <td>{{get_tcall($g->id,2)}}</td>
@@ -807,7 +802,7 @@ $(document).ready(function(){
                         <option value="">
                         اختر المشرف
                         </option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>         
                             </div>                                                           
@@ -923,10 +918,10 @@ $(document).ready(function(){
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -943,11 +938,11 @@ $(document).ready(function(){
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 
@@ -956,3 +951,8 @@ $(document).ready(function(){
 	
 </body>
 </html>
+
+
+
+
+

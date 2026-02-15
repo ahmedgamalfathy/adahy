@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -944,7 +943,7 @@
                 <div class="row">
                     
                     <div class="col-xl-12 col-lg-12" style="direction: rtl;">
-                          <?
+                          @php
   use Jenssegers\Agent\Agent;
   use Illuminate\Http\Request;
   
@@ -961,7 +960,7 @@
 	$is_available = $request->is_available;
     // if($c_sak > 0){}else{$c_sak = 1;}
     // if($day > 0){}else{$day = 1;}
-  ?>	
+  @endphp	
   	<div class="page-box">
   	    
     		<div class="advanced-search col-xl-12 col-lg-12 col-md-12 col-sm-12" style="direction: ltr;   overflow-x: auto; 
@@ -1006,14 +1005,14 @@
     color: #525252;
     padding: 4%;">
             										     <option value="">الكل</option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('times')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($times == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($times == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1033,14 +1032,14 @@
     color: #525252;
     padding: 4%;">
             											    <option value="">الكل</option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('days')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($day == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($day == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1061,13 +1060,13 @@
     color: #525252;
     padding: 4%;">							      
               	<option value="0">الكل</option>	
-              	<option value="1" <?if($c_sak == 1){echo "selected";}?>>1</option>
-              	<option value="2" <?if($c_sak == 2){echo "selected";}?>>2</option>
-              	<option value="3" <?if($c_sak == 3){echo "selected";}?>>3</option>
-              	<option value="4" <?if($c_sak == 4){echo "selected";}?>>4</option>
-              	<option value="5" <?if($c_sak == 5){echo "selected";}?>>5</option>
-              	<option value="6" <?if($c_sak == 6){echo "selected";}?>>6</option>
-              	<option value="7" <?if($c_sak == 7){echo "selected";}?>>7</option>
+              	<option value="1" @php if($c_sak == 1){echo "selected";} @endphp>1</option>
+              	<option value="2" @php if($c_sak == 2){echo "selected";} @endphp>2</option>
+              	<option value="3" @php if($c_sak == 3){echo "selected";} @endphp>3</option>
+              	<option value="4" @php if($c_sak == 4){echo "selected";} @endphp>4</option>
+              	<option value="5" @php if($c_sak == 5){echo "selected";} @endphp>5</option>
+              	<option value="6" @php if($c_sak == 6){echo "selected";} @endphp>6</option>
+              	<option value="7" @php if($c_sak == 7){echo "selected";} @endphp>7</option>
               	
             			</select>			
    
@@ -1092,14 +1091,14 @@
             													    <option value="">
             													        الكل
             													    </option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('sak')->get();
               							    foreach($get_type as $g){
-              							    ?>
+              							    @endphp
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
                   										</div>
           					</div>
@@ -1122,14 +1121,14 @@
             								     <option value="">
             													        الكل
             													    </option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('adahy_type')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($type == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($type == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1152,24 +1151,24 @@
 								<b class="b">عرض المتاح للحجز فقط</b>
             						<div class="checkbox">
               							<div class="checkboxinactivedefaulton">
-                								<input type="checkbox" id="myCheckbox" <?if($filter == 1){echo "checked";}?> class="checkboxinactivedefaulton-child">
+                								<input type="checkbox" id="myCheckbox" @php if($filter == 1){echo "checked";} @endphp class="checkboxinactivedefaulton-child">
                 							
               							</div>
             						</div>
           					</div>
           					<div class="days-tab">
             						<div style="{{ $day == 3 ?" background-color: white":null}}"
-									 <?if($day == 3){?> class="tab-header2" <?}else{?>class="tab-header"<?}?>>
+									 @if($day == 3) class="tab-header2" @elseclass="tab-header"}>
               							<a href="adahyt_rss?filter={{$filter}}&gov={{$gov}}&times={{$times}}&day=3&c_sak={{$c_sak}}&sak={{$sak}}&type={{$type}}"><div class="div26">اليوم الثالث</div>
               						</a>
             						</div>
             							<div style="{{ $day == 2 ?" background-color: white":null}}"
-										<?if($day == 2){?> class="tab-header2" <?}else{?>class="tab-header"<?}?>>
+										@if($day == 2) class="tab-header2" @elseclass="tab-header"}>
               							<a href="adahyt_rss?filter={{$filter}}&gov={{$gov}}&times={{$times}}&day=2&c_sak={{$c_sak}}&sak={{$sak}}&type={{$type}}">	<div class="div26">اليوم الثاني</div>
             						</a>
             						</div>
             						<div style="{{ $day == 1 ?" background-color: white":null}}"
-									 <?if($day == 1 || $day == 0){?> class="tab-header2" <?}else{?>class="tab-header"<?}?>>
+									 @if($day == 1 || $day == 0) class="tab-header2" @elseclass="tab-header"}>
               							<a href="adahyt_rss?filter={{$filter}}&gov={{$gov}}&times={{$times}}&day=1&c_sak={{$c_sak}}&sak={{$sak}}&type={{$type}}">	<div class="div26">اليوم الأول</div>
             						</a>
             						</div>
@@ -1177,19 +1176,19 @@
         				</div>
         				<div class="shifts-parent">
         				    
-        				    <?
+        				    @php
         				    $get_data = DB::table('times')->where(function($query) use ($times) {
         				        if($times)
         				        $query->where('id', '=',$times);
         				        })->get();
         				    foreach($get_data as $get){
-        				    ?>
+        				    @endphp
           					<div class="shifts">
             						<b class="b" style="direction: rtl;">{{$get->name}} </b>
           					</div>
           					<div class="cards-parent">
           					    
-          					    <?
+          					    @php
  
           					       $get_adahy = DB::table('adahyt')->where(function($query) use ($type,$sak,$day,$c_sak,$filter,$gov,$is_available) {
 									    if($gov)
@@ -1208,7 +1207,7 @@
                                            $query->where('free', '>=', $filter)->where('is_available',0);
                                       })->where('times', '=', $get->id)->orderBy('id','ASC')->get();
                                       foreach ($get_adahy as $gs){
-          					    ?>
+          					    @endphp
           					    
           					                						<!-- Modal -->
   <!-- Modal: الخطوة 1 -->
@@ -1264,23 +1263,23 @@
   </div>
     	<!-- Modal -->  
           					    
-            						<div <?if($gs->free == 0 || $is_available != $gs->is_available){?>class="cards"<?}else{?>class="cards2"<?}?>>
-              							<div <?if($gs->free == 0){?>class="circle-one"<?}else{?>class="circle-half"<?}?>>
-              							    <?if($gs->free == 0 || $is_available != $gs->is_available ){?>
+            						<div @if($gs->free == 0 || $is_available != $gs->is_available)class="cards"@elseclass="cards2"}>
+              							<div @if($gs->free == 0)class="circle-one"@elseclass="circle-half"}>
+              							    @if($gs->free == 0 || $is_available != $gs->is_available )
               							    <div class="circle">
-              							    <?}else{?>
+              							    @else
                 								<div class="circle" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#selectSakModal{{$gs->id}}">
-                								    <?}?>
-                  									<div  <?if($gs->free == 0){?>class="base"<?}else{?>class="base1"<?}?>>
+                								    }
+                  									<div  @if($gs->free == 0)class="base"@elseclass="base1"}>
                   									</div>
-                  									<div  <?if($gs->free == 0){?>class="ellipse"<?}else{?>class="ellipse2"<?}?>>
+                  									<div  @if($gs->free == 0)class="ellipse"@elseclass="ellipse2"}>
                   									</div>
                   									<b class="b11">
-                  									    <?if($gs->free == 0){?>
+                  									    @if($gs->free == 0)
                   									    محجوز
-                  									    <?}else{?>
+                  									    @else
                   									    متاح
-                  									    <?}?>
+                  									    }
                   									    </b>
                   								<div class="parent2">
                     										<div class="div37">{{$gs->sak_c}}</div>
@@ -1290,7 +1289,7 @@
                 								</div>
               							</div>
               							<div class="title-number">
-                								<b class="b" <?if($gs->free == 0){?>style="padding-left: 8%;"<?}?>>
+                								<b class="b" @if($gs->free == 0)style="padding-left: 8%;"}>
                   								
                   									<span> </span>
                   										<span class="span1">{{$gs->adahy}} </span><br>
@@ -1298,7 +1297,7 @@
                   									
                   								
                 								</b>
-                								<div class="parent" <?if($gs->free == 0){?>style="padding-left: 37%;direction: ltr;"<?}else{?>style="direction: ltr;"<?}?>>
+                								<div class="parent" @if($gs->free == 0)style="padding-left: 37%;direction: ltr;"@elsestyle="direction: ltr;"}>
                   									<div class="div29">{{$gs->code}}</div>
                   									<b class="b6">
                     										<span>رقم</span>
@@ -1307,14 +1306,14 @@
                 								</div>
               							</div>
               							<img class="animal-img-icon" alt="" 
-              							<? if($gs->adahy == "بقرى")
-                                        {?>src="/img/1.png"<?}?>
-              								<? if($gs->adahy == "جمسى")
-                                        {?>src="/img/2.png"<?}?>
-                                        	<? if($gs->adahy == "خراف")
-                                        {?>src="/img/3.png"<?}?>
-                                   	<? if($gs->adahy == "ماعز")
-                                        {?>src="/img/4.png"<?}?>
+              							@php if($gs->adahy == "بقرى")
+                                        { @endphpsrc="/img/1.png"}
+              								@php if($gs->adahy == "جمسى")
+                                        { @endphpsrc="/img/2.png"}
+                                        	@php if($gs->adahy == "خراف")
+                                        { @endphpsrc="/img/3.png"}
+                                   	@php if($gs->adahy == "ماعز")
+                                        { @endphpsrc="/img/4.png"}
               							>
               							
               							
@@ -1324,7 +1323,7 @@
               							</div>
             						</div>
             						
-            						<?}?>
+            						}
             				
             						
             						
@@ -1341,7 +1340,7 @@
             					
             						
           					</div>
-          				<?}?>
+          				}
         				</div>
       			</div>
     		</div>
@@ -1380,10 +1379,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1400,11 +1399,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
            <script type="text/javascript">
@@ -1445,7 +1444,7 @@ $(document).ready(function() {
     $('#myCheckboxAivilable').change(function() {
         if ($(this).is(':checked')) {
             $('#filterAivilable').val(1); // Set value to 1 when checked
-        } else {
+        @else
             $('#filterAivilable').val(0); // Set value to 0 when unchecked
         }
         $('#resrv2').submit(); // Submit the form
@@ -1472,7 +1471,7 @@ $(document).ready(function() {
 		document.getElementById('hiddenSak' + gsid).value = 1;
 		document.getElementById('hiddenPersons' + gsid).value = 1;
 		document.getElementById('reservationForm' + gsid).submit();
-	  } else {
+	  @else
 		// تخزين عدد الصكوك في hidden input
 		document.getElementById('hiddenSak' + gsid).value = sakCount;
 		document.getElementById('displaySakCount' + gsid).innerText = sakCount;
@@ -1504,3 +1503,8 @@ $(document).ready(function() {
 </body>
 </html>
                     
+
+
+
+
+

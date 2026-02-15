@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\tr_income;
   
   
@@ -45,7 +44,7 @@
       }
    
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>بيانات الأضحية  </title>
 	
@@ -207,7 +206,7 @@
                 </div>
             @endif
 		       
-		<?
+		@php
 		/////get data
 		$c = DB::table('adahyt')->where('code',$id)->count();
 		if($c > 0){
@@ -222,7 +221,7 @@
 		    dd('رقم الاضحية غير موجود لدينا');
 		}
 		
-		?>
+		@endphp
 		
 		    
         <!--***********************************-->
@@ -262,9 +261,9 @@
 							</div>
 						</div>
 					</div>
-					<?
+					@php
 					if($opt_c < 1){
-					?>
+					@endphp
 					<div class="col col-lg-7 pe-1 mb-3">
 						<div class="row">
 							<div class="col">
@@ -312,8 +311,8 @@
 							</div>
 						</div>
 					</div>
-					<?}else{
-					?>
+					@php}else{
+					@endphp
 					<div class="col col-lg-7 pe-1 mb-3">
 						<div class="row">
 							<div class="col">
@@ -365,7 +364,7 @@
 							</div>
 						</div>
 					</div>
-					<?}?>
+					}
 				</div>
 				
 				
@@ -392,53 +391,53 @@
 											</tr>
 										</thead>
 										<tbody>
-										    <?
+										    @php
 										    $x = 1;
 										    $get_sak = DB::table('reservation')->where('code',$id)->get();
 										    foreach($get_sak as $gs){
-										    ?>
+										    @endphp
 											<tr>
 												<td class="text-center">{{$x}}</td>
 												<td class="text-center"><a href="/print2/{{$gs->id}}">طباعة</a></td>
 												<td class="text-center">{{$gs->rec}}</td>
 												<td>{{$gs->name}}</td>
 												<td class="text-center">
-												    <?
+												    @php
 												    $g_acc = DB::table('callcenter')->where('re_id',$gs->id)->whereNotNull('acc')->take(1)->orderBy('id','desc')->get();
 												    foreach($g_acc as $g){
 												        echo $g->acc."-";
 												    }
-												    ?>
+												    @endphp
 												    
 												  
 												    
 												</td>
 												<td class="text-center">
-												    <?
+												    @php
 												    $view = 0;
 										$gviewc = DB::table('callcenter')->where('re_id',$gs->id)->whereNotNull('view')->count();
                                                 if($gviewc > 0){
                                         $view = DB::table('callcenter')->where('re_id',$gs->id)->whereNotNull('view')->orderBy('id','desc')->first()->view;
                                                 }
 												    
-												    ?>
+												    @endphp
 													<div class="form-check form-switch form-check-inline form-check-reverse">
-													    <input id="formCheck-1" class="form-check-input" type="checkbox" <?if($view == "نعم"){?>checked<?}?> /><label class="form-check-label" for="formCheck-1"></label></div>
+													    <input id="formCheck-1" class="form-check-input" type="checkbox" @if($view == "نعم")checked} /><label class="form-check-label" for="formCheck-1"></label></div>
 												</td>
 												<td class="text-center">
 													<div class="form-check form-switch form-check-inline form-check-reverse"><input id="formCheck-5" class="form-check-input" type="checkbox" 
-													<? if($gs->retype == 2 || $gs->retype == 4){echo "checked";} ?>
+													@php if($gs->retype == 2 || $gs->retype == 4){echo "checked";} @endphp
 													
 													 /><label class="form-check-label" for="formCheck-5"></label></div>
 												</td>
 												<td class="text-center">
 													<div class="form-check form-switch form-check-inline form-check-reverse"><input id="formCheck-4" class="form-check-input" type="checkbox" 
-													<? if($gs->retype == 3){echo "checked";} ?>
+													@php if($gs->retype == 3){echo "checked";} @endphp
 													/><label class="form-check-label" for="formCheck-4"></label></div>
 												</td>
 												<td class="text-center">-</td>
 											</tr>
-											<? $x++; }?>
+											@php $x++; } @endphp
 										</tbody>
 									</table>
 								</div>
@@ -447,9 +446,9 @@
 					</div>
 				</div>
 				
-						<?
+						@php
 					if($opt_c < 1){
-					?>
+					@endphp
 		
 				<div class="row">
 				<div class="col">
@@ -728,7 +727,7 @@
 						</form>
 					</div>
 				</div>
-				<?}else{?>
+				@else
 				
 				<div class="row" style="background:#fff">
 					<div class="card-header py-3">
@@ -908,7 +907,7 @@
 													</thead>
 													<tbody>
 													    
-													    <?
+													    @php
 													  $x = 1;
 										    $get_sakss = DB::table('reservation')->where('code',$id)->whereIN('retype',[2,4])->get();
 										    foreach($get_sakss as $gz){
@@ -916,7 +915,7 @@
 										      $gz_opt = DB::table('opt')->where('code',$id)->first();
 										      $gz_skc = DB::table('adahyt')->where('code',$id)->first();
 										      $weight_sak = $gz_opt->f_weight + $gz_opt->f_weight2 / $gz_skc->sak_c;
-													    ?>
+													    @endphp
 														<tr>
 															<td class="text-center">{{$x}}</td>
 															<td class="text-center"><a href="/print4/{{$gs->id}}">طباعة</a></td>
@@ -930,7 +929,7 @@
 															<td class="text-center"></td>
 															<td class="text-center"></td>
 														</tr>
-														<?$x++; }?>
+														@php $x++; } @endphp
 													</tbody>
 												</table>
 											</div>
@@ -966,24 +965,24 @@
 											</tr>
 										</thead>
 										<tbody>
-										    <?
+										    @php
 										    $x = 1;
 										    $get_saks = DB::table('reservation')->where('code',$id)->where('retype',1)->get();
 										    foreach($get_saks as $get){
 										        
-										    ?>
+										    @endphp
 											<tr>
 												<td class="text-center">{{$x}}</td>
 												<td class="text-center"><a href="/print4/{{$gs->id}}">طباعة</a></td>
 												<td>{{$get->name}}</td>
 												<td class="text-center">{{$get->mobile}}</td>
 												<td class="text-center">
-												    	    <?
+												    	    @php
 												    $g_acc = DB::table('adahy_acc')->where('r_id',$get->rec)->get();
 												    foreach($g_acc as $g){
 												        echo $g->name."-";
 												    }
-												    ?>
+												    @endphp
 												</td>
 												<td class="text-center">
 												    
@@ -1000,7 +999,7 @@
 												</td>
 												<td class="text-center"></td>
 											</tr>
-											<?$x++; }?>
+											@php $x++; } @endphp
 										</tbody>
 										
 										
@@ -1041,7 +1040,7 @@
 					</div>
 				</div>
 				
-				<?}?>
+				}
 				
 				
 				
@@ -1102,10 +1101,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1122,11 +1121,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -1179,3 +1178,8 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+
+
+

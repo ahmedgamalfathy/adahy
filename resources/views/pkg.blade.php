@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -691,7 +690,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                             <div class="mb-12 col-md-12">
                             <label class="form-label">وقت دخول  *</label>
-                            <input type="time" name="f_entry_date" id="f_entry_date" class="form-control" value="<? echo $g->f_entry_date;?>">        
+                            <input type="time" name="f_entry_date" id="f_entry_date" class="form-control" value="@php echo $g->f_entry_date; @endphp">        
 
                             @error('f_entry_date')
                             <span class="invalid-feedback" role="alert">
@@ -706,13 +705,13 @@ thead, tbody, tfoot, tr, td, th {
                             </label>
                             <div class="note-adahy">
                             <select class="form-control  @error('f_room') is-invalid @enderror" id="f_room" name="f_room"  Required>
-                            <option value="1" <? if($g->f_room == "1"){echo "selected";}?>>1</option> 
-                            <option value="2" <? if($g->f_room == "2"){echo "selected";}?>>2</option> 
-                            <option value="3" <? if($g->f_room == "3"){echo "selected";}?>>3</option> 
-                            <option value="4" <? if($g->f_room == "4"){echo "selected";}?>>4</option> 
-                            <option value="5" <? if($g->f_room == "5"){echo "selected";}?>>5</option> 
-                            <option value="6" <? if($g->f_room == "6"){echo "selected";}?>>6</option> 
-                            <option value="7" <? if($g->f_room == "7"){echo "selected";}?>>7</option> 
+                            <option value="1" @php if($g->f_room == "1"){echo "selected";} @endphp>1</option> 
+                            <option value="2" @php if($g->f_room == "2"){echo "selected";} @endphp>2</option> 
+                            <option value="3" @php if($g->f_room == "3"){echo "selected";} @endphp>3</option> 
+                            <option value="4" @php if($g->f_room == "4"){echo "selected";} @endphp>4</option> 
+                            <option value="5" @php if($g->f_room == "5"){echo "selected";} @endphp>5</option> 
+                            <option value="6" @php if($g->f_room == "6"){echo "selected";} @endphp>6</option> 
+                            <option value="7" @php if($g->f_room == "7"){echo "selected";} @endphp>7</option> 
                             </select>
                             </div>
                             @error('f_room')
@@ -726,7 +725,7 @@ thead, tbody, tfoot, tr, td, th {
                             <label class="form-label">المشرف *</label>
                             <select class="form-control  @error('f_follower') is-invalid @enderror" id="f_follower" name="f_follower"  Required>
                             <option value="{{$g->f_follower}}">{{$g->f_follower}}</option>
-                            <? echo $all_f; ?>
+                            @php echo $all_f; @endphp
                             </select>
                             @error('f_follower')
                             <span class="invalid-feedback" role="alert">
@@ -811,13 +810,13 @@ thead, tbody, tfoot, tr, td, th {
                                                   <td>{{$g->f_weight2}}</td>
                                                    <td>{{number_format($g->f_case,2) }}</td>
                                                    <td>
-                                                       <?
+                                                       @php
                                                        $adahyt_sak = DB::table('adahyt')->where('code',$g->code)->first()->sak_c;
                                                        if($g->f_case > 0){
                                                            $wightSak = ((float)$g->f_weight + (float)$g->f_weight2) / $adahyt_sak;
                                                            
                                                        }
-                                                       ?>
+                                                       @endphp
                                                        @if ($g->f_case > 0)
                                                            {{ number_format($wightSak,2) }}
                                                        @endif
@@ -853,7 +852,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                             {{-- <div class="mb-12 col-md-12">
                             <label class="form-label">وقت دخول  *</label>
-                            <input type="time" name="f_entry_date" id="f_entry_date" class="form-control" value="<? echo $g->f_entry_date;?>">        
+                            <input type="time" name="f_entry_date" id="f_entry_date" class="form-control" value="@php echo $g->f_entry_date; @endphp">        
 
                             @error('f_entry_date')
                             <span class="invalid-feedback" role="alert">
@@ -868,13 +867,13 @@ thead, tbody, tfoot, tr, td, th {
                             </label>
                             <div class="note-adahy">
                             <select class="form-control  @error('f_room') is-invalid @enderror" id="f_room" name="f_room"  Required>
-                            <option value="1" <? if($g->f_room == "1"){echo "selected";}?>>1</option> 
-                            <option value="2" <? if($g->f_room == "2"){echo "selected";}?>>2</option> 
-                            <option value="3" <? if($g->f_room == "3"){echo "selected";}?>>3</option> 
-                            <option value="4" <? if($g->f_room == "4"){echo "selected";}?>>4</option> 
-                            <option value="5" <? if($g->f_room == "5"){echo "selected";}?>>5</option> 
-                            <option value="6" <? if($g->f_room == "6"){echo "selected";}?>>6</option> 
-                            <option value="7" <? if($g->f_room == "7"){echo "selected";}?>>7</option> 
+                            <option value="1" @php if($g->f_room == "1"){echo "selected";} @endphp>1</option> 
+                            <option value="2" @php if($g->f_room == "2"){echo "selected";} @endphp>2</option> 
+                            <option value="3" @php if($g->f_room == "3"){echo "selected";} @endphp>3</option> 
+                            <option value="4" @php if($g->f_room == "4"){echo "selected";} @endphp>4</option> 
+                            <option value="5" @php if($g->f_room == "5"){echo "selected";} @endphp>5</option> 
+                            <option value="6" @php if($g->f_room == "6"){echo "selected";} @endphp>6</option> 
+                            <option value="7" @php if($g->f_room == "7"){echo "selected";} @endphp>7</option> 
                             </select>
                             </div>
                             @error('f_room')
@@ -888,7 +887,7 @@ thead, tbody, tfoot, tr, td, th {
                             <label class="form-label">المشرف *</label>
                             <select class="form-control  @error('f_follower') is-invalid @enderror" id="f_follower" name="f_follower"  Required>
                             <option value="{{$g->f_follower}}">{{$g->f_follower}}</option>
-                            <? echo $all_f; ?>
+                            @php echo $all_f; @endphp
                             </select>
                             @error('f_follower')
                             <span class="invalid-feedback" role="alert">
@@ -964,9 +963,9 @@ thead, tbody, tfoot, tr, td, th {
                                 </td>
                                                
                                         <td>
-                                            <?
+                                            @php
                                             $hours = intdiv($g->f_deff_date, 60).':'. ($g->f_deff_date % 60);
-                                            ?>
+                                            @endphp
                                             {{$hours}}
                                             
                                             ساعة</td>
@@ -1044,10 +1043,10 @@ thead, tbody, tfoot, tr, td, th {
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1064,11 +1063,11 @@ thead, tbody, tfoot, tr, td, th {
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -1138,3 +1137,5 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+

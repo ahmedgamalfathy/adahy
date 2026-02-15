@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -500,12 +499,12 @@
                                          </td>
                                          
                                   
-                                            <?
+                                            @php
                                      
                                             if($g->d_room != 0){
                                           
                                                 
-                                            ?>
+                                            @endphp
                                
                                          
                                                  <td>
@@ -535,7 +534,7 @@
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="d_entry_date" id="d_entry_date" class="form-control" value="<? echo $g->d_entry_date;?>">        
+                                          <input type="time" name="d_entry_date" id="d_entry_date" class="form-control" value="@php echo $g->d_entry_date; @endphp">        
                                                   
                                                                              @error('d_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -554,7 +553,7 @@
                         
                           <select class="form-control  @error('d_follower') is-invalid @enderror" id="d_follower" name="d_follower"  Required>
                               <option value="{{$g->d_follower}}">{{$g->d_follower}}</option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -582,11 +581,11 @@
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('d_aduit') is-invalid @enderror" id="d_aduit" name="d_aduit"  >
-                          <option value="جيد"<? if($g->d_aduit == "جيد") {echo "selected";}?> >
+                          <option value="جيد"@php if($g->d_aduit == "جيد") {echo "selected";} @endphp >
                              جيد
                               </option> 
                           <option value="مقبول"
-                          <? if($g->d_aduit == "مقبول") {echo "selected";}?>
+                          @php if($g->d_aduit == "مقبول") {echo "selected";} @endphp
                           >
                              مقبول
                               </option> 
@@ -656,7 +655,7 @@
                
                                                 </td>
                                                 
-                                                             <?}else{?>
+                                                             @else
                                              
                                                                       <!-- Modal edit-->
                                     <div class="modal fade" id="Modaladd{{$g->id}}">
@@ -678,7 +677,7 @@
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="d_entry_date" id="d_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="d_entry_date" id="d_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('d_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -697,7 +696,7 @@
                         
                           <select class="form-control  @error('d_follower') is-invalid @enderror" id="d_follower" name="d_follower"  Required>
                              
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -725,11 +724,11 @@
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('d_aduit') is-invalid @enderror" id="d_aduit" name="d_aduit"  >
-                          <option value="جيد"<? if($g->d_aduit == "جيد") {echo "selected";}?> >
+                          <option value="جيد"@php if($g->d_aduit == "جيد") {echo "selected";} @endphp >
                              جيد
                               </option> 
                           <option value="مقبول"
-                          <? if($g->d_aduit == "مقبول") {echo "selected";}?>
+                          @php if($g->d_aduit == "مقبول") {echo "selected";} @endphp
                           >
                              مقبول
                               </option> 
@@ -798,7 +797,7 @@
                      <a href="#" class="btn btn-success   shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#Modaladd{{$g->id}}"><i class="fa fa-pencil"></i></a> 
      
                                                  </td>
-                                                 <?}?>
+                                                 }
                                          
                                          
                                                 <td>{{$g->d_entry_date}}</td>
@@ -886,10 +885,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -906,11 +905,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -980,3 +979,7 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+
+

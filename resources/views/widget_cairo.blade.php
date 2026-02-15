@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -213,9 +212,9 @@
 			 ;}}
 													    </span></li>
 													<li><span class="bg-warning circle"></span>اليوم الثالث<span>
-													  <?
+													  @php
 													  $search = "الثالث";
-													  ?>
+													  @endphp
 			 {{DB::table('adahyt')->where('gov',01)->where('days','LIKE', '%'.$search.'%')->sum('reservation')
 			 -
 			 DB::table('reservation')->where('gov_type',01)->where('days','LIKE', '%'.$search.'%')->where('emp','=','website')
@@ -245,9 +244,9 @@
 				  ;}}
 													    </span></li>
 													<li><span class="bg-warning circle"></span>اليوم الثالث<span>
-													  <?
+													  @php
 													  $search = "الثالث";
-													  ?>
+													  @endphp
 			 {{DB::table('adahyt')->where('gov',01)->where('days','LIKE', '%'.$search.'%')->sum('free')
 			 +
 			 		 DB::table('reservation')->where('gov_type',01)->where('days','LIKE', '%'.$search.'%')->where('emp','=','website')
@@ -270,9 +269,9 @@
 													    {{DB::table('adahyt')->where('gov',01)->where('days','=','اليوم الثانى')->count();}}
 													    </span></li>
 													<li><span class="bg-warning circle"></span>اليوم الثالث<span>
-													  <?
+													  @php
 													  $search = "الثالث";
-													  ?>
+													  @endphp
 													    {{DB::table('adahyt')->where('gov',01)->where('days','LIKE', '%'.$search.'%')->count();}}
 													    </span></li>
 													
@@ -314,22 +313,19 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <?
+                                                @php
                                                 $get_type = DB::table('adahy_type')->get();
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                @endphp
+                                                @foreach($get_type as $gt)
                                                 <th>{{$gt->name}}</th>
                                                
-                                                <?}?>
+                                                @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th>اليوم الأول</th>
-                                                 <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                 @foreach($get_type as $gt)
                              <td> {{DB::table('adahyt')->where('gov',01)->where('free','>',0)->where('adahy','=',$gt->name)->where('days','=','اليوم الأول')->count()
                              +
                                          
@@ -340,16 +336,13 @@
          ->where('emp','=','website')->distinct()->count('code')
                            
                              ;}}</td>
-                                            <?}?>
+                                            @endforeach
                           
                     
                                             </tr>
                                               <tr>
                                                 <th>اليوم الثانى</th>
-                                                     <?
-                                               
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                     @foreach($get_type as $gt)
                              <td> {{DB::table('adahyt')->where('gov',01)->where('free','>',0)->where('adahy','=',$gt->name)->where('days','=','اليوم الثانى')->count() 
                              +
                                DB::table('reservation')
@@ -358,18 +351,15 @@
          ->where('days','=','اليوم الثانى')
          ->where('emp','=','website')->distinct()->count('code')
                              ;}}</td>
-                             <?}?>
+                             @endforeach
                        
                                             </tr>
-                                            	  <?
+                                            	  @php
 													  $search = "الثالث";
-													  ?>
+													  @endphp
                                               <tr>
                                                 <th>اليوم الثالث</th>
-                                                <?
-                                               
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                @foreach($get_type as $gt)
                     <td> {{DB::table('adahyt')->where('gov',01)->where('free','>',0)->where('adahy','=',$gt->name)->where('days','LIKE', '%'.$search.'%')->count()
                     +
                             DB::table('reservation')
@@ -378,17 +368,14 @@
          ->where('days','LIKE', '%'.$search.'%')
          ->where('emp','=','website')->distinct()->count('code')
                     ;}}</td>
-                    <?}?>
+                    @endforeach
                
                                             </tr>
                                             
                                             
                                                 <tr>
                                                 <th>الإجمالى </th>
-                                                   <?
-                                          
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                   @foreach($get_type as $gt)
                     <td> {{DB::table('adahyt')->where('gov',01)->where('free','>',0)->where('adahy','=',$gt->name)->count()
                     +
                        DB::table('reservation')
@@ -397,7 +384,7 @@
          ->where('emp','=','website')->distinct()->count('code')
                     
                     ;}}</td>
-                    <?}?>
+                    @endforeach
                     
                                             </tr>
                                         </tbody>
@@ -441,21 +428,15 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                    <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                    @foreach($get_type as $gt)
                                                 <th>{{$gt->name}}</th>
-                                            <?}?>
+                                            @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th>اليوم الأول</th>
-                                     <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                     @foreach($get_type as $gt)
                              <td> {{DB::table('adahyt')->where('gov',01)->where('free','=',0)->where('adahy','=',$gt->name)->where('days','=','اليوم الأول')->count() 
                              -
          DB::table('reservation')
@@ -464,15 +445,12 @@
          ->where('days','=','اليوم الأول')
          ->where('emp','=','website')->distinct()->count('code');
                              }}</td>
-                             <?}?>
+                             @endforeach
                            
                                             </tr>
                                               <tr>
                                                 <th>اليوم الثانى</th>
-                                                    <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                    @foreach($get_type as $gt)
                              <td> {{DB::table('adahyt')->where('gov',01)->where('free','=',0)->where('adahy','=',$gt->name)->where('days','=','اليوم الثانى')->count() 
                                           -
          DB::table('reservation')
@@ -481,17 +459,14 @@
          ->where('days','=','اليوم الثانى')
          ->where('emp','=','website')->distinct()->count('code');
                              }}</td>
-                         <?}?>
+                         @endforeach
                                             </tr>
-                                            	  <?
+                                            	  @php
 													  $search = "الثالث";
-													  ?>
+													  @endphp
                                               <tr>
                                                 <th>اليوم الثالث</th>
-                                                      <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                      @foreach($get_type as $gt)
                     <td> {{DB::table('adahyt')->where('gov',01)->where('free','=',0)->where('adahy','=',$gt->name)->where('days','LIKE', '%'.$search.'%')->count() 
                     
                                                  -
@@ -502,17 +477,14 @@
          ->where('emp','=','website')->distinct()->count('code');
                     
                     }}</td>
-                    <?}?>
+                    @endforeach
                
                                             </tr>
                                             
                                             
                                                   <tr>
                                                 <th>الإجمالى</th>
-                                                             <?
-                                              
-                                                foreach($get_type as $gt){
-                                                ?>
+                                                             @foreach($get_type as $gt)
                     <td> {{DB::table('adahyt')->where('gov',01)->where('free','=',0)->where('adahy','=',$gt->name)->count()
                     -
                         DB::table('reservation')
@@ -521,7 +493,7 @@
          ->where('emp','=','website')->distinct()->count('code');
                     
                     }}</td>
-                     <?}?>
+                     @endforeach
          
                                             </tr>
                                         </tbody>
@@ -753,10 +725,10 @@
     <script src="{{$theme1}}/js/custom.min.js"></script>
 	<script src="{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	            <script>
 		jQuery(document).ready(function(){
 			setTimeout(function() {
@@ -1178,11 +1150,12 @@
 		
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	
 </body>
 </html>
+

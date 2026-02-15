@@ -74,10 +74,10 @@
 						</ul>
 
                     </li>
-                           <?
+                           @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->whereIN('page',['adahy','sak','days','adahyt'])->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
 							<span class="nav-text">الأضاحى</span>
@@ -91,20 +91,20 @@
                       @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','card_adahy')->count() > 0)
                         <li><a href="/card_adahy">كارت اضحية المنصورة</a></li>
                       @endif    
-                        {{-- @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','card_adahy_cairo')->count() > 0)
+                        {{-- card_adahy_cairo is commented out
                         <li><a href="/card_adahy_cairo">كارت اضحية القاهرة</a></li>
-                        @endif --}}
+                         --}}
                         @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','card_adahy_mani')->count() > 0)
                         <li><a href="/card_adahy_mani">كارت اضحية المنيا</a></li>
                         @endif
 
                         </ul>
                     </li>
-                    <? }?>
-                    <?
+                    @endif
+                    @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','adahyt_r')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -120,11 +120,11 @@
                             
                         </ul>
                     </li>
-                    <?}?>
-                       <?
+                    @endif
+                       @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','sak_all_gov')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                     <li>
                         <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -145,41 +145,39 @@
                         </ul>
                     </li>
                     
-                    <?}?>
-                        <?
+                    @endif
+                        @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','treasures')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                                 <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
 							<span class="nav-text">الخزائن</span>
 						</a>
                         <ul aria-expanded="false">
-                        <?
+                        @php
                         if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','treasury_all')->count() > 0)
                         {
                         $get_tresury = DB::table('treasures')->get();
                         }else{
                          $get_tresury = DB::table('treasures')->where('id',Auth::user()->t_id)->get();   
                         }
-                        foreach($get_tresury as $get_tresury){
-                        ?>
-                            <li><a href="/treasures/{{$get_tresury->id}}">
-                                {{$get_tresury->name}}
+                        @endphp
+                        @foreach($get_tresury as $treasury)
+                            <li><a href="/treasures/{{ $treasury->id }}">
+                                {{ $treasury->name }}
                             </a></li>
-						
-                      
-                           <?}?> 
+                        @endforeach
                         </ul>
                     </li>
                     
-                    <?}?>
+                    @endif
                     
-                            <?
+                            @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','expense')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -196,13 +194,13 @@
                             
                         </ul>
                     </li>
-                    <?}?>
+                    @endif
                     
                     
-                                      <?
+                                      @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','income')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -219,13 +217,13 @@
                             
                         </ul>
                     </li>
-                    <?}?>
+                    @endif
                     
                     
-                                                          <?
+                                                          @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','butcher')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -245,13 +243,13 @@
                     @endif                            
                         </ul>
                     </li>
-                    <?}?>
+                    @endif
                     
                     
-                                                               <?
+                                                               @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','follower')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -268,13 +266,13 @@
                             
                         </ul>
                     </li>
-                    <?}?>
+                    @endif
                     
                     
-                                                                          <?
+                                                                          @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','butcher2')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -291,13 +289,13 @@
                             
                         </ul>
                     </li>
-                    <?}?>
+                    @endif
                     
                     
-                         <?
+                         @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','vendor')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                          <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -319,11 +317,11 @@
                             
                         </ul>
                     </li>
-                    <?}?>
-                              <?
+                    @endif
+                              @php
         $check_list = DB::table('per')->where('u_id',Auth::user()->id)->whereIN('page',['weight','butcher_s','accessories','cleanup','pkg','rec','rec_all','freez','ship','rec_end'])->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
 							<span class="nav-text">التشغيل</span>
@@ -373,14 +371,14 @@
                             
                         </ul>
                     </li>
-                    <? }?>
+                    @endif
                     
                  
                  
-                                    <?
+                                    @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','callcenter')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                     <li>
                         <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -401,9 +399,10 @@
                            
                         </ul>
                     </li>
-              <?}?>
-                <li>
+              @endif
+              
                       @if (DB::table('per')->where('u_id',Auth::user()->id)->whereIN('page',['checks','safe'])->count() > 0)
+                <li>
                         <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                          <i class="flaticon-050-info"></i>
 							<span class="nav-text">حركة الحسابات </span>
@@ -421,14 +420,14 @@
                                 </a></li>
                             @endif
                         </ul>
-                        @endif
 
                     </li>
+                        @endif
               
-                                      <?
+                                      @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','reception')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                                       <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -446,13 +445,13 @@
                            
                         </ul>
                     </li>
-              <?}?>
+              @endif
                  
                     
-                          <?
+                          @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','per')->count();
-                    if($check_list > 0){
-                    ?>
+                    @endphp
+                    @if($check_list > 0)
                     
                                       <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
@@ -468,7 +467,7 @@
                            
                         </ul>
                     </li>
-              <?}?>
+              @endif
                 </ul>
 				<div class="copyright">
 					<p><strong>Islah</strong> © 2023 All Rights Reserved</p>

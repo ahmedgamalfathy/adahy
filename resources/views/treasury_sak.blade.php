@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\agreement;
 
     function arday($y)
@@ -33,7 +32,7 @@ $x = date("D" , $dayss );
     if($x == "Thu"){return "الخميس";}
   
 }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -296,10 +295,10 @@ $x = date("D" , $dayss );
 					
 					
 			
-				<?
+				@php
 						$c1 = DB::table('per')->where('page','treasury_sak_p1')->where('u_id',Auth::user()->id)->count();//صرف
 						$c2 = DB::table('per')->where('page','treasury_sak_p2')->where('u_id',Auth::user()->id)->count();//استلام
-						?>
+						@endphp
 			
 
                     
@@ -452,11 +451,11 @@ $x = date("D" , $dayss );
 						
 						
 						
-						<?
+						@php
 						
 						$check_agreement = agreement::where('r_id',$id)->count();
 						if($check_agreement > 0){
-						?>
+						@endphp
 						<div style="    margin-top: 10px;">
 						 		<span class="badge badge-success" style="    cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter_rn">
 								    تمت الموافقة على التسليم
@@ -512,12 +511,12 @@ $x = date("D" , $dayss );
                                     </div>
 						
 										        
-										   <?}else{?>
+										   @else
 										   	<a href="javascript:void(0);" class="btn btn-info d-sm-inline-block " data-bs-toggle="modal" data-bs-target="#exampleModalCenter_r">
 										        موافقة تسليم
 										        <i class="las la-signal ms-3 scale5"></i></a>
 										   
-										   <?}?>
+										   }
 										        
 										        	    <!-- Modal -->
                                     <div class="modal fade" id="exampleModalCenter_r">
@@ -614,18 +613,19 @@ $x = date("D" , $dayss );
                                                 <td>{{arday($g->created_at)}}</td>
                                                 <td>{{$g->created_at}}</td>
                                                 
-                                                <td><? if($g->type == 1){?>
+                                                <td>
+                                                    @if($g->type == 1)
                                                 		<a href="javascript:void(0);" class="btn btn-danger d-sm-inline-block ">
 										        مدين
 										        <i class="las la-signal ms-3 scale5"></i></a>
-                                                <?}else{?>
+                                                    @else
                                                								    
 				<a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block " >دائن<i class="las la-signal ms-3 scale5"></i></a> 
-                                                <?}?>
+                                                    @endif
                                                 </td>
                                                  <td>{{$g->reason_t}}</td>
-                                                <td><? if($g->type == 1){?>{{$g->amount}}<?}else{echo 0;}?></td>
-                                                <td><? if($g->type != 1){?>{{$g->amount}}<?}else{echo 0;}?></td>
+                                                <td>@if($g->type == 1){{$g->amount}}@else 0 @endif</td>
+                                                <td>@if($g->type != 1){{$g->amount}}@else 0 @endif</td>
                                                
                                                 <td>{{$g->total}}</td>
                                                 <td>{{$g->nots}}</td>
@@ -719,10 +719,10 @@ $x = date("D" , $dayss );
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -739,11 +739,11 @@ $x = date("D" , $dayss );
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 
@@ -753,3 +753,7 @@ $x = date("D" , $dayss );
 	
 </body>
 </html>
+
+
+
+

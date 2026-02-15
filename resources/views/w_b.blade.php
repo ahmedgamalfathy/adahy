@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -406,7 +405,7 @@
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول الذبيحة *</label>
-                                          <input type="time" name="wb_entry_date" id="wb_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="wb_entry_date" id="wb_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('wb_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -462,9 +461,9 @@
                                                  <td>{{$g->wb_note}}</td>
                                            
                                                  <td>
-                                                     <?
+                                                     @php
                                                      if($g->wb_entry_date != 0){
-                                                     ?>
+                                                     @endphp
                                                        <a href="#" class="btn btn-success   shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#Modaladda{{$g->id}}"><i class="fa fa-pencil"></i></a> 
                                                        
                                                        
@@ -505,7 +504,7 @@
                          
                                                                          <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت خروج الذبيحة  </label>
-                                          <input type="time" name="wb_exit_date" id="wb_exit_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="wb_exit_date" id="wb_exit_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('wb_exit_date')
                                     <span class="invalid-feedback" role="alert">
@@ -530,7 +529,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                                  <?}?>   
+                                                  }   
                                                  </td>
                                              </tr>
                                              
@@ -598,10 +597,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -618,11 +617,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -692,3 +691,6 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+

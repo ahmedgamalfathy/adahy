@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -444,12 +443,12 @@ thead, tbody, tfoot, tr, td, th {
                                          <td>{{ $g->b_weight }}</td>
                                 <td>{{ number_format($g->b_case,2)}}</td>
                                
-                                            <?
+                                            @php
                                      
                                             if($g->b_room != 0){
                                           
                                                 
-                                            ?>
+                                            @endphp
                                
                                          
                                                  <td>
@@ -482,7 +481,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول الذبيحة *</label>
-                                          <input type="time" name="fb_entry_date" id="fb_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="fb_entry_date" id="fb_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('fb_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -493,16 +492,16 @@ thead, tbody, tfoot, tr, td, th {
                                                     
    
                          
-                         <?
+                         @php
                          $cl = 1;
                          if($cl = 0){
-                         ?>
+                         @endphp
                          
                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">مندوب النقل   *</label>
                         
                           <select class="form-control  @error('fb_note1') is-invalid @enderror" id="fb_note1" name="fb_note1"  Required>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -543,7 +542,7 @@ thead, tbody, tfoot, tr, td, th {
                                             </div>
                                                             
                                             
-                            <?}?>
+                            }
                                                    
                                                 </div>
                                                 <div class="modal-footer">
@@ -570,9 +569,9 @@ thead, tbody, tfoot, tr, td, th {
                                                    <td>
                                             
                                          
-                                            <?
+                                            @php
                                             if($g->fb_entry_date != 0){
-                                            ?>
+                                            @endphp
                                             
                                                     
                                                          <!-- Modal edit-->
@@ -601,16 +600,16 @@ thead, tbody, tfoot, tr, td, th {
                                                     
    
                          
-                         <?
+                         @php
                          $cl = 0;
                          if($cl == 0){
-                         ?>
+                         @endphp
                          
                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label"> مشرف غرفة التبريد  *</label>
                         
                           <select class="form-control  @error('fb_note1') is-invalid @enderror" id="fb_note1" name="fb_note1"  Required>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -641,7 +640,7 @@ thead, tbody, tfoot, tr, td, th {
                          
                                                                          <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت خروج الذبيحة  </label>
-                                          <input type="time" name="fb_exit_date" id="fb_exit_date" required="required" class="form-control" value="<? echo date('H:i');?>" >        
+                                          <input type="time" name="fb_exit_date" id="fb_exit_date" required="required" class="form-control" value="@php echo date('H:i'); @endphp" >        
                                                   
                                                                              @error('fb_exit_date')
                                     <span class="invalid-feedback" role="alert">
@@ -651,7 +650,7 @@ thead, tbody, tfoot, tr, td, th {
                                             </div>
                                                             
                                             
-                            <?}?>
+                            }
                                                    
                                                 </div>
                                                 <div class="modal-footer">
@@ -669,14 +668,14 @@ thead, tbody, tfoot, tr, td, th {
                        
                         <a href="#" class="btn btn-success  shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#Modaladds{{$g->id}}"><i class="fa fa-pencil"></i></a>
                         
-                        <?}?>
+                        }
                
                                                 </td>
                                                 
                                          
                                             
                                       
-                                             <?}?>
+                                             }
                                              
                                              
                                 
@@ -743,10 +742,10 @@ thead, tbody, tfoot, tr, td, th {
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -763,11 +762,11 @@ thead, tbody, tfoot, tr, td, th {
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -837,3 +836,6 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+

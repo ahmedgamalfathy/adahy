@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -235,19 +234,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?
+                                            @php
                                             $rep = array();
-                                            ?>
+                                            @endphp
                                             @foreach($get as $g)
-                                            <?
-                                                if(in_array($g->rec , $rep)){
-		        
-		    }else{
-		    array_push($rep,$g->rec);
+                                            @php
+                                                if(!in_array($g->rec , $rep)){
+		                                        array_push($rep,$g->rec);
                                             
-                                            $loan = DB::table('reservation')->where('rec',$g->rec)->sum('loan');
-                                            
-                                            ?>
+                                                    $loan = DB::table('reservation')->where('rec',$g->rec)->sum('loan');
+                                            @endphp
                                             @php
                                             $cleanDate = trim($g->created_at);
                                             $createdAt =\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $cleanDate , 'Africa/Cairo');
@@ -267,22 +263,22 @@
                                                  <td>{{$g->created_at}}</td>
                                                 <td>
                                                     
-                                                    <?
+                                                    @php
                                                     	$c1 = DB::table('per')->where('page','website_m')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                                     	$c2 = DB::table('per')->where('page','website_m')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                                     if($c1 > 0){
-                                                    ?>
+                                                    @endphp
                                     		<a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block " data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{$g->id}}">
 				    إستلام نقدية
 				    <i class="las la-signal ms-3 scale5"></i></a>
-				    <?}?>
+				    }
 				    <a href="/reservationsystem/{{$g->resnum}}" class="btn btn-primary light me-1 px-3" target="_blank">
                                <i class="flaticon-072-printer"></i>
                                     </a>
                                   
-                                    <?
+                                    @php
                                     if($c2 > 0){
-                                    ?>
+                                    @endphp
                                     	<a href="#" data-bs-toggle="modal" data-bs-target="#Modaldel{{$g->id}}" >
 														    
 														    <span class="me-2 oi-icon bgl-danger">
@@ -295,7 +291,7 @@
 														    
 														</a>
 														
-														<?}?>
+														}
                                                 </td>
                                                 
                                        
@@ -394,7 +390,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?}?>
                                      @endforeach
                                  
                          
@@ -472,10 +467,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -492,11 +487,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
            <script type="text/javascript">
@@ -520,3 +515,5 @@ $('#show_sak').html(date1);
 	
 </body>
 </html>
+
+

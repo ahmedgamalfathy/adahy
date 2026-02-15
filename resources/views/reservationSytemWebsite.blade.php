@@ -1,5 +1,4 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+@php header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
@@ -15,7 +14,7 @@ header("Pragma: no-cache");
     use App\Models\sak;
      use App\Models\opt;
      use App\Models\adahy_type;
-?>
+@endphp
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}audio[controls],canvas,video{display:inline-block}[hidden],audio{display:none}mark{background:#FF0;color:#000}</style>
 		<meta charset="utf-8">
@@ -159,11 +158,11 @@ th{
               </script>
 
 
-<?
+@php
 //$get = DB::table('reservation')->where('resnum',$id)->first();
  
 
-?>
+@endphp
 
 			<div style="margin:20px 5px;float: left;     width: 100%;   ">
 					<button class="button" style="    width: 30%;" onclick="window.print();">طباعة</button>
@@ -198,7 +197,7 @@ th{
 		</style>
 		
 		
-		<?
+		@php
 		$rep = array();
 		$get_all = DB::table('reservation')->where('rec',$id)->get();
 		foreach($get_all as $get){
@@ -211,7 +210,7 @@ th{
                                         $sak_price = sak::where('name',$get_info->sak)->first()->price;
                                         $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
-		?>
+		@endphp
 		
 			<div class="wrap" style="height: auto;">
 
@@ -367,13 +366,13 @@ th{
                 </span>
           
                 </th>
-            <?
+            @php
             $acc = "";
             $get_acc = DB::table('adahy_acc')->where('r_id',$get->rec)->select('name')->distinct()->get();
             foreach ($get_acc as $gac){
              $acc .= $gac->name." + ";   
             }
-            ?>
+            @endphp
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
     font-size: 22px;"><input type="text" style="width: 100%; text-align: center;" name="date" value="{{$acc}} "  readonly ></td>
 
@@ -397,9 +396,9 @@ th{
 
 
 				</tr>
-			<?
+			@php
 			$loan = DB::table('reservation')->where('rec',$get->rec)->sum('loan');
-			?>	
+			@endphp	
 			<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
     font-size: 22px;"><span contenteditable="0">
@@ -448,7 +447,9 @@ th{
 
 
 </div>
-<?}?>
-<?}?>
+}
+}
 
 </body></html>
+
+

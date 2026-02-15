@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -2245,7 +2244,7 @@ h5 {
 </style>
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700&display=swap" />
   	
-    <?
+    @php
   use Jenssegers\Agent\Agent;
   use Illuminate\Http\Request;
   
@@ -2275,14 +2274,14 @@ h5 {
     if($info->sak_c == 3){$selcted = 3;}
     if($info->sak_c == 4){$selcted = 2;}
     if($info->sak_c == 7){$selcted = 1;}
-  ?> 	
+  @endphp 	
   	
   	
   	<script>
   	        
 			  function checksak() {
     let sum = 0;
-    var c = "<?php echo $c_sak; ?>"; // تأكد أنها PHP صحيحة
+    var c = "{{ $c_sak }}"; // تأكد أنها PHP صحيحة
 
     $('.num').each(function () {
         let value = parseFloat($(this).val());
@@ -2296,7 +2295,7 @@ h5 {
         document.getElementById("sub").disabled = true;
         document.getElementById("sub").value = "خطأ في الصكوك";
         return false;
-    } else {
+    @else
         document.getElementById("sub").disabled = false;
         document.getElementById("sub").value = "الخطوة التالية";
         return true;
@@ -2379,7 +2378,7 @@ h5 {
     		    
     		    
       			<div class="container-buy-parent row m-0 w-100" >
-        		<?for ($x = 1; $x <= $c_persons; $x++) {?>
+        		@php for($x = 1; $x <= $c_persons; $x++) { @endphp
 				@php
 				 if ($info->sak_c == 4) {
                         if ($c_sak == 1 ) {
@@ -2598,12 +2597,12 @@ h5 {
 																			<p class="p1" id="ns_{{$x}}"></p>
 																	</div>
 															</div>
-																<?
+																@php
 																	$cp = ($c_persons - 1);
 																	$cps = ($c_sak - $c_persons) + 1;
-																?>
+																@endphp
                                                             
-																<?if($c_sak == $c_persons){?>
+																@if($c_sak == $c_persons)
 																<select name="number[]" id="number{{$x}}" class="num" onchange="checksak()" style="
 																		width: 30%;
 																		height: 30px;
@@ -2613,7 +2612,7 @@ h5 {
 																		border-color: #ced4d9;" >
 																		<option value="1">1</option>
 																</select>
-															<?}else{?>
+															@else
 																<select name="number[]" id="number{{$x}}" class="num" onchange="checksak()" style=" 
 																width: 30%;
 																height: 30px;
@@ -2621,11 +2620,11 @@ h5 {
 																margin-top: 0%;
 																border-radius: 7px;
 																border-color: #ced4d9;" >
-																<?for ($y = 1; $y <= $cps; $y++) {?>
+																@php for($y = 1; $y <= $cps; $y++) { @endphp
 																	<option value="{{$y}}">{{$y}}</option>
-																<?}?>
+																}
 																</select>
-																<?}?>	
+																}	
 													</div>
 												</div>
 												<div class="title5">
@@ -2785,7 +2784,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#number{{$x}}').on('change', function() {
         var inputValue = $(this).val();
-        var p = "<? echo $sak_price ;?>";
+        var p = "@php echo $sak_price ; @endphp";
         $('#notes{{$x}}').val(inputValue * p);
     
     });
@@ -2803,14 +2802,14 @@ $(document).ready(function() {
         if (checkedBoxes > ss) {
             $(this).prop('checked', false);
             $('#message').text('You can select up to 3 options only.');
-        } else {
+        @else
             $('#message').text('');
         }
     });
 });
 </script>
         					
-        				<?}?>
+        				}
       		</div>
       			<div class="btn-parent" style="margin-top:-1%;    margin-bottom: 3%;">
       			    	    <a href="resrv2" style="color:#fff;">
@@ -2851,7 +2850,7 @@ $(document).ready(function() {
                 								    
                   															   
           					    
-          					    <div <? if($c_persons > 1){?>class="checkboxactivedefaulton-child4"<?}else{?>class="checkboxinactivedefaulton-child"<?}?>>
+          					    <div @if($c_persons > 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
                   									</div>
                   			
                   									<img class="phosphor-icons-check" alt="" src="Phosphor Icons / Check.svg">
@@ -2868,7 +2867,7 @@ $(document).ready(function() {
                 								<div class="checkboxinactivedefaulton">
                   									<div class="checkbox1">
                     										<div class="checkboxinactivedefaulton">
-                      										<div <? if($c_persons == 1){?>class="checkboxactivedefaulton-child4"<?}else{?>class="checkboxinactivedefaulton-child"<?}?>>
+                      										<div @if($c_persons == 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
                       											</div>
                     										</div>
                   									</div>
@@ -2919,10 +2918,10 @@ $(document).ready(function() {
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -2939,11 +2938,11 @@ $(document).ready(function() {
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
            <script type="text/javascript">
@@ -3015,7 +3014,7 @@ function validateForm() {
 					}
 	
 					selectedParts[person].push(value);
-				} else {
+				@else
 					// إلغاء الاختيار
 					const index = selectedParts[person].indexOf(value);
 					if (index > -1) {
@@ -3037,7 +3036,7 @@ function validateForm() {
     if (checksak() !== false) {
       popup.style.display = 'flex';
     }
-  } else {
+  @else
     form.reportValidity();
   }
 };
@@ -3063,3 +3062,8 @@ function validateForm() {
 </body>
 </html>
                     
+
+
+
+
+

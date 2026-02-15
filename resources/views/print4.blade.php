@@ -1332,7 +1332,7 @@
         }
     </style>
 </head>
-<?
+@php
 
 
 
@@ -1353,7 +1353,7 @@ $gopt = DB::table('opt')->where('code',$get_->code)->first();
                                         $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
 
-?>
+@endphp
 <body dir="rtl">
 
     <div class="border">
@@ -1519,12 +1519,12 @@ font-size: 22px;"><span contenteditable="0">
                                                     المشتملات المختارة
                                                 </span></th>
                                             <td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-font-size: 22px;"><input type="text" style="width: 100%;    text-align: center;" name="date" value="<?
+font-size: 22px;"><input type="text" style="width: 100%;    text-align: center;" name="date" value="@php
 												    $g_acc = DB::table('callcenter')->where('re_id',$id)->whereNotNull('acc')->take(1)->orderBy('id','desc')->get();
 												    foreach($g_acc as $g){
 												        echo $g->acc."-";
 												    }
-												    ?>" readonly="">
+												    @endphp" readonly="">
                                             </td>
                                         </tr>
                                         <tr>

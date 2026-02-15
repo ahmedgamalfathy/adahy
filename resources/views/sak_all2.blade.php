@@ -13,13 +13,12 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-    use App\Models\treasury_sak;
+    @php use App\Models\treasury_sak;
     use App\Models\adahyt;
     use App\Models\sak;
      use App\Models\adahy_type;
   $theme1 = "theme1";
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -436,11 +435,11 @@ font-weight: bold;">
                                                
                                         </thead>
                                         <tbody>
-                                            <?
+                                            @php
                                             $u_adhya = array(0);
-                                            ?>
+                                            @endphp
                                             @foreach($get as $g)
-                                        <?
+                                        @php
                                        	$c1 = DB::table('per')->where('page','del_trans')->where('u_id',Auth::user()->id)->count();//مسح ونقل
                                         
                                         $get_info = adahyt::where('id',$g->ad_id)->first();
@@ -449,12 +448,8 @@ font-weight: bold;">
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
                                         
                                       $l_total =(float) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
-                                        ?>
-                                        <?
-                                        if(in_array($get_info->code,$u_adhya)){
-                                        ?>
-                                        
-                                        <?}else{?>
+                                        @endphp
+                                        @php if(!in_array($get_info->code,$u_adhya)){ @endphp
                                         <tr>
                                             <td colspan="19" style="font-size: 19px;
    
@@ -502,16 +497,16 @@ font-weight: bold;">
                                             </tr>
                                         
                                         
-                                        <?array_push($u_adhya,$get_info->code);}?>
+                                        @php array_push($u_adhya,$get_info->code); } @endphp
                                             <tr>
                                                 <td>
                                                   <div class="d-flex">
                                                       
                                                       <form action="res_rev" id="res_rev{{$g->id}}" method="get">
                                                           <input type="hidden" name="r_id" value="{{$g->id}}">
-<i class="las la-check-circle check-icon" <? if($g->type == 1){?> style="font-size: 36px;color: var(--bs-orange);cursor: pointer;"<?}elseif($g->type == 2){?>
+<i class="las la-check-circle check-icon" @if($g->type == 1) style="font-size: 36px;color: var(--bs-orange);cursor: pointer;"@elseif($g->type == 2) @endphp
 style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
-<?}else{?>style="font-size: 36px;color: var(--bs-orange);cursor: pointer;"<?}?> onclick=document.getElementById('res_rev<? echo $g->id ;?>').submit();></i>
+@elsestyle="font-size: 36px;color: var(--bs-orange);cursor: pointer;"} onclick=document.getElementById('res_rev@php echo $g->id ; @endphp').submit();></i>
                                                       </form>
                                                       
 														<a href="reservation_E/{{$g->id}}" >
@@ -642,8 +637,8 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
                                                  <td>{{(float)$get_info->kilo_s * $adahy_type_info->price}}</td>
                                                 <td>{{(float)$sak_price2}}</td>
                                                 <td>{{$l_total}}</td>
-                                                 <? $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ;?>
-                                                <td <? if($total < 0){?>style="color:red"<?}?>>
+                                                 @php $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ; @endphp
+                                                <td @if($total < 0)style="color:red"}>
                                                    
                                                  {{number_format((float)$total, 2, '.', '')}}   
                                                     </td>
@@ -757,10 +752,10 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -777,11 +772,11 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 
@@ -791,3 +786,9 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
 	
 </body>
 </html>
+
+
+
+
+
+

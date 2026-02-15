@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="/theme1/css/style.css">
     
     	<meta http-equiv="refresh" content="300">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   date_default_timezone_set("Africa/Kampala"); 
     use App\Models\treasury_sak;
     use App\Models\adahyt;
@@ -28,7 +27,7 @@
      use App\Models\reservation;
      use App\Models\adahy_type;
   
-  ?>
+  @endphp
   
   <style>
       .fixed-header-table {
@@ -75,7 +74,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?
+                                        @php
                                         $in_loop = ["بقرى","جمسى"];
                                         $day = "اليوم  الثالث";
                                         $get = DB::table('adahyt')->whereIN('adahy',$in_loop)->where('days',$day)->get();
@@ -86,10 +85,10 @@
                                           
                                              //dd($g->wb_exit_date);
                                              
-                                        ?>
-                                        <?
+                                        @endphp
+                                        @php
                                         if($g == null){
-                                        ?>
+                                        @endphp
                                             <tr>
                                             <td class="text-center" style="font-size: 18px;">{{$gs->code}}</td>
                                             <td class="text-center">
@@ -109,65 +108,65 @@
                                                 </td>
                                         </tr>
                                         
-                                        <?}else{?>
+                                        @else
                                         <tr>
                                             <td class="text-center" style="font-size: 18px;">{{$gs->code}}</td>
                                             <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->wb_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
+                                                }
                                                 </td>
                                             <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->b_entry_date != 0){
                                                     if($g->b_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                           <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->fb_entry_date != 0){
                                                 if($g->fb_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                               <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->f_entry_date != 0){
                                                 if($g->f_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                              <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->r_entry_date != 0){
                                                 if($g->r_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                         </tr>
-                                             <?}?>
-                                        <?}?>
+                                             }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -187,17 +186,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                                     <?
+                                                     @php
                                         $in_loop = ["بقرى","جمسى"];
                                            $day = "اليوم  الثالث";
                                          $gets = DB::table('adahyt')->whereNOTIN('adahy',$in_loop)->where('days',$day)->get();
                                         //$gets = DB::table('opt')->whereNOTIN('adahy',$in_loop)->where('days',$day)->get();
                                         foreach($gets as $gs){
                                                $g = DB::table('opt')->where('code',$gs->code)->first();
-                                        ?>
-                                              <?
+                                        @endphp
+                                              @php
                                         if($g == null){
-                                        ?>
+                                        @endphp
                                             <tr>
                                             <td class="text-center" style="font-size: 18px;">{{$gs->code}}</td>
                                             <td class="text-center">
@@ -217,67 +216,67 @@
                                                 </td>
                                         </tr>
                                         
-                                        <?}else{?>
+                                        @else
                                         <tr>
                                             <td class="text-center" style="font-size: 18px;">{{$gs->code}}</td>
                                             <td class="text-center">
-                                                <?
+                                                @php
                                                  if($g->b_entry_date != 0){
                                                 if($g->wb_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                 <?}?>
+                                                }
+                                                 }
                                                 </td>
                                             <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->b_entry_date != 0){
                                                     if($g->b_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                           <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->fb_entry_date != 0){
                                                 if($g->fb_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                               <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->f_entry_date != 0){
                                                 if($g->f_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                              <td class="text-center">
-                                                <?
+                                                @php
                                                 if($g->r_entry_date != 0){
                                                 if($g->r_exit_date == 0){
-                                                ?>
+                                                @endphp
                                                 <button class="btn btn-warning rounded-circle p-3" type="button"></button>
-                                                <?}else{?>
+                                                @else
                                                 <button class="btn btn-primary rounded-circle p-3" type="button"></button>
-                                                <?}?>
-                                                <?}?>
+                                                }
+                                                }
                                                 </td>
                                         </tr>
-                                           <?}?>
-                                        <?}?>
+                                           }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -310,3 +309,6 @@
 </body>
 
 </html>
+
+
+

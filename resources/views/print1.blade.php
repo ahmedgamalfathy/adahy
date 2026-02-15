@@ -15,14 +15,14 @@
            We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
     </style>
 
-<?
+@php
 
  use App\Models\treasury_sak;
     use App\Models\adahyt;
     use App\Models\sak;
      use App\Models\opt;
      use App\Models\adahy_type;
-?>
+@endphp
 <style type="text/css" media="screen">.uv-tray{position:fixed;-webkit-font-smothing:antialias;z-index:100000}.uv-tray.uv-bottom-right{bottom:10px;right:10px}.uv-tray.uv-top-right{top:10px;right:10px}.uv-tray.uv-bottom-left{bottom:10px;left:10px}.uv-tray.uv-top-left{top:10px;left:10px}.uv-tray-item{background:rgba(46,49,51,0.6);border-radius:24px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:inline-block;color:white;cursor:pointer;font-family:sans-serif;font-size:14px;font-weight:100;-webkit-font-smoothing:antialias;line-height:1;margin-left:4px;padding:0 24px;position:relative;-webkit-transition:all 300ms;-moz-transition:all 300ms;-o-transition:all 300ms;transition:all 300ms;width:48px;height:48px;vertical-align:middle;white-space:nowrap}.uv-ie8 .uv-tray-item{background:url(//widget.uservoice.com/images/clients/widget_environment/sixty_percent.png)}.uv-tray-item-hoverinfo{display:block;opacity:0;-webkit-transition:opacity 100ms;-moz-transition:opacity 100ms;-o-transition:opacity 100ms;transition:opacity 100ms;padding-right:48px;overflow:hidden;line-height:48px}.uv-top-left .uv-tray-item-hoverinfo,.uv-bottom-left .uv-tray-item-hoverinfo{padding-left:24px}.uv-top-right .uv-tray-item-hoverinfo,.uv-bottom-right .uv-tray-item-hoverinfo{padding-left:48px}.uv-tray-item-icon{position:absolute;top:0;opacity:0.8;-webkit-transition:opacity 100ms;-moz-transition:opacity 100ms;-o-transition:opacity 100ms;transition:opacity 100ms}.uv-top-right .uv-tray-item-icon,.uv-bottom-right .uv-tray-item-icon{right:0}.uv-top-left .uv-tray-item-icon,.uv-bottom-left .uv-tray-item-icon{left:0}.uv-tray-item-icon svg{width:48px;height:48px}.uv-init .uv-tray-item{background:rgba(46,49,51,0.9);width:245px}.uv-init .uv-tray-item .uv-tray-item-hoverinfo{opacity:1;-webkit-transition:opacity 400ms;-webkit-transition-delay:100ms;-moz-transition:opacity 400ms 100ms;-o-transition:opacity 400ms 100ms;transition:opacity 400ms 100ms}.uv-init .uv-tray-item .uv-tray-item-icon{opacity:1}.uv-ie8 .uv-init .uv-tray-item{background:url(//widget.uservoice.com/images/clients/widget_environment/ninety_percent.png)}.uv-init.uv-top-right .uv-tray-item-hoverinfo,.uv-init.uv-bottom-right .uv-tray-item-hoverinfo{padding-left:0}.uv-tray-item{background:rgba(46,49,51,0.6);width:48px}.uv-ie8 .uv-tray-item{background:url(//widget.uservoice.com/images/clients/widget_environment/sixty_percent.png)}.uv-tray-item:hover{background:rgba(46,49,51,0.9)}.uv-ie8 .uv-tray-item:hover{background:url(//widget.uservoice.com/images/clients/widget_environment/ninety_percent.png)}.uv-tray-item .uv-tray-item-hoverinfo{opacity:0}.uv-tray-item .uv-tray-item-icon{opacity:1}.uv-tray-item.uv-is-selected{background:rgba(46,49,51,0.75)}.uv-ie8 .uv-tray-item.uv-is-selected{background:url(//widget.uservoice.com/images/clients/widget_environment/seventy_five_percent.png)}.uv-tray-item.uv-is-selected:hover{background:rgba(46,49,51,0.9)}.uv-ie8 .uv-tray-item.uv-is-selected:hover{background:url(//widget.uservoice.com/images/clients/widget_environment/ninety_percent.png)}.uv-popover{position:absolute;color:black;z-index:100001}.uv-top-right .uv-popover{top:54px;right:4px}.uv-top-left .uv-popover{top:54px;left:4px}.uv-bottom-right .uv-popover{bottom:54px;right:4px}.uv-bottom-left .uv-popover{bottom:54px;left:4px}@media screen and (max-device-width: 480px){.uv-popover{position:fixed;bottom:10px;right:10px;left:10px;top:10px}}.uv-popover-content{-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;-o-border-radius:3px;border-radius:3px;background:#f0f3f7;width:325px;-webkit-transition:background 200ms;-moz-transition:background 200ms;-o-transition:background 200ms;transition:background 200ms}.uv-top-left .uv-popover-content,.uv-top-right .uv-popover-content,.uv-below .uv-popover-content{-webkit-box-shadow:rgba(0,0,0,0.3) 0 -10px 60px,rgba(0,0,0,0.1) 0 0 20px;-moz-box-shadow:rgba(0,0,0,0.3) 0 -10px 60px,rgba(0,0,0,0.1) 0 0 20px;box-shadow:rgba(0,0,0,0.3) 0 -10px 60px,rgba(0,0,0,0.1) 0 0 20px}.uv-bottom-left .uv-popover-content,.uv-bottom-right .uv-popover-content,.uv-above .uv-popover-content{-webkit-box-shadow:rgba(0,0,0,0.3) 0 10px 60px,rgba(0,0,0,0.1) 0 0 20px;-moz-box-shadow:rgba(0,0,0,0.3) 0 10px 60px,rgba(0,0,0,0.1) 0 0 20px;box-shadow:rgba(0,0,0,0.3) 0 10px 60px,rgba(0,0,0,0.1) 0 0 20px}@media screen and (max-device-width: 480px){.uv-popover-content{-webkit-box-shadow:rgba(0,0,0,0.6) 0 10px 60px,rgba(0,0,0,0.2) 0 0 20px;-moz-box-shadow:rgba(0,0,0,0.6) 0 10px 60px,rgba(0,0,0,0.2) 0 0 20px;box-shadow:rgba(0,0,0,0.6) 0 10px 60px,rgba(0,0,0,0.2) 0 0 20px;height:100%;width:100%}}@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){.uv-popover-content{width:380px}}.uv-ie8 .uv-popover-content{position:relative}.uv-ie8 .uv-popover-content .uv-popover-content-shadow{display:block;background:black;content:'';position:absolute;left:-15px;top:-15px;width:100%;height:100%;filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius=15,MakeShadow=true,ShadowOpacity=0.30);z-index:-1}.uv-popover-tail{border:8px solid transparent;width:0;z-index:10;position:relative;-webkit-transition:border-top-color 200ms;-moz-transition:border-top-color 200ms;-o-transition:border-top-color 200ms;transition:border-top-color 200ms}.uv-top-left .uv-popover-tail,.uv-bottom-left .uv-popover-tail{margin-left:12px}.uv-top-right .uv-popover-tail,.uv-bottom-right .uv-popover-tail{margin-left:297px}.uv-bottom-left .uv-popover-tail,.uv-bottom-right .uv-popover-tail,.uv-above .uv-popover-tail{border-bottom:none;border-top:12px solid #f0f3f7}.uv-top-left .uv-popover-tail,.uv-top-right .uv-popover-tail,.uv-below .uv-popover-tail{border-top:none;border-bottom:12px solid #f0f3f7}@media screen and (max-device-width: 480px){.uv-popover-tail{display:none}}@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){.uv-popover-tail{margin-left:350px}}.uv-popover-iframe-container{height:325px}@media screen and (max-device-width: 480px){.uv-popover-iframe-container{height:290px}.uv-popover-controls-hidden .uv-popover-iframe-container{height:auto}}@media only screen and (min-device-width: 768px) and (max-device-width: 1024px){.uv-popover-iframe-container{height:380px}}.uv-popover-iframe{-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;-o-border-radius:3px;border-radius:3px;overflow:hidden}.uv-popover-controls{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0 10px 3px;text-align:center;-webkit-transition:all 600ms;-webkit-transition-delay:600ms;-moz-transition:all 600ms 600ms;-o-transition:all 600ms 600ms;transition:all 600ms 600ms;height:42px;overflow:hidden}.uv-popover-controls-hidden .uv-popover-controls{opacity:0;height:0;padding:0 10px}.uv-popover-button{display:inline-block;border-top:1px solid #c8dbef;font-size:13px;line-height:1;padding:13px 18px;color:#297bcc;font-weight:500;margin:0 5px}.uv-popover-button:focus{outline:none}.uv-popover-button:hover{border-top:1px solid #a0c1e4;color:#314f70}.uv-reversed .uv-popover-button{-webkit-transition:all 200ms;-moz-transition:all 200ms;-o-transition:all 200ms;transition:all 200ms;color:white !important;border-top-color:white !important}.uv-bubble{position:absolute;text-align:center;z-index:100002}.uv-top-right .uv-bubble,.uv-top-left .uv-bubble{top:48px;padding-top:12px}.uv-bottom-right .uv-bubble,.uv-bottom-left .uv-bubble{bottom:48px;padding-bottom:12px}.uv-bubble-content{font-family:sans-serif;font-size:13px;line-height:28px;background:rgba(46,49,51,0.9);-webkit-border-radius:14px;-moz-border-radius:14px;-ms-border-radius:14px;-o-border-radius:14px;border-radius:14px;padding:0 10px;text-align:left}.uv-ie8 .uv-bubble-content{background:url(//widget.uservoice.com/images/clients/widget_environment/ninety_percent.png)}.uv-bubble-dismiss{display:inline-block;opacity:0.5;width:28px;-webkit-transition:all 200ms;-moz-transition:all 200ms;-o-transition:all 200ms;transition:all 200ms;text-align:center;margin:0 -10px 0 -6px}.uv-bubble-dismiss:hover{opacity:1;-webkit-transform:rotateZ(90deg);-moz-transform:rotateZ(90deg);-ms-transform:rotateZ(90deg);-o-transform:rotateZ(90deg);transform:rotateZ(90deg)}.uv-bubble-tail{border:6px solid transparent;position:absolute;margin:0 auto;width:0}.uv-bottom-left .uv-bubble-tail,.uv-bottom-right .uv-bubble-tail{border-top:8px solid rgba(46,49,51,0.9);border-bottom:none}.uv-top-left .uv-bubble-tail,.uv-top-right .uv-bubble-tail{border-bottom:8px solid rgba(46,49,51,0.9);border-top:none;top:4px}.uv-ie8 .uv-bubble-tail{border:none;background:url(//widget.uservoice.com/images/clients/widget_environment/bubble_tail.png);width:12px;height:8px}.uv-ie8.uv-top-left .uv-bubble-tail,.uv-ie8.uv-top-right .uv-bubble-tail{background:url(//widget.uservoice.com/images/clients/widget_environment/bubble_tail_up.png)}.uv-is-hidden{display:none}.uv-is-invisible{display:block !important;visibility:hidden !important}.uv-is-transitioning{display:block !important}.uv-no-transition{-moz-transition:none !important;-webkit-transition:none !important;-o-transition:color 0 ease-in !important;transition:none !important}.uv-fade{opacity:1;-webkit-transition:opacity 200ms ease-out;-moz-transition:opacity 200ms ease-out;-o-transition:opacity 200ms ease-out;transition:opacity 200ms ease-out}.uv-fade.uv-is-hidden{opacity:0}.uv-scale-top{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-top.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(-15%);-moz-transform:scale(0.8) translateY(-15%);-ms-transform:scale(0.8) translateY(-15%);-o-transform:scale(0.8) translateY(-15%);transform:scale(0.8) translateY(-15%)}.uv-scale-top-left{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-top-left.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(-15%) translateX(-10%);-moz-transform:scale(0.8) translateY(-15%) translateX(-10%);-ms-transform:scale(0.8) translateY(-15%) translateX(-10%);-o-transform:scale(0.8) translateY(-15%) translateX(-10%);transform:scale(0.8) translateY(-15%) translateX(-10%)}.uv-scale-top-right{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-top-right.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(-15%) translateX(10%);-moz-transform:scale(0.8) translateY(-15%) translateX(10%);-ms-transform:scale(0.8) translateY(-15%) translateX(10%);-o-transform:scale(0.8) translateY(-15%) translateX(10%);transform:scale(0.8) translateY(-15%) translateX(10%)}.uv-scale-bottom{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-bottom.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(15%);-moz-transform:scale(0.8) translateY(15%);-ms-transform:scale(0.8) translateY(15%);-o-transform:scale(0.8) translateY(15%);transform:scale(0.8) translateY(15%)}.uv-scale-bottom-left{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-bottom-left.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(15%) translateX(-10%);-moz-transform:scale(0.8) translateY(15%) translateX(-10%);-ms-transform:scale(0.8) translateY(15%) translateX(-10%);-o-transform:scale(0.8) translateY(15%) translateX(-10%);transform:scale(0.8) translateY(15%) translateX(-10%)}.uv-scale-bottom-right{opacity:1;-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-scale-bottom-right.uv-is-hidden{opacity:0;-webkit-transform:scale(0.8) translateY(15%) translateX(10%);-moz-transform:scale(0.8) translateY(15%) translateX(10%);-ms-transform:scale(0.8) translateY(15%) translateX(10%);-o-transform:scale(0.8) translateY(15%) translateX(10%);transform:scale(0.8) translateY(15%) translateX(10%)}.uv-slide-top{-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-slide-top.uv-is-hidden{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}.uv-slide-bottom{-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-slide-bottom.uv-is-hidden{-webkit-transform:translateY(100%);-moz-transform:translateY(100%);-ms-transform:translateY(100%);-o-transform:translateY(100%);transform:translateY(100%)}.uv-slide-left{-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-slide-left.uv-is-hidden{-webkit-transform:translateX(-100%);-moz-transform:translateX(-100%);-ms-transform:translateX(-100%);-o-transform:translateX(-100%);transform:translateX(-100%)}.uv-slide-right{-webkit-transition:all 80ms ease-out;-moz-transition:all 80ms ease-out;-o-transition:all 80ms ease-out;transition:all 80ms ease-out}.uv-slide-right.uv-is-hidden{-webkit-transform:translateX(100%);-moz-transform:translateX(100%);-ms-transform:translateX(100%);-o-transform:translateX(100%);transform:translateX(100%)}
 </style><style type="text/css" media="print">#uvTab {display:none !important;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
 .fb_invisible{display:none}
@@ -167,7 +167,7 @@ window.history.back()
 }
 </script>
           
-<?
+@php
 $get_info = DB::table('reservation')->where('id',$id)->first();
 $get_ad = DB::table('adahyt')->where('code',$get_info->code)->first();
 $gopt = DB::table('opt')->where('code',$get_info->code)->first();
@@ -177,7 +177,7 @@ $gopt = DB::table('opt')->where('code',$get_info->code)->first();
                                         $sak_price = sak::where('name',$get_info->sak)->first()->price;
                                         $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
-?>
+@endphp
 
 
         <div style="margin:20px 5px;float: left;     width: 100%;   ">
@@ -267,13 +267,13 @@ font-size: 22px;"><input type="text" style="width: 100%;    text-align: center;"
 font-size: 22px;"><span contenteditable="0">
                الوزن القائم  
             </span></th>
-            <?
+            @php
             $get_kilo = 0;
                $adahyt_sak = $get_ad->sak_c;
                                                        if($gopt->f_case > 0){
                                                            $get_kilo =  ((float)$gopt->f_weight + (float)$gopt->f_weight2) / $adahyt_sak;
                                                        }
-                                                       ?>
+                                                       @endphp
  <td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
 font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" value="{{$get_ad->kilo}} كيلو" name="date" readonly=""></td>
 
@@ -323,9 +323,9 @@ font-size: 22px;"><input type="text" style="width: 100%; text-align: center;" na
 
             </tr>
             
-            	<?
+            	@php
 				$tots = (float)$get_ad->kilo * $adahy_type_info->price  + ((float)$sak_price2 * $get_ad->sak_c);
-				?>
+				@endphp
                             
                     <tr>
             <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -340,9 +340,9 @@ font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" nam
 
 
             </tr>
-            	<?
+            	@php
 			$getprice4 = $tots / $get_ad->sak_c;
-			?>
+			@endphp
             
                                 <tr>
             <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -358,12 +358,12 @@ font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" nam
 
             </tr>
                             
-  			<?
+  			@php
 				$check_opt = opt::where('code',$get_ad->code)->count();
 				if($check_opt > 0){
 				$get_opt = opt::where('code',$get_ad->code)->first();
 				}
-				?>
+				@endphp
 				
 									<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -371,8 +371,8 @@ font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" nam
                    الوزن الإجمالى المشفى   
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date" <?if($check_opt > 0){?> value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو" 
-    <?}else{?> value="0"<?}?> readonly ></td>
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date" @if($check_opt > 0) value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو" 
+    @else value="0"} readonly ></td>
 
 				</tr>
 				
@@ -384,10 +384,10 @@ font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" nam
                  بالكبدة
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" <?if($check_opt > 0){
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" @php if($check_opt > 0){
     $saka = ((float)$get_opt->f_weight + (float)$get_opt->f_weight2) / $get_ad->sak_c;
-    ?> value="{{number_format((float)$saka, 2, '.', '')}} كيلو"
-    <?}else{?>value="0"<?}?>
+    @endphp value="{{number_format((float)$saka, 2, '.', '')}} كيلو"
+    @elsevalue="0"}
     name="date"  readonly ></td>
 
 				</tr>
@@ -426,3 +426,6 @@ font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" nam
 
 
 </div></body></html>
+
+
+

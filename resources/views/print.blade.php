@@ -1,5 +1,4 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+@php header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
@@ -9,7 +8,7 @@ header("Pragma: no-cache");
     use App\Models\sak;
      use App\Models\opt;
      use App\Models\adahy_type;
-?>
+@endphp
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}audio[controls],canvas,video{display:inline-block}[hidden],audio{display:none}mark{background:#FF0;color:#000}</style>
 		<meta charset="utf-8">
@@ -154,14 +153,14 @@ th{
               </script>
 
 
-<?
+@php
    $get_info = adahyt::where('id',$get->ad_id)->first();
    
                                         $sak_price = sak::where('name',$get_info->sak)->first()->price;
                                         $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
                                         $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
 
-?>
+@endphp
 
 			<div style="margin:20px 5px;float: left;     width: 100%;   ">
 					<button class="button" style="    width: 30%;" onclick="window.print();">طباعة</button>
@@ -302,9 +301,9 @@ th{
 				</tr>
 				
 				
-				<?
+				@php
 				$tots = (float)$get_info->kilo * $adahy_type_info->price  + ((float)$sak_price2 * $get_info->sak_c);
-				?>
+				@endphp
 				
 						<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -319,9 +318,9 @@ th{
 
 
 				</tr>
-			<?
+			@php
 			$getprice4 = $tots / $get_info->sak_c;
-			?>	
+			@endphp	
 				
 									<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -336,12 +335,12 @@ th{
 
 
 				</tr>
-				<?
+				@php
 				$check_opt = opt::where('code',$get_info->code)->count();
 				if($check_opt > 0){
 				$get_opt = opt::where('code',$get_info->code)->first();
 				}
-				?>
+				@endphp
 				
 									<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;
@@ -349,8 +348,8 @@ th{
                    الوزن الإجمالى المشفى   
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date" <?if($check_opt > 0){?> value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو" 
-    <?}else{?> value="0"<?}?> readonly ></td>
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date" @if($check_opt > 0) value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو" 
+    @else value="0"} readonly ></td>
 
 				</tr>
 				
@@ -362,10 +361,10 @@ th{
                  بالكبدة
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" <?if($check_opt > 0){
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" @php if($check_opt > 0){
     $saka = ((float)$get_opt->f_weight + (float)$get_opt->f_weight2) / $get_info->sak_c;
-    ?> value="{{number_format((float)$saka, 2, '.', '')}} كيلو"
-    <?}else{?>value="0"<?}?>
+    @endphp value="{{number_format((float)$saka, 2, '.', '')}} كيلو"
+    @elsevalue="0"}
     name="date"  readonly ></td>
 
 				</tr>
@@ -405,3 +404,7 @@ th{
 
 </body>
 </html>
+
+
+
+

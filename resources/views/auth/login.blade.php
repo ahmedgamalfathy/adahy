@@ -16,9 +16,8 @@
 	
 	<!-- PAGE TITLE HERE -->
 	<title>Islah </title>
-	<?php
-  $theme1 = "theme1";
-  ?>
+	@php $theme1 = "theme1";
+  @endphp
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="{{$theme1}}/images/favicon.png" />
     <link href="{{$theme1}}/css/style.css" rel="stylesheet">
@@ -101,4 +100,6 @@
         </div>
     </div>
 </div>
+
+
 

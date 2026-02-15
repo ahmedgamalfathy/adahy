@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -872,7 +871,7 @@
                 <div class="row">
                     
                     <div class="col-xl-12 col-lg-12" style="direction: rtl;">
-                          <?
+                          @php
   use Jenssegers\Agent\Agent;
   use Illuminate\Http\Request;
   
@@ -888,7 +887,7 @@
   
     if($c_sak > 0){}else{$c_sak = 1;}
     if($day > 0){}else{$day = 1;}
-  ?>	
+  @endphp	
   	<div class="page-box">
     		<div class="advanced-search col-xl-12 col-lg-12 col-md-12 col-sm-12" style="direction: ltr;   overflow-x: auto; 
   white-space: nowrap;">
@@ -928,14 +927,14 @@
     font-size: 18px;
     color: #525252;
     padding: 4%;">
-              							    <?
+              							    @php
               							    $get_type = DB::table('times')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($times == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($times == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -954,14 +953,14 @@
     font-size: 18px;
     color: #525252;
     padding: 4%;">
-              							    <?
+              							    @php
               							    $get_type = DB::table('days')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($day == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($day == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1000,14 +999,14 @@ width: 93%;
             													    <option value="">
             													        الكل
             													    </option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('sak')->get();
               							    foreach($get_type as $g){
-              							    ?>
+              							    @endphp
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1029,14 +1028,14 @@ width: 93%;
             								     <option value="">
             													        الكل
             													    </option>
-              							    <?
+              							    @php
               							    $get_type = DB::table('adahy_type')->get();
               							    foreach($get_type as $g){
-              							    ?>
-                  									<option value="{{$g->id}}" <? if($type == $g->id){echo "selected";}?>>
+              							    @endphp
+                  									<option value="{{$g->id}}" @php if($type == $g->id){echo "selected";} @endphp>
                   									    {{$g->name}}
                   									</option>
-                  									<?}?>
+                  									}
                   									</select>
           					</div>
         				</div>
@@ -1069,19 +1068,19 @@ width: 93%;
         				</div>
         				<div class="shifts-parent">
         				    
-        				    <?
+        				    @php
         				    $get_data = DB::table('times')->where(function($query) use ($times) {
         				        if($times)
         				        $query->where('id', '=',$times);
         				        })->get();
         				    foreach($get_data as $get){
-        				    ?>
+        				    @endphp
           					<div class="shifts">
             						<b class="b" style="direction: rtl;">{{$get->name}} </b>
           					</div>
           					<div class="cards-parent">
           					    
-          					    <?
+          					    @php
     // $name = DB::table('adahy_type')->where('id',$type)first()->name;
           					  
           					       $get_adahy = DB::table('adahyt')->where(function($query) use ($type,$sak,$day,$c_sak) {
@@ -1096,7 +1095,7 @@ width: 93%;
                                           $query->where('free', '>=', $c_sak);
                                       })->orderBy('id','ASC')->get();
                                       foreach ($get_adahy as $gs){
-          					    ?>
+          					    @endphp
           					    
           					                						<!-- Modal -->
 <div class="modal fade" id="exampleModal{{$gs->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1121,11 +1120,11 @@ width: 93%;
               عدد الصكوك
           </label>
         <select name="c_sak" class="form-control">
-            <?
+            @php
             for ($x = 1; $x <= $gs->free; $x++) {
-            ?>
+            @endphp
             <option value="{{$x}}">{{$x}}</option>
-            <?}?>
+            }
            
         </select>
         
@@ -1133,11 +1132,11 @@ width: 93%;
               عدد الأشخاص
           </label>
         <select name="c_persons" class="form-control">
-                 <?
+                 @php
             for ($x = 1; $x <= $gs->free; $x++) {
-            ?>
+            @endphp
             <option value="{{$x}}">{{$x}}</option>
-            <?}?>
+            }
          
         </select>
       </div>
@@ -1151,23 +1150,23 @@ width: 93%;
 </div>
     	<!-- Modal -->  
           					    
-            						<div <?if($gs->free == 0){?>class="cards"<?}else{?>class="cards2"<?}?>>
-              							<div <?if($gs->free == 0){?>class="circle-one"<?}else{?>class="circle-half"<?}?>>
-              							    <?if($gs->free == 0){?>
+            						<div @if($gs->free == 0)class="cards"@elseclass="cards2"}>
+              							<div @if($gs->free == 0)class="circle-one"@elseclass="circle-half"}>
+              							    @if($gs->free == 0)
               							    <div class="circle">
-              							    <?}else{?>
+              							    @else
                 								<div class="circle" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gs->id}}">
-                								    <?}?>
-                  									<div  <?if($gs->free == 0){?>class="base"<?}else{?>class="base1"<?}?>>
+                								    }
+                  									<div  @if($gs->free == 0)class="base"@elseclass="base1"}>
                   									</div>
-                  									<div  <?if($gs->free == 0){?>class="ellipse"<?}else{?>class="ellipse2"<?}?>>
+                  									<div  @if($gs->free == 0)class="ellipse"@elseclass="ellipse2"}>
                   									</div>
                   									<b class="b11">
-                  									    <?if($gs->free == 0){?>
+                  									    @if($gs->free == 0)
                   									    محجوز
-                  									    <?}else{?>
+                  									    @else
                   									    متاح
-                  									    <?}?>
+                  									    }
                   									    </b>
                   								<div class="parent2">
                     										<div class="div37">{{$gs->sak_c}}</div>
@@ -1200,7 +1199,7 @@ width: 93%;
               							</div>
             						</div>
             						
-            						<?}?>
+            						}
             				
             						
             						
@@ -1217,7 +1216,7 @@ width: 93%;
             					
             						
           					</div>
-          				<?}?>
+          				}
         				</div>
       			</div>
     		</div>
@@ -1249,10 +1248,10 @@ width: 93%;
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1269,11 +1268,11 @@ width: 93%;
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
            <script type="text/javascript">
@@ -1298,3 +1297,8 @@ $('#show_sak').html(date1);
 </body>
 </html>
                     
+
+
+
+
+

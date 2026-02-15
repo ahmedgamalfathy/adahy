@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -764,12 +763,12 @@ thead, tbody, tfoot, tr, td, th {
                                         </div>
                                     </div>
                                          </td>
-                                            <?
+                                            @php
                                      
                                             if($g->r_room != 0){
                                           
                                                 
-                                            ?>
+                                            @endphp
                                
                                          
                                                  <td>
@@ -799,7 +798,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="r_entry_date" id="r_entry_date" class="form-control" value="<? echo $g->r_entry_date;?>">        
+                                          <input type="time" name="r_entry_date" id="r_entry_date" class="form-control" value="@php echo $g->r_entry_date; @endphp">        
                                                   
                                                                              @error('r_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -819,12 +818,12 @@ thead, tbody, tfoot, tr, td, th {
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('r_room') is-invalid @enderror" id="r_room" name="r_room"  Required>
-                          <option value="1" <? if($g->r_room == "1"){echo "selected";}?>>1</option> 
-                          <option value="2" <? if($g->r_room == "2"){echo "selected";}?>>2</option> 
-                          <option value="3" <? if($g->r_room == "3"){echo "selected";}?>>3</option> 
-                          <option value="4" <? if($g->r_room == "4"){echo "selected";}?>>4</option> 
-                          <option value="5" <? if($g->r_room == "5"){echo "selected";}?>>5</option> 
-                          <option value="6" <? if($g->r_room == "6"){echo "selected";}?>>6</option> 
+                          <option value="1" @php if($g->r_room == "1"){echo "selected";} @endphp>1</option> 
+                          <option value="2" @php if($g->r_room == "2"){echo "selected";} @endphp>2</option> 
+                          <option value="3" @php if($g->r_room == "3"){echo "selected";} @endphp>3</option> 
+                          <option value="4" @php if($g->r_room == "4"){echo "selected";} @endphp>4</option> 
+                          <option value="5" @php if($g->r_room == "5"){echo "selected";} @endphp>5</option> 
+                          <option value="6" @php if($g->r_room == "6"){echo "selected";} @endphp>6</option> 
                  
                             </select>
                                     </div>
@@ -843,7 +842,7 @@ thead, tbody, tfoot, tr, td, th {
                         
                           <select class="form-control  @error('r_follower') is-invalid @enderror" id="r_follower" name="r_follower"  Required>
                               <option value="{{$g->r_follower}}">{{$g->r_follower}}</option>
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -899,7 +898,7 @@ thead, tbody, tfoot, tr, td, th {
                
                                                 </td>
                                                 
-                                                             <?}else{?>
+                                                             @else
                                              
                                                                       <!-- Modal edit-->
                                     <div class="modal fade" id="Modaladd{{$g->id}}">
@@ -921,7 +920,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول  *</label>
-                                          <input type="time" name="r_entry_date" id="r_entry_date" class="form-control" value="<? echo date('H:i');?>">        
+                                          <input type="time" name="r_entry_date" id="r_entry_date" class="form-control" value="@php echo date('H:i'); @endphp">        
                                                   
                                                                              @error('r_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -941,13 +940,13 @@ thead, tbody, tfoot, tr, td, th {
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('r_room') is-invalid @enderror" id="r_room" name="r_room"  Required>
-                          <option value="1" <? if($g->r_room == "1"){echo "selected";}?>>1</option> 
-                          <option value="2" <? if($g->r_room == "2"){echo "selected";}?>>2</option> 
-                          <option value="3" <? if($g->r_room == "3"){echo "selected";}?>>3</option> 
-                          <option value="4" <? if($g->r_room == "4"){echo "selected";}?>>4</option> 
-                          <option value="5" <? if($g->r_room == "5"){echo "selected";}?>>5</option> 
-                          <option value="6" <? if($g->r_room == "6"){echo "selected";}?>>6</option> 
-                          <option value="7" <? if($g->r_room == "7"){echo "selected";}?>>7</option> 
+                          <option value="1" @php if($g->r_room == "1"){echo "selected";} @endphp>1</option> 
+                          <option value="2" @php if($g->r_room == "2"){echo "selected";} @endphp>2</option> 
+                          <option value="3" @php if($g->r_room == "3"){echo "selected";} @endphp>3</option> 
+                          <option value="4" @php if($g->r_room == "4"){echo "selected";} @endphp>4</option> 
+                          <option value="5" @php if($g->r_room == "5"){echo "selected";} @endphp>5</option> 
+                          <option value="6" @php if($g->r_room == "6"){echo "selected";} @endphp>6</option> 
+                          <option value="7" @php if($g->r_room == "7"){echo "selected";} @endphp>7</option> 
                  
                             </select>
                                     </div>
@@ -966,7 +965,7 @@ thead, tbody, tfoot, tr, td, th {
                         
                           <select class="form-control  @error('r_follower') is-invalid @enderror" id="r_follower" name="r_follower"  Required>
                             
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -1023,7 +1022,7 @@ thead, tbody, tfoot, tr, td, th {
                      <a href="#" class="btn btn-success   shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#Modaladd{{$g->id}}"><i class="fa fa-pencil"></i></a> 
      
                                                  </td>
-                                                 <?}?>
+                                                 }
                                          
                                          
                                                 <td>{{$g->r_entry_date}}</td>
@@ -1039,10 +1038,10 @@ thead, tbody, tfoot, tr, td, th {
                                 
                                 
                                              </tr>
-                                        <?
+                                        @php
                                          if($g->r_room == 100){
                                         
-                                        ?>
+                                        @endphp
                                                <tr>
                                                 <th style="text-align: center;">Action</th>
                                               
@@ -1067,10 +1066,10 @@ thead, tbody, tfoot, tr, td, th {
                                                 <th>الحساب</th>
                                             
                                             </tr>
-                                        <?
+                                        @php
                                         $getsaks = DB::table('reservation')->where('code',$g->code)->get();
                                         foreach($getsaks as $getsak){
-                                        ?>
+                                        @endphp
                                         <tr>
                                         <td></td>
                                         <td>{{$getsak->rec}}</td>
@@ -1091,9 +1090,9 @@ thead, tbody, tfoot, tr, td, th {
                                                 <td></td>
                                                 <td></td>
                                         </tr>
-                                        <?}?>
+                                        }
                                         
-                                        <?}?>
+                                        }
                                             
                                            
                                      @endforeach
@@ -1158,10 +1157,10 @@ thead, tbody, tfoot, tr, td, th {
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -1178,11 +1177,11 @@ thead, tbody, tfoot, tr, td, th {
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -1252,3 +1251,7 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+
+

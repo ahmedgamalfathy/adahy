@@ -13,8 +13,7 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
+    @php $theme1 = "theme1";
   use App\Models\opt;
    date_default_timezone_set("Africa/Kampala");  
   $all_f = "";
@@ -26,7 +25,7 @@
     foreach($butchers as $b){
       $all_b .='<option value="'.$b->name.'">'.$b->name.'</option>'; 
   }
-  ?>
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -494,7 +493,7 @@ thead, tbody, tfoot, tr, td, th {
                                                     
                                                               <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت دخول الذبيحة *</label>
-                <input type="time" name="b_entry_date" id="b_entry_date" class="form-control"  value="<? echo $g->b_entry_date;?>"  required>        
+                <input type="time" name="b_entry_date" id="b_entry_date" class="form-control"  value="@php echo $g->b_entry_date; @endphp"  required>        
                                                   
                                                                              @error('b_entry_date')
                                     <span class="invalid-feedback" role="alert">
@@ -514,13 +513,13 @@ thead, tbody, tfoot, tr, td, th {
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('b_room') is-invalid @enderror" id="b_room" name="b_room"  Required>
-                          <option value="1" <? if($g->b_room == "1"){echo "selected";}?>>1</option> 
-                          <option value="2" <? if($g->b_room == "2"){echo "selected";}?>>2</option> 
-                          <option value="3" <? if($g->b_room == "3"){echo "selected";}?>>3</option> 
-                          <option value="4" <? if($g->b_room == "4"){echo "selected";}?>>4</option> 
-                          <option value="5" <? if($g->b_room == "5"){echo "selected";}?>>5</option> 
-                          <option value="6" <? if($g->b_room == "6"){echo "selected";}?>>6</option> 
-                          <option value="7" <? if($g->b_room == "7"){echo "selected";}?>>7</option> 
+                          <option value="1" @php if($g->b_room == "1"){echo "selected";} @endphp>1</option> 
+                          <option value="2" @php if($g->b_room == "2"){echo "selected";} @endphp>2</option> 
+                          <option value="3" @php if($g->b_room == "3"){echo "selected";} @endphp>3</option> 
+                          <option value="4" @php if($g->b_room == "4"){echo "selected";} @endphp>4</option> 
+                          <option value="5" @php if($g->b_room == "5"){echo "selected";} @endphp>5</option> 
+                          <option value="6" @php if($g->b_room == "6"){echo "selected";} @endphp>6</option> 
+                          <option value="7" @php if($g->b_room == "7"){echo "selected";} @endphp>7</option> 
                  
                             </select>
                                     </div>
@@ -539,7 +538,7 @@ thead, tbody, tfoot, tr, td, th {
                         
                           <select class="form-control  @error('b_follower') is-invalid @enderror" id="b_follower" name="b_follower"  Required>
                              
-                     <? echo $all_f; ?>
+                     @php echo $all_f; @endphp
                  
                             </select>
                         
@@ -557,7 +556,7 @@ thead, tbody, tfoot, tr, td, th {
                         
                           <select class="form-control  @error('b_butcher') is-invalid @enderror" id="b_butcher" name="b_butcher"  Required>
                        
-                         <? echo $all_b; ?>
+                         @php echo $all_b; @endphp
                  
                             </select>
                         
@@ -571,10 +570,10 @@ thead, tbody, tfoot, tr, td, th {
                                            
                                            
                              
-                                    <?
+                                    @php
                                     $cl = 0;
                                     if($cl == 1){
-                                    ?>
+                                    @endphp
                                      
                                      
                                                       <div class="mb-12 col-md-12">
@@ -601,11 +600,11 @@ thead, tbody, tfoot, tr, td, th {
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('b_aduit') is-invalid @enderror" id="b_aduit" name="b_aduit"  >
-                          <option value="جيد"<? if($g->b_aduit == "جيد") {echo "selected";}?> >
+                          <option value="جيد"@php if($g->b_aduit == "جيد") {echo "selected";} @endphp >
                              جيد
                               </option> 
                           <option value="مقبول"
-                          <? if($g->b_aduit == "مقبول") {echo "selected";}?>
+                          @php if($g->b_aduit == "مقبول") {echo "selected";} @endphp
                           >
                              مقبول
                               </option> 
@@ -637,7 +636,7 @@ thead, tbody, tfoot, tr, td, th {
                          
                                                                          <div class="mb-12 col-md-12">
                                                 <label class="form-label">وقت خروج الذبيحة  </label>
-                                          <input type="time" name="b_exit_date" id="b_exit_date" class="form-control" value="<? echo $g->b_exit_date;?>" >        
+                                          <input type="time" name="b_exit_date" id="b_exit_date" class="form-control" value="@php echo $g->b_exit_date; @endphp" >        
                                                   
                                                                              @error('b_exit_date')
                                     <span class="invalid-feedback" role="alert">
@@ -646,7 +645,7 @@ thead, tbody, tfoot, tr, td, th {
                                 @enderror
                                             </div>
                                                             
-                                            <?}?>
+                                            }
                             
                                                    
                                                 </div>
@@ -684,9 +683,9 @@ thead, tbody, tfoot, tr, td, th {
                                              
                                               <td>
                                             
-                                         <?
+                                         @php
                                          if($g->b_room != 0){
-                                         ?>
+                                         @endphp
                                             
                                             
                                                     
@@ -727,10 +726,10 @@ thead, tbody, tfoot, tr, td, th {
                                            
                                            
                              
-                                    <?
+                                    @php
                                     $cl = 1;
                                     if($cl == 1){
-                                    ?>
+                                    @endphp
                                      
                                      
                                                       <div class="mb-12 col-md-12">
@@ -757,11 +756,11 @@ thead, tbody, tfoot, tr, td, th {
                                                        </label>
                                                        <div class="note-adahy">
                         <select class="form-control  @error('b_aduit') is-invalid @enderror" id="b_aduit" name="b_aduit"  >
-                          <option value="جيد"<? if($g->b_aduit == "جيد") {echo "selected";}?> >
+                          <option value="جيد"@php if($g->b_aduit == "جيد") {echo "selected";} @endphp >
                              جيد
                               </option> 
                           <option value="مقبول"
-                          <? if($g->b_aduit == "مقبول") {echo "selected";}?>
+                          @php if($g->b_aduit == "مقبول") {echo "selected";} @endphp
                           >
                              مقبول
                               </option> 
@@ -802,7 +801,7 @@ thead, tbody, tfoot, tr, td, th {
                                 @enderror
                                             </div>
                                                             
-                                            <?}?>
+                                            }
                             
                                                    
                                                 </div>
@@ -821,14 +820,14 @@ thead, tbody, tfoot, tr, td, th {
                        
                         <a href="#" class="btn btn-success  shadow btn-xs sharp me-1" data-bs-toggle="modal" data-bs-target="#Modaledits{{$g->id}}"><i class="fa fa-pencil"></i></a>  
                         
-                        <?}?>
+                        }
                
                                                 </td>
                                                
                                         <td>
-                                                    <?
+                                                    @php
                                             $hours = intdiv($g->b_deff_date, 60).':'. ($g->b_deff_date % 60);
-                                            ?>
+                                            @endphp
                                             {{$hours}}
                                            
                                             
@@ -902,10 +901,10 @@ thead, tbody, tfoot, tr, td, th {
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -922,11 +921,11 @@ thead, tbody, tfoot, tr, td, th {
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -996,3 +995,6 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
+

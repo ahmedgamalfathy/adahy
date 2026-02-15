@@ -52,6 +52,35 @@ use DB;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// ========================================
+// Routes الجديدة المنظمة - New Organized Routes
+// ========================================
+
+use App\Http\Controllers\Reservation\ReservationController;
+use App\Http\Controllers\Financial\SafeController;
+
+// Reservation Routes (New - Organized)
+Route::prefix('reservations')->middleware(['auth', 'per1'])->name('reservation.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::get('/{id}', [ReservationController::class, 'show'])->name('show');
+    Route::post('/', [ReservationController::class, 'store'])->name('store');
+    Route::put('/{id}', [ReservationController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+});
+
+// Financial Routes (New - Organized)
+Route::prefix('financial')->middleware(['auth', 'per1'])->name('financial.')->group(function () {
+    // Safe (الخزنة الرئيسية)
+    Route::get('/safe', [SafeController::class, 'index'])->name('safe.index');
+    Route::post('/safe', [SafeController::class, 'store'])->name('safe.store');
+    Route::post('/safe/withdraw', [SafeController::class, 'withdraw'])->name('safe.withdraw');
+});
+
+// ========================================
+// Routes القديمة - Old Routes (Backup)
+// ========================================
+
 Route::get('repo-supplier-opt',function(Request $request){
    if($request->input('search')){
        $search = htmlspecialchars($request->input('search'));

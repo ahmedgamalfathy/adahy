@@ -13,9 +13,8 @@
 	<meta property="og:description" content="p2p :  Admin " />
 	
 	<meta name="format-detection" content="telephone=no">
-    <?php
-  $theme1 = "theme1";
-  ?>
+    @php $theme1 = "theme1";
+  @endphp
 	<!-- PAGE TITLE HERE -->
 	<title>Islah :  Admin </title>
 	
@@ -381,12 +380,12 @@
                                                     <div class="modal-body">
                                                         <div class="mb-12 col-md-12">
                                                             <div class="bootstrap-badge">
-                                                                <?php
+                                                                @php
                                                                 $get_perm = DB::table('per')->where('u_id',$g->id)->get();
-                                                                foreach($get_perm as $get_p){
-                                                                ?>
+                                                                @endphp
+                                                                @foreach($get_perm as $get_p)
                                                                 <span class="badge badge-primary">{{$get_p->page_ar}}</span>
-                                                                <?php }?>
+                                                                @endforeach
                                                             </div>
                                                         </div>
                                                         <div class="mb-12 col-md-12">
@@ -428,7 +427,7 @@
                                                                                 option.selected = false;
                                                                                 this.classList.remove('badge-primary');
                                                                                 this.classList.add('badge-secondary');
-                                                                            } else {
+                                                                            @else
                                                                                 option.selected = true;
                                                                                 this.classList.remove('badge-secondary');
                                                                                 this.classList.add('badge-primary');
@@ -528,10 +527,10 @@
     <script src="/{{$theme1}}/js/custom.min.js"></script>
 	<script src="/{{$theme1}}/js/dlabnav-init.js"></script>
 	
-           	<?
+           	@php
 	if(Session::has('thems')){
 	 if(Session::get('thems') == 'dark'){
-	     ?>
+	     @endphp
 	     <style>
 	         .nice-select.wide .list {
     left: 0 !important;
@@ -548,11 +547,11 @@
 		});
 	</script>
 	 
-	     <?
+	     @php
 	     
 	 }   
 	}
-	    ?> 
+	    @endphp 
 	    
 	    
 	    <script>
@@ -605,3 +604,5 @@ $(document).ready(function() {
 	
 </body>
 </html>
+
+
