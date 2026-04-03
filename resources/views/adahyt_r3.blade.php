@@ -2264,7 +2264,7 @@ if (sum > c || sum < c) {
   document.getElementById("sub").disabled = true;
   document.getElementById("sub").value = "خطأ في الصكوك";
   return false;
-@else
+} else {
   document.getElementById("sub").disabled = false;
   document.getElementById("sub").value = "الخطوة التالية";
   return true;
@@ -2342,7 +2342,7 @@ if (sum > c || sum < c) {
     		    
     		    
       			<div class="container-buy-parent row" style="margin-right:15%">
-        				 @php for($x = 1; $x <= $c_persons; $x++) { @endphp
+        				 @for($x = 1; $x <= $c_persons; $x++)
 							@php
 				 if ($info->sak_c == 4) {
                         if ($c_sak == 1 ) {
@@ -2570,9 +2570,7 @@ if (sum > c || sum < c) {
                     										$cp = ($c_persons - 1);
                     										$cps = ($c_sak - $c_persons) + 1;
                     										@endphp
-                    										@php
-                    										if($c_sak == $c_persons){
-                    										@endphp
+                    										@if($c_sak == $c_persons)
                     										<select name="number[]" id="number{{$x}}" class="num" onchange="checksak()" style="
    width: 30%;
     height: 30px;
@@ -2590,13 +2588,11 @@ if (sum > c || sum < c) {
     margin-top: 0%;
        border-radius: 7px;
     border-color: #ced4d9;" >
-                    											    @php
-                    											     for ($y = 1; $y <= $cps; $y++) {
-                    											    @endphp
+                    											    @for($y = 1; $y <= $cps; $y++)
                     										    <option value="{{$y}}">{{$y}}</option>
-                    										    }
+                    										    @endfor
                     										</select>
-                    										}
+                    										@endif
                     				
                   									</div>
                 								</div>
@@ -2755,14 +2751,14 @@ $(document).ready(function() {
         if (checkedBoxes > ss) {
             $(this).prop('checked', false);
             $('#message').text('You can select up to 3 options only.');
-        @else
+        } else {
             $('#message').text('');
         }
     });
 });
 </script>
         					
-        				}
+        				@endfor
       		</div>
       			<div class="btn-parent" style="margin-top:-1%;    margin-bottom: 3%;width: 50%;">
       			    	    <a href="adahyt_r" style="color:#fff;">
@@ -2803,8 +2799,7 @@ $(document).ready(function() {
                 								    
                   															   
           					    
-          					    <div @if($c_persons > 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
-                  									</div>
+          					    <div @if($c_persons > 1) class="checkboxactivedefaulton-child4" @else class="checkboxinactivedefaulton-child" @endif>                  									</div>
                   			
                   									<img class="phosphor-icons-check" alt="" src="Phosphor Icons / Check.svg">
                   							
@@ -2820,8 +2815,7 @@ $(document).ready(function() {
                 								<div class="checkboxinactivedefaulton">
                   									<div class="checkbox1">
                     										<div class="checkboxinactivedefaulton">
-                      										<div @if($c_persons == 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
-                      											</div>
+                      										<div @if($c_persons == 1) class="checkboxactivedefaulton-child4" @else class="checkboxinactivedefaulton-child" @endif>                      											</div>
                     										</div>
                   									</div>
                 								</div>
@@ -2966,7 +2960,7 @@ $('#show_sak').html(date1);
 					}
 	
 					selectedParts[person].push(value);
-				@else
+				} else {
 					// إلغاء الاختيار
 					const index = selectedParts[person].indexOf(value);
 					if (index > -1) {
@@ -2988,7 +2982,7 @@ $('#show_sak').html(date1);
     if (checksak() !== false) {
       popup.style.display = 'flex';
     }
-  @else
+  } else {
     form.reportValidity();
   }
 };

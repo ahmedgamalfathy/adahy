@@ -195,10 +195,8 @@
         				</b>
       			</div>
       				<div class="frame-group">
-      			@php
-      			$get = DB::table('reservation')->where('resnum',$id)->get();
-      			foreach($get as $g){
-      			@endphp
+      			@php $get = DB::table('reservation')->where('resnum',$id)->get(); @endphp
+      			@foreach($get as $g)
       		
         				<div class="frame-container">
           					<div class="frame" style="direction: rtl;">
@@ -212,7 +210,7 @@
         				</div>
         			
         				
-        				}
+      			@endforeach
       			</div>
       			<div class="wrapper3">
         				<div class="div1">

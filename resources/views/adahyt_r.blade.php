@@ -1505,7 +1505,7 @@ $(document).ready(function() {
     $('#myCheckboxAivilable').change(function() {
         if ($(this).is(':checked')) {
             $('#filterAivilable').val(1); // Set value to 1 when checked
-        @else
+        } else {
             $('#filterAivilable').val(0); // Set value to 0 when unchecked
         }
         $('#resrv2').submit(); // Submit the form
@@ -1521,7 +1521,7 @@ $(document).ready(function() {
 		document.getElementById('hiddenSak' + gsid).value = 1;
 		document.getElementById('hiddenPersons' + gsid).value = 1;
 		document.getElementById('reservationForm' + gsid).submit();
-	  @else
+	  } else {
 		// تخزين عدد الصكوك في hidden input
 		document.getElementById('hiddenSak' + gsid).value = sakCount;
 		document.getElementById('displaySakCount' + gsid).innerText = sakCount;

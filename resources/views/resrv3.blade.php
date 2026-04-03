@@ -2295,7 +2295,7 @@ h5 {
         document.getElementById("sub").disabled = true;
         document.getElementById("sub").value = "خطأ في الصكوك";
         return false;
-    @else
+    } else {
         document.getElementById("sub").disabled = false;
         document.getElementById("sub").value = "الخطوة التالية";
         return true;
@@ -2802,7 +2802,7 @@ $(document).ready(function() {
         if (checkedBoxes > ss) {
             $(this).prop('checked', false);
             $('#message').text('You can select up to 3 options only.');
-        @else
+        } else {
             $('#message').text('');
         }
     });
@@ -2850,7 +2850,7 @@ $(document).ready(function() {
                 								    
                   															   
           					    
-          					    <div @if($c_persons > 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
+          					    <div @if($c_persons > 1) class="checkboxactivedefaulton-child4" @else class="checkboxinactivedefaulton-child" @endif>
                   									</div>
                   			
                   									<img class="phosphor-icons-check" alt="" src="Phosphor Icons / Check.svg">
@@ -2867,7 +2867,7 @@ $(document).ready(function() {
                 								<div class="checkboxinactivedefaulton">
                   									<div class="checkbox1">
                     										<div class="checkboxinactivedefaulton">
-                      										<div @if($c_persons == 1)class="checkboxactivedefaulton-child4"@elseclass="checkboxinactivedefaulton-child"}>
+                      										<div @if($c_persons == 1) class="checkboxactivedefaulton-child4" @else class="checkboxinactivedefaulton-child" @endif>
                       											</div>
                     										</div>
                   									</div>
@@ -3014,7 +3014,7 @@ function validateForm() {
 					}
 	
 					selectedParts[person].push(value);
-				@else
+				} else {
 					// إلغاء الاختيار
 					const index = selectedParts[person].indexOf(value);
 					if (index > -1) {
@@ -3036,7 +3036,7 @@ function validateForm() {
     if (checksak() !== false) {
       popup.style.display = 'flex';
     }
-  @else
+  } else {
     form.reportValidity();
   }
 };

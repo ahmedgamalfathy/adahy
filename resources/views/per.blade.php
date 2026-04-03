@@ -427,7 +427,7 @@
                                                                                 option.selected = false;
                                                                                 this.classList.remove('badge-primary');
                                                                                 this.classList.add('badge-secondary');
-                                                                            @else
+                                                                            } else {
                                                                                 option.selected = true;
                                                                                 this.classList.remove('badge-secondary');
                                                                                 this.classList.add('badge-primary');

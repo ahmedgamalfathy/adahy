@@ -284,7 +284,7 @@
                                             <tr>
                                                 <td class="text-center cell-left num">{{ $get->code }}</td>
                                                 <!-- مرحلة الجزارة -->
-                                                {{-- <td class="cell-right text-center text-success">
+                                                {{-- <td class='cell-right text-center text-success'>
                                                     {{ $opt->b_entry_date ? \Carbon\Carbon::parse($opt->b_entry_date)->format('h:i A') : null }}
                                                 </td> --}}
                                                 <td class="cell-right text-center text-success">{{ $opt->b_entry_date ??null }}</td>

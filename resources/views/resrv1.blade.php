@@ -355,14 +355,11 @@
             													        الكل
             													    </option>										    
               											    
-              							    @php
-              							    $get_type = DB::table('sak')->get();
-              							    foreach($get_type as $g){
-              							    @endphp
+              							    @php $get_type = DB::table('sak')->get(); @endphp
+              							    @foreach($get_type as $g)
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									}
                   									</select>
                   									</div>
             						</div>
@@ -416,14 +413,11 @@
             													        الكل
             													    </option>
               											    
-              							    @php
-              							    $get_type = DB::table('days')->get();
-              							    foreach($get_type as $g){
-              							    @endphp
+              							    @php $get_type = DB::table('days')->get(); @endphp
+              							    @foreach($get_type as $g)
                   									<option value="{{$g->id}}">
                   									    {{$g->name}}
                   									</option>
-                  									}
                   									</select>
             						</div>
           					</div> --}}

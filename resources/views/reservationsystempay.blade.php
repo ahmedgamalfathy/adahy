@@ -77,7 +77,6 @@ header("Pragma: no-cache");
 .fb_dialog_content .dialog_title > span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif)
 no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
 body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
-}
 .fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif)
 white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
 .fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
@@ -86,11 +85,8 @@ white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:
 .fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
 .fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
 .fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
-}
 .fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
-}
 .fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
-}
 .fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
 color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
 rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
@@ -142,7 +138,6 @@ th{
    height: 30px;
     vertical-align: middle;
     font-size: 14px;
-}
 
 </style></head>
 	<body dir="rtl">
@@ -200,16 +195,15 @@ th{
 		@php
 		$rep = array();
 		$get_all = DB::table('reservation')->where('resnum',$id)->get();
-		foreach($get_all as $get){
-		    if(in_array($get->rec , $rep)){
-		        
-		    }else{
+		@endphp
+		@foreach($get_all as $get)
+		@php
+		    if(in_array($get->rec , $rep)) { continue; }
 		    array_push($rep,$get->rec);
-		      $get_info = adahyt::where('id',$get->ad_id)->first();
-   
-                                        $sak_price = sak::where('name',$get_info->sak)->first()->price;
-                                        $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
-                                        $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
+		    $get_info = adahyt::where('id',$get->ad_id)->first();
+		    $sak_price = sak::where('name',$get_info->sak)->first()->price;
+		    $sak_price2 = sak::where('name',$get_info->sak)->first()->price2;
+		    $adahy_type_info = adahy_type::where('name',$get_info->adahy)->first();
 		@endphp
 		
 			<div class="wrap" style="height: auto;">
@@ -439,7 +433,7 @@ th{
     
 		</div>
 
-
+		@endforeach
        
   
 
@@ -447,8 +441,6 @@ th{
 
 
 </div>
-}
-}
 
 </body></html>
 

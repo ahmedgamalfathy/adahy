@@ -1214,24 +1214,18 @@
               عدد الصكوك
           </label>
         <select name="c_sak" class="form-control">
-            @php
-            for ($x = 1; $x <= $gs->free; $x++) {
-            @endphp
+            @for($x = 1; $x <= $gs->free; $x++)
             <option value="{{$x}}">{{$x}}</option>
-            }
-           
+@endfor
         </select>
         
              <label>
               عدد الأشخاص
           </label>
         <select name="c_persons" class="form-control">
-                 @php
-            for ($x = 1; $x <= $gs->free; $x++) {
-            @endphp
+                 @for($x = 1; $x <= $gs->free; $x++)
             <option value="{{$x}}">{{$x}}</option>
-            }
-         
+@endfor
         </select>
       </div>
       <div class="modal-footer">
@@ -1244,16 +1238,16 @@
 </div>
     	<!-- Modal -->  
           					    
-            						<div @if($gs->free == 0)class="cards"@elseclass="cards2"}>
-              							<div @if($gs->free == 0)class="circle-one"@elseclass="circle-half"}>
+            						<div @if($gs->free == 0) class="cards" @else class="cards2" @endif>
+              							<div @if($gs->free == 0) class="circle-one" @else class="circle-half" @endif>
               							    @if($gs->free == 0)
               							    <div class="circle">
               							    @else
                 								<div class="circle" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal{{$gs->id}}">
                 								    }
-                  									<div  @if($gs->free == 0)class="base"@elseclass="base1"}>
+                  									<div  @if($gs->free == 0) class="base" @else class="base1" @endif>
                   									</div>
-                  									<div  @if($gs->free == 0)class="ellipse"@elseclass="ellipse2"}>
+                  									<div  @if($gs->free == 0) class="ellipse" @else class="ellipse2" @endif>
                   									</div>
                   									<b class="b11">
                   									    @if($gs->free == 0)
