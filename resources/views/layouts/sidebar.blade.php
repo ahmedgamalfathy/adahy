@@ -412,7 +412,6 @@
                             <li><a href="/checks">
                               حركة الحسابات اليومية
                             </a></li>
-                              
                           @endif
                             @if (DB::table('per')->where('u_id',Auth::user()->id)->where('page','safe')->count() > 0)
                                 <li><a href="/safe">
@@ -420,10 +419,33 @@
                                 </a></li>
                             @endif
                         </ul>
-
                     </li>
+                @endif
+
+                {{-- إدارة الخزائن الجديد --}}
+                @if (DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes')->count() > 0)
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-050-info"></i>
+                        <span class="nav-text">إدارة الخزائن</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('financial.safes.dashboard') }}">لوحة الخزائن</a></li>
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/transactions')->count() > 0)
+                        <li><a href="{{ route('financial.safes.transactions') }}">سجل الحركات</a></li>
                         @endif
-              
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/handover')->count() > 0)
+                        <li><a href="{{ route('financial.safes.handover') }}">تسليم فرع → مندوب</a></li>
+                        @endif
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/deposit')->count() > 0)
+                        <li><a href="{{ route('financial.safes.deposit') }}">إيداع مندوب → رئيسية</a></li>
+                        @endif
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/create')->count() > 0)
+                        <li><a href="{{ route('financial.safes.create') }}">إنشاء خزنة جديدة</a></li>
+                        @endif
+                    </ul>
+                </li>
+                @endif
                                       @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','reception')->count();
                     @endphp

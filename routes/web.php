@@ -69,12 +69,29 @@ Route::prefix('reservations')->middleware(['auth', 'per1'])->name('reservation.'
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
 });
 
-// Financial Routes (New - Organized)
-Route::prefix('financial')->middleware(['auth', 'per1'])->name('financial.')->group(function () {
-    // Safe (الخزنة الرئيسية)
+// Financial Routes (New - Organized) ->middleware(['auth', 'per1'])
+Route::prefix('financial')->name('financial.')->group(function () {
+    // Safe (الخزنة الرئيسية) - القديم
     Route::get('/safe', [SafeController::class, 'index'])->name('safe.index');
     Route::post('/safe', [SafeController::class, 'store'])->name('safe.store');
     Route::post('/safe/withdraw', [SafeController::class, 'withdraw'])->name('safe.withdraw');
+
+    // Safes Dashboard - الجديد
+    Route::prefix('safes')->name('safes.')->group(function () {
+        Route::get('/', [SafeController::class, 'dashboard'])->name('dashboard');
+        Route::get('/transactions', [SafeController::class, 'transactions'])->name('transactions');
+        Route::post('/payment', [SafeController::class, 'confirmPayment'])->name('payment');
+        Route::get('/handover', [SafeController::class, 'handoverPage'])->name('handover');
+        Route::post('/handover', [SafeController::class, 'handover'])->name('handover.post');
+        Route::get('/deposit', [SafeController::class, 'depositPage'])->name('deposit');
+        Route::post('/deposit', [SafeController::class, 'deposit'])->name('deposit.post');
+        // CRUD الخزائن
+        Route::get('/create', [SafeController::class, 'create'])->name('create');
+        Route::post('/', [SafeController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [SafeController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [SafeController::class, 'update'])->name('update');
+        Route::delete('/{id}', [SafeController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // ========================================

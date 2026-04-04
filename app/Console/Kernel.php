@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // حذف حجوزات الموقع غير المدفوعة كل ساعة
+        $schedule->job(new \App\Jobs\ExpireWebsiteReservations)->hourly();
     }
 
     /**

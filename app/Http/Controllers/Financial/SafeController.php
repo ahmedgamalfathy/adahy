@@ -3,156 +3,212 @@
 namespace App\Http\Controllers\Financial;
 
 use App\Http\Controllers\Controller;
+use App\Models\Safe;
+use App\Models\SafeMovement;
+use App\Models\reservation;
+use App\Services\Financial\SafeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class SafeController extends Controller
 {
-    public function __construct()
+    public function __construct(protected SafeService $safeService)
     {
-        $this->middleware('auth');
-        $this->middleware('per1');
+        // $this->middleware('auth');
+        // $this->middleware('per1');
     }
 
-    /**
-     * عرض الخزنة الرئيسية
-     */
-    public function index()
+    /** لوحة الخزائن */
+    public function dashboard()
     {
-        $safes = DB::table('safe_transactions')
-            ->orderBy('id', 'desc')
-            ->paginate(15);
-        
-        $totalIncome = DB::table('safe_transactions')
-            ->where('type', 'استلام نقدية')
-            ->sum('amount');
-        
-        $totalExpense = DB::table('safe_transactions')
-            ->where('type', 'صرف نقدية')
-            ->sum('amount');
-        
-        $balance = $totalIncome - $totalExpense;
-        
-        return view('financial.safe.index', compact('safes', 'balance', 'totalIncome', 'totalExpense'));
+        $safes = Safe::orderByRaw("FIELD(type,'main','branch','representative')")->get();
+
+        // إجماليات كل خزنة من الحركات
+        $stats = SafeMovement::selectRaw("
+            COALESCE(destination_safe_id, source_safe_id) as safe_id,
+            SUM(CASE WHEN type='deposit'    THEN amount ELSE 0 END) as total_deposit,
+            SUM(CASE WHEN type='withdrawal' THEN amount ELSE 0 END) as total_withdrawal,
+            SUM(CASE WHEN type='payment'    THEN amount ELSE 0 END) as total_payment,
+            SUM(CASE WHEN type='transfer'   THEN amount ELSE 0 END) as total_transfer
+        ")
+        ->groupByRaw("COALESCE(destination_safe_id, source_safe_id)")
+        ->get()
+        ->keyBy('safe_id');
+
+        $recentMovements = SafeMovement::with(['sourceSafe', 'destinationSafe', 'creator'])
+            ->latest()->limit(10)->get();
+
+        return view('financial.safes.dashboard', compact('safes', 'stats', 'recentMovements'));
     }
 
-    /**
-     * إضافة دفعة جديدة للخزنة
-     */
+    /** إنشاء خزنة جديدة - عرض الفورم */
+    public function create()
+    {
+        return view('financial.safes.create');
+    }
+
+    /** حفظ خزنة جديدة */
     public function store(Request $request)
     {
-        DB::beginTransaction();
-        
+        $request->validate([
+            'name'    => 'required|string|max:255',
+            'type'    => 'required|in:branch,representative,main',
+            'balance' => 'nullable|numeric|min:0',
+        ]);
+
+        Safe::create([
+            'name'    => $request->name,
+            'type'    => $request->type,
+            'balance' => $request->balance ?? 0,
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('financial.safes.dashboard')->with('success', 'تم إنشاء الخزنة بنجاح');
+    }
+
+    /** تعديل خزنة - عرض الفورم */
+    public function edit($id)
+    {
+        $safe = Safe::findOrFail($id);
+        return view('financial.safes.edit', compact('safe'));
+    }
+
+    /** تحديث خزنة */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:branch,representative,main',
+        ]);
+
+        Safe::findOrFail($id)->update($request->only('name', 'type'));
+
+        return redirect()->route('financial.safes.dashboard')->with('success', 'تم التحديث بنجاح');
+    }
+
+    /** حذف خزنة */
+    public function destroy($id)
+    {
+        $safe = Safe::findOrFail($id);
+
+        if ($safe->balance > 0) {
+            return redirect()->back()->with('fail', 'لا يمكن حذف خزنة بها رصيد');
+        }
+
+        $safe->delete();
+        return redirect()->route('financial.safes.dashboard')->with('success', 'تم الحذف بنجاح');
+    }
+
+    /** سجل الحركات مع فلتر */
+    public function transactions(Request $request)
+    {
+        $query = SafeMovement::with(['sourceSafe', 'destinationSafe', 'creator', 'reservation']);
+
+        if ($request->safe_id) {
+            $query->where('source_safe_id', $request->safe_id)
+                  ->orWhere('destination_safe_id', $request->safe_id);
+        }
+        if ($request->type) {
+            $query->where('type', $request->type);
+        }
+        if ($request->from_date) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+        if ($request->to_date) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+
+        $movements = $query->latest()->paginate(20)->withQueryString();
+        $safes = Safe::all();
+
+        return view('financial.safes.transactions', compact('movements', 'safes'));
+    }
+
+    /** تأكيد دفع حجز */
+    public function confirmPayment(Request $request)
+    {
+        $request->validate([
+            'reservation_id' => 'required|exists:reservation,id',
+            'amount'         => 'required|numeric|min:1',
+            'safe_id'        => 'required|exists:safes,id',
+        ]);
+
         try {
-            $validated = $request->validate([
-                'source' => 'required|string|max:255',
-                'amount' => 'required|numeric|min:1',
-                'total' => 'required|numeric|min:1|gte:amount',
-            ]);
-            
-            // إضافة المعاملة للخزنة الرئيسية
-            DB::table('safe_transactions')->insert([
-                'agent' => Auth::user()->email,
-                'amount' => $validated['amount'],
-                'type' => "استلام نقدية",
-                'source' => $validated['source'],
-                'created_at' => Carbon::now(),
-            ]);
-            
-            // تحديث المعاملات المالية
-            $checkMount = $validated['total'] - $validated['amount'];
-            $checkZero = $checkMount < 0 ? 0 : $checkMount;
-            
-            if ($checkZero > 0) {
-                DB::table('financial_transactions')
-                    ->where('agent_name', $validated['source'])
-                    ->where('returned_to_main_safe', 0)
-                    ->update(['returned_to_main_safe' => 1]);
-                
-                DB::table('financial_transactions')->insert([
-                    'agent_name' => $validated['source'],
-                    'amount' => $checkZero,
-                    'type' => "استلام نقدية",
-                    'created_at' => Carbon::now(),
-                    'returned_to_main_safe' => 0,
-                ]);
-            } else {
-                DB::table('financial_transactions')
-                    ->where('agent_name', $validated['source'])
-                    ->where('returned_to_main_safe', 0)
-                    ->update(['returned_to_main_safe' => 1]);
-            }
-            
-            DB::commit();
-            
-            return redirect()
-                ->route('safe.index')
-                ->with('success', 'تم إضافة الدفعة بنجاح');
-                
+            $this->safeService->confirmPayment(
+                $request->reservation_id,
+                $request->amount,
+                $request->safe_id
+            );
+
+            return redirect()->back()->with('success', 'تم تأكيد الدفع بنجاح');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->with('fail', 'حدث خطأ: ' . $e->getMessage());
+            return redirect()->back()->with('fail', $e->getMessage());
         }
     }
 
-    /**
-     * صرف من الخزنة
-     */
-    public function withdraw(Request $request)
+    /** صفحة تسليم الفرع للمندوب */
+    public function handoverPage()
     {
-        DB::beginTransaction();
-        
+        $branchSafes = Safe::where('type', 'branch')->get();
+        $repSafes    = Safe::where('type', 'representative')->get();
+
+        return view('financial.safes.handover', compact('branchSafes', 'repSafes'));
+    }
+
+    /** تنفيذ تسليم الفرع للمندوب */
+    public function handover(Request $request)
+    {
+        $request->validate([
+            'from_safe_id' => 'required|exists:safes,id',
+            'to_safe_id'   => 'required|exists:safes,id',
+            'amount'       => 'required|numeric|min:1',
+            'notes'        => 'nullable|string|max:255',
+        ]);
+
         try {
-            $validated = $request->validate([
-                'agent_name' => 'required|string|max:255',
-                'amount' => 'required|numeric|min:1',
-            ]);
-            
-            // التحقق من الرصيد
-            $totalSafe = DB::table('safe_transactions')
-                ->where('type', 'استلام نقدية')
-                ->sum('amount') - DB::table('safe_transactions')
-                ->where('type', 'صرف نقدية')
-                ->sum('amount');
-            
-            if ($totalSafe < $validated['amount']) {
-                return redirect()
-                    ->back()
-                    ->with('fail', 'لا يوجد رصيد كافٍ في الخزنة الرئيسية');
-            }
-            
-            // صرف من الخزنة
-            DB::table('safe_transactions')->insert([
-                'agent' => "الخزنة الرئيسية",
-                'amount' => $validated['amount'],
-                'type' => "صرف نقدية",
-                'source' => $validated['agent_name'],
-                'created_at' => Carbon::now(),
-            ]);
-            
-            // إضافة للمعاملات المالية
-            DB::table('financial_transactions')->insert([
-                'agent_name' => $validated['agent_name'],
-                'amount' => $validated['amount'],
-                'type' => "استلام نقدية",
-                'created_at' => Carbon::now(),
-            ]);
-            
-            DB::commit();
-            
-            return redirect()
-                ->route('safe.index')
-                ->with('success', 'تم صرف المبلغ بنجاح');
-                
+            $this->safeService->transferBranchToRep(
+                $request->from_safe_id,
+                $request->to_safe_id,
+                $request->amount,
+                $request->notes ?? ''
+            );
+
+            return redirect()->back()->with('success', 'تم التسليم بنجاح');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->with('fail', 'حدث خطأ: ' . $e->getMessage());
+            return redirect()->back()->with('fail', $e->getMessage());
+        }
+    }
+
+    /** صفحة إيداع المندوب للخزنة الرئيسية */
+    public function depositPage()
+    {
+        $repSafes  = Safe::where('type', 'representative')->get();
+        $mainSafes = Safe::where('type', 'main')->get();
+
+        return view('financial.safes.deposit', compact('repSafes', 'mainSafes'));
+    }
+
+    /** تنفيذ إيداع المندوب */
+    public function deposit(Request $request)
+    {
+        $request->validate([
+            'from_safe_id' => 'required|exists:safes,id',
+            'to_safe_id'   => 'required|exists:safes,id',
+            'amount'       => 'required|numeric|min:1',
+            'notes'        => 'nullable|string|max:255',
+        ]);
+
+        try {
+            $this->safeService->transferRepToMain(
+                $request->from_safe_id,
+                $request->to_safe_id,
+                $request->amount,
+                $request->notes ?? ''
+            );
+
+            return redirect()->back()->with('success', 'تم الإيداع بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('fail', $e->getMessage());
         }
     }
 }
