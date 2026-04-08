@@ -115,8 +115,74 @@ class SafeService
     }
 
     /**
-     * التحقق من منطق الدفع حسب نوع الحجز
+     * إضافة مبلغ للخزنة الرئيسية (إيداع خارجي)
      */
+    public function depositToMain(int $safeId, float $amount, string $notes): SafeMovement
+    {
+        return DB::transaction(function () use ($safeId, $amount, $notes) {
+            $safe = Safe::lockForUpdate()->findOrFail($safeId);
+
+            if ($safe->type !== 'main') {
+                throw new \Exception('يجب اختيار خزنة رئيسية');
+            }
+
+            $safe->balance += $amount;
+            $safe->save();
+
+            return SafeMovement::create([
+                'amount'              => $amount,
+                'type'                => 'deposit',
+                'destination_safe_id' => $safeId,
+                'created_by'          => Auth::id(),
+                'notes'               => $notes,
+            ]);
+        });
+    }
+
+    public function transferMainToBranch(int $fromSafeId, float $amount, ?string $notes, ?int $toSafeId = null): SafeMovement
+    {
+        return DB::transaction(function () use ($fromSafeId, $toSafeId, $amount, $notes) {
+            $from = Safe::lockForUpdate()->findOrFail($fromSafeId);
+
+            if ($from->type !== 'main') {
+                throw new \Exception('المصدر يجب أن يكون الخزنة الرئيسية');
+            }
+            if ($from->balance < $amount) {
+                throw new \Exception('رصيد الخزنة الرئيسية غير كافٍ');
+            }
+
+            $from->balance -= $amount;
+            $from->save();
+
+            // لو فيه فرع محدد - حوّل له
+            if ($toSafeId) {
+                $to = Safe::lockForUpdate()->findOrFail($toSafeId);
+                if ($to->type !== 'branch') {
+                    throw new \Exception('الوجهة يجب أن تكون خزنة فرع');
+                }
+                $to->balance += $amount;
+                $to->save();
+
+                SafeMovement::create([
+                    'amount'              => $amount,
+                    'type'                => 'transfer',
+                    'destination_safe_id' => $toSafeId,
+                    'created_by'          => Auth::id(),
+                    'notes'               => $notes,
+                ]);
+            }
+
+            // حركة السحب من الرئيسية دايماً
+            return SafeMovement::create([
+                'amount'         => $amount,
+                'type'           => 'withdrawal',
+                'source_safe_id' => $fromSafeId,
+                'created_by'     => Auth::id(),
+                'notes'          => $notes,
+            ]);
+        });
+    }
+
     private function validatePaymentByAgent(reservation $reservation, float $amount): void
     {
         $sakPrice = sak::where('name', $reservation->saks)->value('price') ?? 0;

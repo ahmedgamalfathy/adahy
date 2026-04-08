@@ -2378,7 +2378,7 @@ h5 {
     		    
     		    
       			<div class="container-buy-parent row m-0 w-100" >
-        		@php for($x = 1; $x <= $c_persons; $x++) { @endphp
+        		@for($x = 1; $x <= $c_persons; $x++)
 				@php
 				 if ($info->sak_c == 4) {
                         if ($c_sak == 1 ) {
@@ -2620,11 +2620,11 @@ h5 {
 																margin-top: 0%;
 																border-radius: 7px;
 																border-color: #ced4d9;" >
-																@php for($y = 1; $y <= $cps; $y++) { @endphp
+																@for($y = 1; $y <= $cps; $y++)
 																	<option value="{{$y}}">{{$y}}</option>
-																}
+																@endfor
 																</select>
-																}	
+															@endif
 													</div>
 												</div>
 												<div class="title5">
@@ -2809,7 +2809,7 @@ $(document).ready(function() {
 });
 </script>
         					
-        				}
+        				@endfor
       		</div>
       			<div class="btn-parent" style="margin-top:-1%;    margin-bottom: 3%;">
       			    	    <a href="resrv2" style="color:#fff;">

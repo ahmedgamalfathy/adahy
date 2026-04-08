@@ -2,7 +2,7 @@
 @section('title', 'تسليم فرع إلى مندوب')
 
 @section('content')
-<div class="col-xl-6 col-lg-8 mx-auto" style="direction:rtl">
+<div class="col-12" style="direction:rtl">
     <div class="card">
         <div class="card-header border-0 pb-0">
             <h5 class="card-title">تسليم من الفرع إلى المندوب</h5>

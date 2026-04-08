@@ -1,3 +1,4 @@
+@php $theme1 = "theme1"; @endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    @php $theme1 = "theme1"; @endphp
     <title>Islah : @yield('title', 'إدارة الخزائن')</title>
     <link rel="shortcut icon" type="image/png" href="/{{$theme1}}/images/favicon.png" />
     <link href="/{{$theme1}}/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@
 
     <script src="/{{$theme1}}/vendor/global/global.min.js"></script>
     <script src="/{{$theme1}}/vendor/chart.js/Chart.bundle.min.js"></script>
-    <script src="/{{$theme1}}/vendor/jquery-nice-select/js/jquery.nice.select.min.js"></script>
+    <script src="/{{$theme1}}/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
     <script src="/{{$theme1}}/vendor/apexchart/apexchart.js"></script>
     <script src="/{{$theme1}}/js/custom.min.js"></script>
     <script src="/{{$theme1}}/js/dlabnav-init.js"></script>

@@ -203,8 +203,11 @@
                                                                                  <div class="mb-12 col-md-12">
                                                 <label class="form-label">الخزينة*</label>
                                                 <select name="t_id"  class="form-control " Required>
-                                                @foreach($get2 as $g2)
+                                                <!-- @foreach($get2 as $g2)
                                                 <option value="{{$g2->id}}">{{$g2->name}}</option>
+                                                @endforeach -->
+                                                @foreach($safes as $safe)
+                                                <option value="{{$safe->id}}">{{$safe->name}}</option>
                                                 @endforeach
                        </select>
                                                    @error('count')
@@ -292,8 +295,11 @@
                                                                                  <div class="mb-12 col-md-12">
                                                 <label class="form-label">الخزينة*</label>
                                                 <select name="t_id"  class="form-control note-t_id" Required>
-                                                @foreach($get2 as $g2)
+                                                <!-- @foreach($get2 as $g2)
                                                 <option value="{{$g2->id}}">{{$g2->name}}</option>
+                                                @endforeach -->
+                                                @foreach($safes as $safe)
+                                                <option value="{{$safe->id}}" {{ old('t_id') == $safe->id ? "selected" :"" }} >{{$safe->name}}</option>
                                                 @endforeach
                        </select>
                                                    @error('count')

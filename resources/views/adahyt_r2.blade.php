@@ -239,10 +239,9 @@
                                             @endphp
                                             @foreach($get as $g)
                                             @php
-                                                if(!in_array($g->rec , $rep)){
+                                                if(in_array($g->rec , $rep)) continue;
 		                                        array_push($rep,$g->rec);
-                                            
-                                                    $loan = DB::table('reservation')->where('rec',$g->rec)->sum('loan');
+                                                $loan = DB::table('reservation')->where('rec',$g->rec)->sum('loan');
                                             @endphp
                                             @php
                                             $cleanDate = trim($g->created_at);
@@ -271,7 +270,7 @@
                                     		<a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block " data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{$g->id}}">
 				    إستلام نقدية
 				    <i class="las la-signal ms-3 scale5"></i></a>
-				    }
+				    @php } @endphp
 				    <a href="/reservationsystem/{{$g->resnum}}" class="btn btn-primary light me-1 px-3" target="_blank">
                                <i class="flaticon-072-printer"></i>
                                     </a>
@@ -291,7 +290,7 @@
 														    
 														</a>
 														
-														}
+														@php } @endphp
                                                 </td>
                                                 
                                        

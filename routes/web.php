@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Safe;
 use App\Models\users_c;
 use App\Http\Middleware;
 use Illuminate\Support\Facades\Hash;
@@ -81,6 +82,10 @@ Route::prefix('financial')->name('financial.')->group(function () {
         Route::get('/', [SafeController::class, 'dashboard'])->name('dashboard');
         Route::get('/transactions', [SafeController::class, 'transactions'])->name('transactions');
         Route::post('/payment', [SafeController::class, 'confirmPayment'])->name('payment');
+        Route::get('/add-to-main', [SafeController::class, 'addToMainPage'])->name('add_to_main');
+        Route::post('/add-to-main', [SafeController::class, 'addToMain'])->name('add_to_main.post');
+        Route::get('/withdraw', [SafeController::class, 'withdrawPage'])->name('withdraw');
+        Route::post('/withdraw', [SafeController::class, 'withdraw'])->name('withdraw.post');
         Route::get('/handover', [SafeController::class, 'handoverPage'])->name('handover');
         Route::post('/handover', [SafeController::class, 'handover'])->name('handover.post');
         Route::get('/deposit', [SafeController::class, 'depositPage'])->name('deposit');
@@ -801,8 +806,9 @@ $get = tr_vendor::where('treasury_id',$id)->orderBy('id','DESC')->get();
 Route::get('/per', function () {
      $get = User::all();
      $get2 = treasures::all();
+     $safes=Safe::all();
      $pages = pages::all();
-    return view('per',compact('get','get2','get2','pages'));
+    return view('per',compact('get','get2','get2','pages','safes'));
   
 })->middleware('auth','per1');
 

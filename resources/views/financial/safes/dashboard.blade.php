@@ -1,4 +1,4 @@
-@extends('layouts.financial')
+﻿@extends('layouts.financial')
 @section('title', 'إدارة الخزائن')
 
 @section('content')
@@ -12,6 +12,8 @@
                     <h4 style="font-weight:bold; margin:0">إدارة الخزائن</h4>
                     <div>
                         <a href="{{ route('financial.safes.transactions') }}" class="btn btn-primary btn-sm">سجل الحركات</a>
+                        <a href="{{ route('financial.safes.add_to_main') }}" class="btn btn-success btn-sm">+ إضافة للرئيسية</a>
+                        <a href="{{ route('financial.safes.withdraw') }}" class="btn btn-danger btn-sm">سحب رئيسية → فرع</a>
                         <a href="{{ route('financial.safes.handover') }}" class="btn btn-warning btn-sm">تسليم فرع ← مندوب</a>
                         <a href="{{ route('financial.safes.deposit') }}" class="btn btn-success btn-sm">إيداع مندوب ← رئيسية</a>
                         <a href="{{ route('financial.safes.create') }}" class="btn btn-dark btn-sm">+ خزنة جديدة</a>
@@ -41,21 +43,25 @@
                     </div>
                     <div style="border-top:1px solid #eee; padding-top:10px">
                         <div class="row text-center">
-                            <div class="col-6 mb-2">
+                            <!-- <div class="col-6 mb-2">
                                 <small class="text-muted d-block">إجمالي الإيداع</small>
                                 <strong style="color:#2bc155">{{ number_format($stat->total_deposit ?? 0, 2) }}</strong>
-                            </div>
+                            </div> -->
                             <div class="col-6 mb-2">
                                 <small class="text-muted d-block">إجمالي السحب</small>
                                 <strong style="color:#f72b50">{{ number_format($stat->total_withdrawal ?? 0, 2) }}</strong>
                             </div>
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <small class="text-muted d-block">إجمالي الدفع</small>
                                 <strong style="color:#3695eb">{{ number_format($stat->total_payment ?? 0, 2) }}</strong>
-                            </div>
+                            </div> -->
+                            <!-- <div class="col-6">
+                                <small class="text-muted d-block" style="font-size:11px">تحويل صادر</small>
+                                <small style="color:#ffb800; font-weight:bold">{{ number_format($stat->total_transfer_out ?? 0, 2) }}</small>
+                            </div> -->
                             <div class="col-6">
-                                <small class="text-muted d-block">إجمالي التحويل</small>
-                                <strong style="color:#ffb800">{{ number_format($stat->total_transfer ?? 0, 2) }}</strong>
+                                <small class="text-muted d-block" style="font-size:11px">تحويل وارد</small>
+                                <small style="color:#5bcfc5; font-weight:bold">{{ number_format($stat->total_transfer_in ?? 0, 2) }}</small>
                             </div>
                         </div>
                     </div>
@@ -86,21 +92,25 @@
                     </div>
                     <div style="border-top:1px solid #eee; padding-top:8px">
                         <div class="row text-center">
-                            <div class="col-6 mb-1">
+                            <!-- <div class="col-6 mb-1">
                                 <small class="text-muted d-block" style="font-size:11px">الإيداع</small>
                                 <small style="color:#2bc155; font-weight:bold">{{ number_format($stat->total_deposit ?? 0, 2) }}</small>
-                            </div>
-                            <div class="col-6 mb-1">
+                            </div> -->
+                            <!-- <div class="col-6 mb-1">
                                 <small class="text-muted d-block" style="font-size:11px">السحب</small>
                                 <small style="color:#f72b50; font-weight:bold">{{ number_format($stat->total_withdrawal ?? 0, 2) }}</small>
-                            </div>
+                            </div> -->
                             <div class="col-6">
                                 <small class="text-muted d-block" style="font-size:11px">الدفع</small>
                                 <small style="color:#3695eb; font-weight:bold">{{ number_format($stat->total_payment ?? 0, 2) }}</small>
                             </div>
                             <div class="col-6">
-                                <small class="text-muted d-block" style="font-size:11px">التحويل</small>
-                                <small style="color:#ffb800; font-weight:bold">{{ number_format($stat->total_transfer ?? 0, 2) }}</small>
+                                <small class="text-muted d-block" style="font-size:11px">تحويل صادر</small>
+                                <small style="color:#ffb800; font-weight:bold">{{ number_format($stat->total_transfer_out ?? 0, 2) }}</small>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block" style="font-size:11px">تحويل وارد</small>
+                                <small style="color:#5bcfc5; font-weight:bold">{{ number_format($stat->total_transfer_in ?? 0, 2) }}</small>
                             </div>
                         </div>
                     </div>
@@ -131,21 +141,25 @@
                     </div>
                     <div style="border-top:1px solid #eee; padding-top:8px">
                         <div class="row text-center">
-                            <div class="col-6 mb-1">
+                            <!-- <div class="col-6 mb-1">
                                 <small class="text-muted d-block" style="font-size:11px">الإيداع</small>
                                 <small style="color:#2bc155; font-weight:bold">{{ number_format($stat->total_deposit ?? 0, 2) }}</small>
-                            </div>
-                            <div class="col-6 mb-1">
+                            </div> -->
+                            <!-- <div class="col-6 mb-1">
                                 <small class="text-muted d-block" style="font-size:11px">السحب</small>
                                 <small style="color:#f72b50; font-weight:bold">{{ number_format($stat->total_withdrawal ?? 0, 2) }}</small>
-                            </div>
+                            </div> -->
                             <div class="col-6">
                                 <small class="text-muted d-block" style="font-size:11px">الدفع</small>
                                 <small style="color:#3695eb; font-weight:bold">{{ number_format($stat->total_payment ?? 0, 2) }}</small>
                             </div>
                             <div class="col-6">
-                                <small class="text-muted d-block" style="font-size:11px">التحويل</small>
-                                <small style="color:#ffb800; font-weight:bold">{{ number_format($stat->total_transfer ?? 0, 2) }}</small>
+                                <small class="text-muted d-block" style="font-size:11px">تحويل صادر</small>
+                                <small style="color:#ffb800; font-weight:bold">{{ number_format($stat->total_transfer_out ?? 0, 2) }}</small>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block" style="font-size:11px">تحويل وارد</small>
+                                <small style="color:#5bcfc5; font-weight:bold">{{ number_format($stat->total_transfer_in ?? 0, 2) }}</small>
                             </div>
                         </div>
                     </div>

@@ -2,9 +2,10 @@
 @section('title', 'تعديل خزنة')
 
 @section('content')
-<div class="col-xl-6 col-lg-8" style="direction:rtl">
-    <div class="card">
-        <div class="card-header border-0 pb-0">
+<div class="d-flex justify-content-center" style="direction:rtl">
+    <div class="col-xl-6 col-lg-8">
+        <div class="card">
+            <div class="card-header border-0 pb-0">
             <h5 class="card-title">تعديل: {{ $safe->name }}</h5>
         </div>
         <div class="card-body">
@@ -50,5 +51,6 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 @endsection

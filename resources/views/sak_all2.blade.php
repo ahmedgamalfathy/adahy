@@ -449,7 +449,7 @@ font-weight: bold;">
                                         
                                       $l_total =(float) @treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first()->total;
                                         @endphp
-                                        @php if(!in_array($get_info->code,$u_adhya)){ @endphp
+                                        @if(!in_array($get_info->code,$u_adhya))
                                         <tr>
                                             <td colspan="19" style="font-size: 19px;
    
@@ -497,16 +497,14 @@ font-weight: bold;">
                                             </tr>
                                         
                                         
-                                        @php array_push($u_adhya,$get_info->code); } @endphp
+                                        @php array_push($u_adhya,$get_info->code); @endphp
                                             <tr>
                                                 <td>
                                                   <div class="d-flex">
                                                       
                                                       <form action="res_rev" id="res_rev{{$g->id}}" method="get">
                                                           <input type="hidden" name="r_id" value="{{$g->id}}">
-<i class="las la-check-circle check-icon" @if($g->type == 1) style="font-size: 36px;color: var(--bs-orange);cursor: pointer;"@elseif($g->type == 2) @endphp
-style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
-@elsestyle="font-size: 36px;color: var(--bs-orange);cursor: pointer;"} onclick=document.getElementById('res_rev@php echo $g->id ; @endphp').submit();></i>
+<i class="las la-check-circle check-icon" @if($g->type == 1) style="font-size: 36px;color: var(--bs-orange);cursor: pointer;" @elseif($g->type == 2) style="font-size: 36px;color: var(--bs-green);cursor: pointer;" @else style="font-size: 36px;color: var(--bs-orange);cursor: pointer;" @endif onclick="document.getElementById('res_rev{{$g->id}}').submit();"></i>
                                                       </form>
                                                       
 														<a href="reservation_E/{{$g->id}}" >
@@ -638,8 +636,7 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
                                                 <td>{{(float)$sak_price2}}</td>
                                                 <td>{{$l_total}}</td>
                                                  @php $total = (float)$get_info->kilo_s * $adahy_type_info->price + (float)$sak_price2 - $l_total ; @endphp
-                                                <td @if($total < 0)style="color:red"}>
-                                                   
+                                                <td @if($total < 0) style="color:red" @endif>                                                   
                                                  {{number_format((float)$total, 2, '.', '')}}   
                                                     </td>
                                                 <td>
@@ -663,6 +660,7 @@ style="font-size: 36px;color: var(--bs-green);cursor: pointer;"
                          
                                               
                                             </tr>
+                                            @endif
                                      @endforeach
                                  
                          

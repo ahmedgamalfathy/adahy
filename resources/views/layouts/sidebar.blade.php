@@ -440,6 +440,12 @@
                         @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/deposit')->count() > 0)
                         <li><a href="{{ route('financial.safes.deposit') }}">إيداع مندوب → رئيسية</a></li>
                         @endif
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/withdraw')->count() > 0)
+                        <li><a href="{{ route('financial.safes.withdraw') }}">سحب رئيسية → فرع</a></li>
+                        @endif
+                        @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/add-to-main')->count() > 0)
+                        <li><a href="{{ route('financial.safes.add_to_main') }}">إضافة للخزنة الرئيسية</a></li>
+                        @endif
                         @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/create')->count() > 0)
                         <li><a href="{{ route('financial.safes.create') }}">إنشاء خزنة جديدة</a></li>
                         @endif

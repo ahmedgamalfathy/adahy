@@ -212,52 +212,53 @@ class AccountController extends Controller
     
       public function res_posts_(Request $request){
         
-       // dd($request->all());
-        
-                  $request->validate([
-            'id' => 'required',
-            'times' => 'required',
-            'c_sak' => 'required',
+        $request->validate([
+            'id'        => 'required',
+            'times'     => 'required',
+            'c_sak'     => 'required',
             'c_persons' => 'required',
-            'day' => 'required',
-          
-        ] 
-     );  
-           
-         $data = $request->all();
-         $data['resnum'] = time().rand(100,999); 
-         if(isset($data['co_z'])){}else{$data['co_z'] = 0;}
-          if(isset($data['nots'])){}else{$data['nots'] = 0;}
-         if(isset($data['history'])){}else{$data['history'] = 0;}
-         $data['pay'] = 0;$data['types'] = 1;
-         $id = $data['id'];
-         $get_info = adahyt::where('id',$data['id'])->first();
+            'day'       => 'required',
+        ]);
+        $data             = $request->all();
+        $data['resnum']   = time() . rand(100, 999);
+        $data['co_z']     = isset($data['co_z'])     ? $data['co_z']     : 0;
+        $data['nots']     = isset($data['nots'])     ? $data['nots']     : 0;
+        $data['history']  = isset($data['history'])  ? $data['history']  : 0;
+        $data['pay']      = 0;
+        $data['types']    = 1;
+        $id       = $data['id'];
+        $get_info = adahyt::where('id', $data['id'])->first();
          $gov_type = $get_info->gov;
          
-         if($get_info->free < $data['c_sak'] ){
-          
+        if ($get_info->free < $data['c_sak']) {
        session()->flash("fail", "لقد سبقك احد فى حجز الصك");
             return redirect("adahyt_rss/");   
-         }else{
+        }
              $data['types'] == 200;
-         $sak_price = sak::where('name',$get_info->sak)->first()->price;
-             if($data['types'] == 200){$data['pay'] = $data['nots']; $data['type'] = 200;}else{$data['type'] = 1;}
-             $loan = ($sak_price - $data['pay']);  
-            $free = ($get_info->free - $data['c_sak']);
-           $reservation = 0 ;
-           if($free < 1){$cases = 2;}else{$cases = 1;}
- $city = $request->get('city');
- $gov = $request->get('gov');
- $address = $request->get('address');
- $view = $request->get('view');
- $notes = $request->get('notes');
- $name = $request->get('name');
- $whats = $request->get('whats');
- $mobile = $request->get('mobile');
- $whatsd = $request->get('whatsd');
- $mobile2 = $request->get('mobile2');
- $mobile3 = $request->get('mobile3');
- $number = $request->get('number');
+        $sak_price = sak::where('name', $get_info->sak)->first()->price;
+
+        if ($data['types'] == 200) {
+            $data['pay']  = $data['nots'];
+            $data['type'] = 200;
+        } else {
+            $data['type'] = 1;
+        }
+        $loan        = ($sak_price - $data['pay']);
+        $free        = ($get_info->free - $data['c_sak']);
+        $reservation = 0;
+        $cases       = ($free < 1) ? 2 : 1;
+        $city        = $request->get('city');
+        $gov         = $request->get('gov');
+        $address     = $request->get('address');
+        $view        = $request->get('view');
+        $notes       = $request->get('notes');
+        $name        = $request->get('name');
+        $whats       = $request->get('whats');
+        $mobile      = $request->get('mobile');
+        $whatsd      = $request->get('whatsd');
+        $mobile2     = $request->get('mobile2');
+        $mobile3     = $request->get('mobile3');
+        $number      = $request->get('number');
  $description = $request->get('description');
 //  $kar = $request->get('kar');
 //  $kars = $request->get('kars');
@@ -271,21 +272,23 @@ $parts = $request->get('parts');
 //  if(isset($view)){}else{$view=[0];}
 //  if(isset($whats)){}else{$whats=[0];}
 //  if(isset($whatsd)){}else{$whatsd=[0];}
+
      $data['gov_type'] = $gov_type;
-        foreach($city as $key => $n ) { 
-            $cc = rand(100,999);
-            $data['resnum2'] = (int)(time()/$cc).rand(10,99);
-           $govs = $gov[$key]; 
-           $addresss = $address[$key]; 
-           $data['pay'] = $notes[$key];
-           if(isset($view[$key])){ $views = $view[$key]; }else{$views = 0;}
-           if(isset($whats[$key])){ $whatss = $whats[$key]; }else{$whatss = 0;}
-           if(isset($whatsd[$key])){ $whatsds = $whatsd[$key]; }else{$whatsds = 0;}
-           if(isset($mobile2[$key])){ $mobile2s = $mobile2[$key]; }else{$mobile2s = 0;}
-           if(isset($mobile3[$key])){ $mobile3s = $mobile3[$key]; }else{$mobile3s = 0;}
-           if(isset($city[$key])){ $citys = $city[$key]; }else{$citys = 0;}
-           if(isset($address[$key])){ $addresss = $address[$key]; }else{$addresss = 0;}
-           if(isset($description[$key])){ $descriptions = $description[$key]; }else{$descriptions = null;}
+        foreach ($city as $key => $n) {
+            $cc               = rand(100, 999);
+            $data['resnum2']  = (int)(time() / $cc) . rand(10, 99);
+            $govs             = $gov[$key];
+            $addresss         = $address[$key];
+            $data['pay']      = $notes[$key];
+
+            $views       = isset($view[$key])        ? $view[$key]        : 0;
+            $whatss      = isset($whats[$key])       ? $whats[$key]       : 0;
+            $whatsds     = isset($whatsd[$key])      ? $whatsd[$key]      : 0;
+            $mobile2s    = isset($mobile2[$key])     ? $mobile2[$key]     : 0;
+            $mobile3s    = isset($mobile3[$key])     ? $mobile3[$key]     : 0;
+            $citys       = isset($city[$key])        ? $city[$key]        : 0;
+            $addresss    = isset($address[$key])     ? $address[$key]     : 0;
+            $descriptions = isset($description[$key]) ? $description[$key] : null;
           //  if(isset($kar[$key])){ $kar_ = $kar[$key]; }else{$kar_ = 0;}
           //  if(isset($kars[$key])){ $kars_ = $kars[$key]; }else{$kars_ = 0;}
           //  if(isset($karss[$key])){ $karss_ = $karss[$key]; }else{$karss_ = 0;}
@@ -293,46 +296,40 @@ $parts = $request->get('parts');
           //  if(isset($ka[$key])){ $ka_ = $ka[$key]; }else{$ka_ = 0;}
           //  if(isset($kah[$key])){ $kah_ = $kah[$key]; }else{$kah_ = 0;}
           //  if(isset($kam[$key])){ $kam_ = $kam[$key]; }else{$kam_ = 0;}
-            
-          
-           $notess = $notes[$key]; 
-           $names = $name[$key]; 
-           
+
+            $notess  = $notes[$key];
+            $names   = $name[$key];
            $mobiles = $mobile[$key]; 
-           
           // $mobile2s = $mobile2[$key]; 
            $mobile3s = $mobile3[$key]; 
-           $numbers = $number[$key]; 
+            $numbers  = $number[$key];
         //   $kars = $kar[$key]; 
           
-          
           ///add clients 
-        $c_client = clients::where('mob',$mobiles)->count();
-         if($c_client > 0){
+            $c_client = clients::where('mob', $mobiles)->count();
+            if ($c_client > 0) {
              $this->add_client_history_2($mobiles);
-             $this->edit_client_2($id,$mobiles,$names,$mobile2s,$mobile3s,0,$citys,$addresss);
-             
-         }else{
-            $this->create_new_client_2($id,$mobiles,$names,$mobile2s,$mobile3s,0,$citys,$addresss); 
+                $this->edit_client_2($id, $mobiles, $names, $mobile2s, $mobile3s, 0, $citys, $addresss);
+            } else {
+                $this->create_new_client_2($id, $mobiles, $names, $mobile2s, $mobile3s, 0, $citys, $addresss);
          }
           
-          
-          $data['whats'] = $whatss;
-          $data['whats2'] = $whatsds;
-          $data['city'] = $citys;
-          $data['name'] = $names;
-          $data['mobile'] = $mobiles;
-          $data['mobile2'] = $mobile2s;
-          $data['mobile3'] = $mobile3s;
-          $data['zone'] = $govs;
-          $data['address'] = $addresss;
-          $data['note'] = $notess;
-          $data['view'] = $views;
-          $data['number'] = $numbers;
-          $data['rec'] = $data['resnum2'];
-          $data['def'] = $data['resnum2'];
-          $data['co_z'] = 0;
-          $data['history'] = 0;
+            $data['whats']       = $whatss;
+            $data['whats2']      = $whatsds;
+            $data['city']        = $citys;
+            $data['name']        = $names;
+            $data['mobile']      = $mobiles;
+            $data['mobile2']     = $mobile2s;
+            $data['mobile3']     = $mobile3s;
+            $data['zone']        = $govs;
+            $data['address']     = $addresss;
+            $data['note']        = $notess;
+            $data['view']        = $views;
+            $data['number']      = $numbers;
+            $data['rec']         = $data['resnum2'];
+            $data['def']         = $data['resnum2'];
+            $data['co_z']        = 0;
+            $data['history']     = 0;
           $data['description'] = $descriptions;
           // $data['kar'] = $kar_;
           // $data['kars'] = $kars_;
@@ -342,100 +339,110 @@ $parts = $request->get('parts');
           // $data['kah'] = $kah_;
           // $data['kam'] = $kam_;
      
-          
           $parts = is_array($parts) ? array_values($parts) : [];
           if (!empty($parts) && isset($parts[$key]) && is_array($parts[$key])) {
             foreach ($parts[$key] as $part) {
                 DB::table('adahy_acc')->insert([
-                    'r_id' => htmlspecialchars($data['resnum2']), // رقم الحجز الفرعي لهذا الشخص
-                    'name' => htmlspecialchars($part), // اسم الجزء
-                    'code_adahy'=> htmlspecialchars($id) ?? null,
+                        'r_id'       => htmlspecialchars($data['resnum2']),
+                        'name'       => htmlspecialchars($part),
+                        'code_adahy' => htmlspecialchars($id) ?? null,
                 ]);
             }
         }
           /////end 
+
            for ($x = 0; $x < $numbers; $x++) {
-               $reservation ++;
+                $reservation++;
                $data['id'] = $get_info->id;
-            $this->create_new_reservation_2($data,$loan);
+                $resId      = $this->create_new_reservation_2($data, $loan);
+
+            $data['amount'] = $sak_price;
+          if ($data['amount'] > 0) {
+             $branchSafe = \App\Models\Safe::where('type', 'branch')
+                        ->where(function ($q) {
+                     $q->where('id', Auth::user()->t_id)
+                    //  ->orWhere('parent_id', Auth::user()->t_id)
+                      ->orWhere('user_id', Auth::user()->t_id);
+                 })->first();
+                //  dd($branchSafe);
+             if ($branchSafe) {
+                 $branchSafe->increment('balance', $data['amount']);
+                 \App\Models\SafeMovement::create([
+                     'amount'              => $data['note'] ,
+                    //  'amount'              => $data['amount'],
+                     'type'                => 'payment',
+                     'destination_safe_id' => $branchSafe->id,
+                     'reservation_id'      => $resId->id,
+                     'created_by'          => Auth::id(),
+                     'notes'               => 'دفعة حجز - ' . $data['name'] . ' - ' . $get_info->sak,
+                 ]);
+             }
+         }
+
                 ///////treasury_sak///////////////////////////////////////
-       $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
-        $type_frome = 2; //الاكشن من انى صفحة
-        $type = 1; // مدين 
-        $reason_t = "  قيمة الصك".$get_info->sak.' ('.$get_info->id.')-'.$data['name'].'-'.$data['mobile'] ;
+                $data['id']    = reservation::where('id', '!=', 0)->orderBy('id', 'desc')->first()->id;
+                $type_frome    = 2; //الاكشن من انى صفحة
+                $type          = 1; // مدين
+                $reason_t      = "  قيمة الصك" . $get_info->sak . ' (' . $get_info->id . ')-' . $data['name'] . '-' . $data['mobile'];
        // $data['amount'] = $sak_price;
         $data['amount'] = $data['pay'];
-        $data['nots'] = 'ثمن الصك';
-         $check = treasury_sak::where('treasury_id',$data['id'])->count();
-         if($check > 0){
-             $get = treasury_sak::where('treasury_id',$data['id'])->orderBy('id','desc')->first();
+                $data['nots']   = 'ثمن الصك';
+                $check = treasury_sak::where('treasury_id', $data['id'])->count();
+                if ($check > 0) {
+                    $get   = treasury_sak::where('treasury_id', $data['id'])->orderBy('id', 'desc')->first();
              $total = 0;
-         }else{
-          $total =  0;  
+                } else {
+                    $total = 0;
          }
-     // $this->create_new_treasury_sak($data,$total,$type_frome,$type,$reason_t); 
+    
        
-        $type_frome = 2; //الاكشن من انى صفحة
-        $type = 2; // دائن 
-        $reason_t = "SYSTEM- استلام نقدية";
+                $type_frome     = 2; //الاكشن من انى صفحة
+                $type           = 2; // دائن
+                $reason_t       = "SYSTEM- استلام نقدية";
       $data['amount'] = $data['pay'];
-      // $data['amount'] = $sak_price;
-        $data['nots'] = 'دفعة';
-           $check = treasury_sak::where('treasury_id',$data['id'])->count();
-         if($check > 0){
-             $get = treasury_sak::where('treasury_id',$data['id'])->orderBy('id','desc')->first();
+
+                $data['nots']   = 'دفعة';
+                $check = treasury_sak::where('treasury_id', $data['id'])->count();
+                if ($check > 0) {
+                    $get   = treasury_sak::where('treasury_id', $data['id'])->orderBy('id', 'desc')->first();
              $total = 0;
-         }else{
-          $total =   0 ; 
+                } else {
+                    $total = 0;
          }
-         $this->create_new_treasury_sak_2($data,$total,$type_frome,$type,$reason_t); 
+                $this->create_new_treasury_sak_2($data, $total, $type_frome, $type, $reason_t);
          
-         
-             
         ///////treasury_account///////////////////////////////////////
-        $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
-        $type_frome = 2; //الاكشن من انى صفحة
-        $type = 1; // مدين 
-         $reason_t = "  حجز الصك".$get_info->sak.' ('.$get_info->id.')-'.$data['name'].'-'.$data['mobile'] ;
+                $data['id']     = reservation::where('id', '!=', 0)->orderBy('id', 'desc')->first()->id;
+                $type_frome     = 2; //الاكشن من انى صفحة
+                $type           = 1; // مدين
+                $reason_t       = "  حجز الصك" . $get_info->sak . ' (' . $get_info->id . ')-' . $data['name'] . '-' . $data['mobile'];
       //$data['amount'] = $sak_price;
          $data['amount'] = $data['pay'];
-        $data['nots'] = 'حجز الصك';
-         $check = treasury::where('treasury_id',Auth::user()->t_id)->count();
-         if($check > 0){
-             $get = treasury::where('treasury_id',Auth::user()->t_id)->orderBy('id','desc')->first();
+                $data['nots']   = 'حجز الصك';
+                $check = treasury::where('treasury_id', Auth::user()->t_id)->count();
+                if ($check > 0) {
+                    $get   = treasury::where('treasury_id', Auth::user()->t_id)->orderBy('id', 'desc')->first();
              $total = 0;
-         }else{
-          $total =  0;  
+                } else {
+                    $total = 0;
          }
-        $this->create_new_treasury_account_2($data,$total,$type_frome,$type,$reason_t); 
-         
-         
-       
+                $this->create_new_treasury_account_2($data, $total, $type_frome, $type, $reason_t);
          
          //////////////////////////////////////////////////
          //////////////////////////////////////////////////
-            
-               
            }
-            
-            
         }
              
-           
-      
-         
-         
-       $free = ($get_info->free - $reservation);
-          $reservation = ($get_info->reservation + $reservation) ;
+        $free        = ($get_info->free - $reservation);
+        $reservation = ($get_info->reservation + $reservation);
+
          //////////////////////////////////////////////////
          //////////////////////////////////////////////////
-            $this->edit_adahyt_reservation_2($get_info->id,$free,$cases,$reservation); 
+        $this->edit_adahyt_reservation_2($get_info->id, $free, $cases, $reservation);
+
        session()->flash("sucess", "تم الإضافة بنجاح");
-            return redirect("reservationsystempay/".$data['resnum']);
-         
+        return redirect("reservationsystempay/" . $data['resnum']);
          }
-        
-    }
     
     
     public function res_posts(Request $request){
@@ -586,9 +593,29 @@ $parts = $request->get('parts');
            for ($x = 0; $x < $numbers; $x++) {
                $reservation ++;
                $data['id'] = $get_info->id;
-            $this->create_new_reservation_2($data,$loan);
+            $resId=$this->create_new_reservation_2($data,$loan);
             // $this->adahy_acc($data);
-            
+            $data['amount'] = $sak_price;
+          if ($data['amount'] > 0) {
+             $branchSafe = \App\Models\Safe::where('type', 'branch')
+                 ->where(function($q) {
+                     $q->where('id', Auth::user()->t_id)
+                    //  ->orWhere('parent_id', Auth::user()->t_id)
+                       ->orWhere('user_id', Auth::user()->t_id);
+                 })->first();
+                //  dd($branchSafe);
+             if ($branchSafe) {
+                 $branchSafe->increment('balance', $data['amount']);
+                 \App\Models\SafeMovement::create([
+                     'amount'              => $data['amount'],
+                     'type'                => 'payment',
+                     'destination_safe_id' => $branchSafe->id,
+                     'reservation_id'      => $resId->id,
+                     'created_by'          => Auth::id(),
+                     'notes'               => 'دفعة حجز - ' . $data['name'] . ' - ' . $get_info->sak,
+                 ]);
+             }
+         }
                 ///////treasury_sak///////////////////////////////////////
        $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
         $type_frome = 2; //الاكشن من انى صفحة
@@ -621,8 +648,9 @@ $parts = $request->get('parts');
           $total =  (0 + $data['amount']) ; 
          }
          $this->create_new_treasury_sak_2($data,$total,$type_frome,$type,$reason_t); 
-         
-         
+
+         // تسجيل الدفعة في safe_movements (خزنة الفرع)
+
              
         ///////treasury_account///////////////////////////////////////
         $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
@@ -2522,36 +2550,61 @@ if($check1 > 0){$err = 1;}else{}
    
     public function new_treasury_sak1_(Request $request)
     {
-             $request->validate([
-            'amount' => 'required|numeric',
-            
-            'id' => 'required'
+      DB::beginTransaction();
+      $request->validate([
+        'amount' => 'required|numeric',
+        
+        'id' => 'required'
         ]
       );  
-            
-         $data = $request->all();
-       
-         $get_info = reservation::where('id',$data['id'])->first();
-         if($get_info->emp == "website"){
-         $get_all = reservation::where('rec',$get_info->rec)->get();
-         foreach($get_all as $g){
-         $check = treasury_sak::where('treasury_id',$g->id)->count();
-         if($check > 0){
-             $data['amount'] = $g->loan;
-             $get = treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first();
-             $total = ($get->total + $data['amount']);
-         }else{
-         $data['amount'] = $g->loan;
-          $total =  (0 + $data['amount']) ; 
-         }
-        $data['id'] = $g->id;
+      
+      $data = $request->all();
+      
+      $get_info = reservation::where('id',$data['id'])->first();
+      if($get_info->emp == "website"){
+        $get_all = reservation::where('rec',$get_info->rec)->get();
+        foreach($get_all as $g){
+          $message = adahyt::where('code', $g->code)->first();
+          $data['amount'] = $g->loan;
+          if ($data['amount'] > 0) {
+            $branchSafe = \App\Models\Safe::where('type', 'branch')
+            ->where(function ($q) {
+              $q->where('id', Auth::user()->t_id)
+              //  ->orWhere('parent_id', Auth::user()->t_id)
+              ->orWhere('user_id', Auth::user()->t_id);
+            })->first();
+            //  dd($branchSafe);
+            if ($branchSafe) {
+              $branchSafe->increment('balance', $data['amount']);
+              \App\Models\SafeMovement::create([
+                //  'amount'              => $data['note'] ,
+                'amount'              => $data['amount'],
+                'type'                => 'payment',
+                'destination_safe_id' => $branchSafe->id,
+                'reservation_id'      => $g->id,
+                'created_by'          => Auth::id(),
+                'notes'               => 'دفعة حجز - ' .$g->name . ' - ' . $message->sak,
+              ]);
+            }
+            $check = treasury_sak::where('treasury_id',$g->id)->count();
+          }
+          if($check > 0){
+            $data['amount'] = $g->loan;
+            $get = treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first();
+            $total = ($get->total + $data['amount']);
+          }else{
+            $data['amount'] = $g->loan;
+            $total =  (0 + $data['amount']) ; 
+          }
+          $data['id'] = $g->id;
           $data['nots'] ="-";
-         $type_frome = 1; //الاكشن من انى صفحة
-         $type = 2; // دائن 
-        $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
-         $this->create_new_treasury_sak($data, $total, $type_frome, $type, $reason_t);  
-           
-         }
+          $type_frome = 1; //الاكشن من انى صفحة
+          $type = 2; // دائن 
+          $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
+          $this->create_new_treasury_sak($data, $total, $type_frome, $type, $reason_t);  
+          
+        }
+
                  ///////treasury_account///////////////////////////////////////
         // $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
         $type_frome = 2; //الاكشن من انى صفحة
@@ -2576,9 +2629,11 @@ if($check1 > 0){$err = 1;}else{}
          //////////////////////////////////////////////////
           $this->upd_res($get_info->rec); 
        session()->flash("sucess", "تم الإضافة بنجاح");
+       DB::commit();
             // return redirect("/adahyt_r2/");
             return redirect("reservationSystemWebsite/".$get_info->rec);
          }else{
+            DB::rollback();
              session()->flash("fail", "لا يمكن الاضافة لهذا الرقم");
              return redirect("reservationSystemWebsite/".$get_info->rec);
             // return redirect("/adahyt_r2/");  
