@@ -718,7 +718,7 @@
   	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   	border-radius: 12px;
   	background-color: #fff;
-  	height: 745px;
+  	min-height: auto; height: auto; overflow: visible;
   	display: flex;
   	flex-direction: column;
   	align-items: center;
@@ -848,17 +848,20 @@ h4 {
   	gap: 10px;
 }
 .div78 {
-  	position: relative;
+  	position: static;
   	font-size: 16px;
   	font-weight: 500;
+  	overflow: visible;
 }
 .select-number-parent {
-  	width: 450px;
+  	width: 100%;
   	display: flex;
   	flex-direction: row;
   	align-items: center;
   	justify-content: flex-end;
   	gap: 8px;
+  	position: relative;
+  	z-index: 1;
 }
 .place-holder19 {
   	align-self: stretch;
@@ -1818,7 +1821,7 @@ h5 {
   	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   	border-radius: 12px;
   	background-color: #fff;
-  	height: 745px;
+  	min-height: auto; height: auto; overflow: visible;
   	display: flex;
   	flex-direction: column;
   	align-items: center;
@@ -1946,17 +1949,20 @@ h5 {
   	gap: 10px;
 }
 .div78 {
-  	position: relative;
+  	position: static;
   	font-size: 16px;
   	font-weight: 500;
+  	overflow: visible;
 }
 .select-number-parent {
-  	width: 450px;
+  	width: 100%;
   	display: flex;
   	flex-direction: row;
   	align-items: center;
   	justify-content: flex-end;
   	gap: 8px;
+  	position: relative;
+  	z-index: 1;
 }
 .place-holder19 {
   	align-self: stretch;
@@ -2633,16 +2639,16 @@ h5 {
 										</div><!-- .al-sa2t-frame -->
             						</div><!-- .general-information-frame-parent -->
           					</div>
-          			<div class="container-buy-inner {{ $info->adahy == "خراف" || $info->adahy == "ماعز"||  $info->adahy == "من الخارج" ? 'd-none' : '' }}">
+          			<div class="container-buy-inner {{ $info->adahy == "خراف" || $info->adahy == "ماعز"||  $info->adahy == "من الخارج" ? 'd-none' : '' }}" style="clear:both; margin-top:10px;">
 		  				<div class="div78"> 
 		  					<div class="select-number-parent">
-		  						<div class="place-holder19">
+		  						<!-- <div class="place-holder19">
 		  							<div class="div80">
 		  								<div class="drop-list-tool1">
 		  									<div class="div82">عدد الأجزاء</div>
 		  								</div>
 		  							</div>
-		  						</div>
+		  						</div> -->
 		  						<div class="drop-list-tool-parent">
 		  							<div class="frame-parent4">
 		  								<div class="select-item-container">

@@ -184,7 +184,8 @@ public function get_sak_data2(Request $request){
         ]);  
            
          $data = $request->all();
-         $data['resnum'] = time().rand(100,999);//رقم الحجز
+         $data['resnum'] = time().rand(1000,9999);//رقم الحجز
+        //  $data['resnum'] = time().rand(1000,9999);//رقم الحجز
        
         if(isset($data['co_z'])){}else{$data['co_z'] = 0;}
         if(isset($data['nots'])){}else{$data['nots'] = 0;}
@@ -232,8 +233,8 @@ public function get_sak_data2(Request $request){
 //  if(isset($whatsd)){}else{$whatsd=[0];}
 
         foreach($city as $key => $n ) { 
-          $cc = rand(100,999);
-          $data['resnum2'] = (int)(time()/$cc).rand(10,99);
+          $cc = rand(1000,9999);
+          $data['resnum2'] = (int)(time()/$cc);
            $govs = $gov[$key]; 
            $addresss = $address[$key]; 
            if(isset($view[$key])){ $views = $view[$key]; }else{$views = 0;}

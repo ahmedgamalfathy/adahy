@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 
     <meta charset="utf-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="keywords" content="" />
 	<meta name="author" content="" />
@@ -716,7 +717,7 @@
   	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   	border-radius: 12px;
   	background-color: #fff;
-  	height: 745px;
+  	min-height: auto; height: auto; overflow: visible;
   	display: flex;
   	flex-direction: column;
   	align-items: center;
@@ -1788,7 +1789,7 @@
   	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   	border-radius: 12px;
   	background-color: #fff;
-  	height: 745px;
+  	min-height: auto; height: auto; overflow: visible;
   	display: flex;
   	flex-direction: column;
   	align-items: center;
@@ -2209,6 +2210,14 @@
     gap: 15px;
 	flex-wrap: wrap;
   }
+  .form-control {
+    border: 1.5px solid #5bcfc5 !important;
+    border-radius: 8px !important;
+  }
+  .form-control:focus {
+    border-color: #009688 !important;
+    box-shadow: 0 0 0 0.2rem rgba(91,207,197,0.25) !important;
+  }
 </style>
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700&display=swap" />
   	
@@ -2247,10 +2256,68 @@
   	
   	
   	<script>
-  	        
+
+	function liveSearch(x, q) {
+	    var box = document.getElementById('searchResults_' + x);
+	    if (!q || q.length < 1) { box.style.display = 'none'; return; }
+	    fetch('/search_client?mobile=' + encodeURIComponent(q), {
+	        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+	    })
+	        .then(r => r.json())
+	        .then(data => {
+	            box.innerHTML = '';
+	            if (data.results && data.results.length) {
+	                data.results.forEach(function(c) {
+	                    var item = document.createElement('div');
+	                    item.style.cssText = 'padding:10px 14px; cursor:pointer; border-bottom:1px solid #eee; font-size:14px; direction:rtl; background:#fff;';
+	                    item.innerHTML = '<strong style="color:#009688">' + c.name + '</strong><span style="color:#999; margin-right:8px; font-size:12px;">' + c.mobile + '</span>';
+	                    item.setAttribute('data-name',    c.name    || '');
+	                    item.setAttribute('data-mobile',  c.mobile  || '');
+	                    item.setAttribute('data-mobile2', c.mobile2 || '');
+	                    item.setAttribute('data-mobile3', c.mobile3 || '');
+	                    item.setAttribute('data-zone',    c.zone    || '');
+	                    item.setAttribute('data-address', c.address || '');
+	                    item.setAttribute('data-city',    c.city    || '');
+	                    item.setAttribute('data-x', x);
+	                    item.onmouseenter = function(){ this.style.background='#f0fffe'; };
+	                    item.onmouseleave = function(){ this.style.background='#fff'; };
+	                    item.onmousedown = function(e) {
+	                        e.preventDefault();
+	                        var px = this.getAttribute('data-x');
+	                        var n   = document.getElementById('name'    + px);
+	                        var m   = document.getElementById('mobile'  + px);
+	                        var m2  = document.getElementById('mobile2' + px);
+	                        var m3  = document.getElementById('mobile3' + px);
+	                        var cty = document.getElementById('city'    + px);
+	                        var adr = document.getElementById('address' + px);
+	                        if (n)   n.value   = this.getAttribute('data-name');
+	                        if (m)   m.value   = this.getAttribute('data-mobile');
+	                        if (m2)  m2.value  = this.getAttribute('data-mobile2');
+	                        if (m3)  m3.value  = this.getAttribute('data-mobile3');
+	                        if (cty) cty.value = this.getAttribute('data-zone');
+	                        if (adr) adr.value = this.getAttribute('data-address');
+	                        document.getElementById('searchMobile_' + px).value = '';
+	                        box.style.display = 'none';
+	                    };
+	                    box.appendChild(item);
+	                });
+	                box.style.display = 'block';
+	            } else {
+	                box.innerHTML = '<div style="padding:10px 14px; color:#999; font-size:13px; direction:rtl;">لا توجد نتائج</div>';
+	                box.style.display = 'block';
+	            }
+	        })
+	        .catch(function(err){ console.log('Search error:', err); box.style.display = 'none'; });
+	}
+	document.addEventListener('click', function(e) {
+	    if (!e.target.closest('[id^="searchResults_"]') && !e.target.closest('[id^="searchMobile_"]')) {
+	        document.querySelectorAll('[id^="searchResults_"]').forEach(function(b){ b.style.display='none'; });
+	    }
+	});
+
 		function checksak() {
 let sum = 0;
-var c = "{{ $c_sak }}"; // تأكد أنها PHP صحيحة
+var c = "{{ $c_sak }}";
 
 $('.num').each(function () {
   let value = parseFloat($(this).val());
@@ -2377,12 +2444,18 @@ if (sum > c || sum < c) {
         				<div class="container-buy col-6" style="    direction: ltr;">
 							<h4 style="color: #ee2367">⏳ برجاء إدخال البيانات بشكل صحيح مع مراعاة الوقت</h4>
           					<div class="title">
-            						<div class="wrapper">
-              							<b class="b" id="n_{{$x}}"></b>
-            						</div>
-            						<div class="frame">
-              							<div class="for-preview">بيانات الفرد  
-              							
+            						<div class="frame" style="display:flex; flex-direction:column; gap:8px; width:100%;">
+              							<div style="display:flex; align-items:center; justify-content:space-between;">
+              							    <b class="b" id="n_{{$x}}" style="color:#00a651; font-size:14px;"></b>
+              							    <div class="for-preview" style="white-space:nowrap">بيانات الفرد</div>
+              							</div>
+              							<div style="position:relative; width:100%;">
+              							    <input type="text" id="searchMobile_{{$x}}" placeholder="ابحث بالموبايل أو الاسم..." 
+              							           class="form-control"
+              							           style="direction:rtl; text-align:right;"
+              							           oninput="liveSearch({{$x}}, this.value)"
+              							           autocomplete="off">
+              							    <div id="searchResults_{{$x}}" style="display:none; position:absolute; top:100%; right:0; left:0; background:#fff; border:1px solid #5bcfc5; border-radius:8px; z-index:9999; max-height:200px; overflow-y:auto; box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
               							</div>
             						</div>
           					</div>
@@ -2395,7 +2468,7 @@ if (sum > c || sum < c) {
                       											<div class="wrapper1">
 																	<div class="for-preview">المدينة</div>
                       											</div>
-																  <input name="city[]" style="    height: 40px;" class="form-control" id="myField" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')">
+																  <input name="city[]" style="    height: 40px;" class="form-control" id="city{{$x}}" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')">
 																</div>
                     										<div class="text-box-with-caption">
                       											<div class="wrapper1">
@@ -2451,7 +2524,7 @@ if (sum > c || sum < c) {
                     										<div class="wrapper1">
 																<div class="for-preview">العنوان التفصيلي</div>
                     										</div>
-															<input name="address[]" class="form-control"id="myField" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')">
+															<input name="address[]" class="form-control" id="address{{$x}}" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')">
 														</div>
                 								</div>
                 								<div class="title1">

@@ -179,6 +179,18 @@
                             </div>
                         </div>
 					</div>
+                    {{-- زرار حذف الحجوزات المنتهية --}}
+                    @if(DB::table('per')->where('u_id',Auth::user()->id)->where('page','delete_expired_reservations')->count() > 0)
+                    <div class="row mt-2 mb-2" style="direction:rtl">
+                        <div class="col-12">
+                            <a href="/delete_expired_reservations" 
+                               class="btn btn-danger"
+                               onclick="return confirm('هل أنت متأكد من حذف كل الحجوزات المنتهية (أكثر من 24 ساعة)؟')">
+                                🗑️ حذف الحجوزات المنتهية (أكثر من 24 ساعة)
+                            </a>
+                        </div>
+                    </div>
+                    @endif
                     
 	
                                     

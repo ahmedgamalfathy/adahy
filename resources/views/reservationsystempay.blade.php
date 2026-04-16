@@ -391,7 +391,7 @@ th{
 
 				</tr>
 			@php
-			$pay = DB::table('reservation')->where('rec',$get->rec)->sum('pay');
+			$pay = DB::table('reservation')->where('rec',$get->rec)->sum('loan');
 			@endphp	
 			<tr>
                 <th id="invoice_id_label" style=" direction: rtl ;     text-align: center;

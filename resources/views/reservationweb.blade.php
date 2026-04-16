@@ -5,6 +5,10 @@
   	<meta name="viewport" content="initial-scale=1, width=device-width">
   	
   	<style>
+  	    @media print {
+  	        .no-print { display: none !important; }
+  	        body { margin: 0; }
+  	    }
   	    .p {
   	margin: 0;
   	font-size: 24px;
@@ -109,39 +113,28 @@
   	font-size: 18px;
 }
 .frame-parent {
-  	position: absolute;
-  	top: 79px;
-  	left: 35%;
+  	position: relative;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	max-width: 500px;
+  	margin: 0 auto;
   	display: flex;
   	flex-direction: column;
   	align-items: center;
   	justify-content: flex-start;
   	gap: 29px;
-}
-.cross-icon {
-  	width: 16px;
-  	position: relative;
-  	height: 16px;
-  	overflow: hidden;
-  	flex-shrink: 0;
-}
-.close-btn {
-  	position: absolute;
-  	top: 24px;
-  	left: 22px;
-  	display: flex;
-  	flex-direction: row;
-  	align-items: flex-start;
-  	justify-content: flex-start;
-  	padding: 10px;
+  	padding: 20px;
+  	box-sizing: border-box;
 }
 .div {
   	width: 100%;
   	position: relative;
   	border-radius: 12px;
   	background-color: #fff;
-  	height: 915px;
-  	overflow: scroll;
+  	min-height: 100vh;
+  	height: auto;
+  	overflow: visible;
   	text-align: center;
   	font-size: 20px;
   	color: #4c4c54;
@@ -149,10 +142,9 @@
 }
 @media(max-width: 900px){
  .frame-parent {
-  left: 0px; 
-          width: -webkit-fill-available;
+  	max-width: 100%;
+  	padding: 15px;
  }
-    
 }
 
   	</style>
@@ -179,7 +171,7 @@
   @endphp 	
 </head>
 <body>
-  <center>	
+  <center id="pdf-content">
   	<div class="div">
     		<div class="frame-parent">
       			<div class="wrapper">
@@ -189,7 +181,7 @@
           					<p class="p1">من فروع المؤسسة لديكم برقم الحجز، وسداد كامل المبلغ.</p>
         				</div>
       			</div>
-      			<div class="container">
+      			<div class="container" style="width:100%; box-sizing:border-box;">
         				<b class="b">ورقم الحجز الخاص بك هو 
         			
         				</b>
@@ -241,9 +233,14 @@
             			
           					</div>
         				</div> --}}
-						<a href="/resrv" class="backTOHomePage wrapper3" style="background-color: #54c04d; color: white; ">
-							الرجوع للصفحة الرئيسية
-						</a>
+						<div style="display:flex; gap:10px; width:100%;">
+							<a href="/resrv" class="backTOHomePage wrapper3" style="background-color:#54c04d; color:white; flex:1; text-align:center;">
+								الرجوع للصفحة الرئيسية
+							</a>
+							<button id="downloadPdf" class="wrapper3 no-print" style="background-color:#009688; color:white; border:none; cursor:pointer; flex:1; font-family:inherit; font-size:inherit;">
+								⬇️ تحميل PDF
+							</button>
+						</div>
       			</div>
     		</div>
     	
@@ -265,6 +262,28 @@
   </script>
 @endif --}}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+document.getElementById('downloadPdf').addEventListener('click', function() {
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'جاري التحميل...';
+
+    var element = document.getElementById('pdf-content');
+    var opt = {
+        margin:       10,
+        filename:     'reservation-{{ $id ?? "receipt" }}.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, direction: 'rtl' },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(function() {
+        btn.disabled = false;
+        btn.textContent = '⬇️ تحميل PDF';
+    });
+});
+</script>
 </body>
 </html>
 

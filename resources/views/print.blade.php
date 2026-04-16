@@ -343,8 +343,10 @@ th{
                    الوزن الإجمالى المشفى   
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date" @if($check_opt > 0) value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو" 
-    @else value="0"} readonly ></td>
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" name="date"
+    @if($check_opt > 0) value="{{(float)$get_opt->f_weight + (float)$get_opt->f_weight2}} كيلو"
+    @else value="0"
+    @endif readonly ></td>
 
 				</tr>
 				
@@ -356,10 +358,12 @@ th{
                  بالكبدة
                 </span></th>
  	<td id="invoice_id_value" style=" direction: rtl ; width: 100% ;     text-align: center;
-    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;" @php if($check_opt > 0){
-    $saka = ((float)$get_opt->f_weight + (float)$get_opt->f_weight2) / $get_info->sak_c;
-    @endphp value="{{number_format((float)$saka, 2, '.', '')}} كيلو"
-    @elsevalue="0"}
+    font-size: 22px;"><input type="text" style="width: 100%;text-align: center;"
+    @if($check_opt > 0)
+    value="{{number_format(((float)$get_opt->f_weight + (float)$get_opt->f_weight2) / $get_info->sak_c, 2, '.', '')}} كيلو"
+    @else
+    value="0"
+    @endif
     name="date"  readonly ></td>
 
 				</tr>

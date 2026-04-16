@@ -452,10 +452,9 @@ $x = date("D" , $dayss );
 						
 						
 						@php
-						
 						$check_agreement = agreement::where('r_id',$id)->count();
-						if($check_agreement > 0){
 						@endphp
+						@if($check_agreement > 0)
 						<div style="    margin-top: 10px;">
 						 		<span class="badge badge-success" style="    cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter_rn">
 								    تمت الموافقة على التسليم
@@ -515,8 +514,7 @@ $x = date("D" , $dayss );
 										   	<a href="javascript:void(0);" class="btn btn-info d-sm-inline-block " data-bs-toggle="modal" data-bs-target="#exampleModalCenter_r">
 										        موافقة تسليم
 										        <i class="las la-signal ms-3 scale5"></i></a>
-										   
-										   }
+										   @endif
 										        
 										        	    <!-- Modal -->
                                     <div class="modal fade" id="exampleModalCenter_r">

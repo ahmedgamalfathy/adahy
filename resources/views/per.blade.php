@@ -396,9 +396,9 @@
                                                         </div>
                                                         <div class="mb-12 col-md-12">
                                                             <label class="form-label">نوع الإضافة*</label>
-                                                            <select name="type" class="form-control" required>
+                                                            <select name="type" class="form-control" required onchange="onTypeChange('{{$g->id}}', this.value)">
                                                                 <option value="1">إضافة</option>
-                                                                <option value="2">إلغاء</option>
+                                                                <option value="2">إلغاء / حذف</option>
                                                             </select>
                                                             @error('type')
                                                             <span class="invalid-feedback" role="alert">
@@ -407,46 +407,55 @@
                                                             @enderror
                                                         </div>
                                                         <div class="mb-12 col-md-12">
-                                                            <label class="form-label">الصفحات*</label>
-                                                            <select name="pages[]" class="form-control" multiple required style="display:none;">
+                                                            <label class="form-label">الصلاحيات <span class="text-danger">*</span></label>
+                                                            <select name="pages[]" id="pages-select-{{$g->id}}" class="form-control" multiple required style="display:none;">
                                                                 @foreach($pages as $page)
                                                                     <option value="{{$page->name}}">{{$page->name_ar}}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <div class="d-flex flex-wrap" id="pages-tags-{{$g->id}}">
+
+                                                            {{-- Search --}}
+                                                            <div style="position:relative; margin-bottom:8px;">
+                                                                <input type="text" id="search-pages-{{$g->id}}"
+                                                                    placeholder="بحث..."
+                                                                    class="form-control"
+                                                                    style="direction:rtl; padding-right:35px;"
+                                                                    oninput="filterPages('{{$g->id}}', this.value)">
+                                                                <span style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#aaa;">🔍</span>
+                                                            </div>
+
+                                                            {{-- Select All --}}
+                                                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; direction:rtl; padding:6px 10px; border-bottom:1px solid #eee;">
+                                                                <input type="checkbox" id="select-all-{{$g->id}}" onchange="toggleAll('{{$g->id}}', this.checked)" style="width:18px;height:18px; accent-color:#6c5ce7;">
+                                                                <label for="select-all-{{$g->id}}" style="margin:0; cursor:pointer; font-weight:500;">الكل</label>
+                                                            </div>
+
+                                                            {{-- Checkboxes --}}
+                                                            <div id="pages-list-{{$g->id}}" style="max-height:250px; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding:5px;">
+                                                                @php
+                                                                $existing_perms = DB::table('per')->where('u_id',$g->id)->pluck('page')->toArray();
+                                                                @endphp
                                                                 @foreach($pages as $page)
-                                                                    <span class="badge badge-secondary m-1 page-tag" data-value="{{$page->name}}" style="cursor:pointer;">
+                                                                @php $already = in_array($page->name, $existing_perms); @endphp
+                                                                <div class="page-item-{{$g->id}}" style="display:flex; align-items:center; gap:8px; padding:6px 10px; direction:rtl; border-bottom:1px solid #f5f5f5; {{ $already ? 'background:#f0fff4;' : '' }}" data-label="{{$page->name_ar}}" data-existing="{{ $already ? '1' : '0' }}">
+                                                                    <input type="checkbox"
+                                                                        id="page-{{$g->id}}-{{$loop->index}}"
+                                                                        class="page-cb-{{$g->id}}"
+                                                                        data-value="{{$page->name}}"
+                                                                        data-existing="{{ $already ? '1' : '0' }}"
+                                                                        {{ $already ? 'checked' : '' }}
+                                                                        onchange="syncSelect('{{$g->id}}')"
+                                                                        style="width:18px;height:18px; accent-color:#6c5ce7; cursor:pointer;">
+                                                                    <label for="page-{{$g->id}}-{{$loop->index}}" style="margin:0; cursor:pointer;">
                                                                         {{$page->name_ar}}
-                                                                    </span>
+                                                                        @if($already)
+                                                                            <small class="existing-badge-{{$g->id}}" style="color:#00a651; font-size:11px;">✓ موجودة</small>
+                                                                        @endif
+                                                                    </label>
+                                                                </div>
                                                                 @endforeach
                                                             </div>
-                                                            <small class="text-muted">اضغط على الصلاحية لاختيارها أو إزالتها</small>
-                                                            <script>
-                                                                document.addEventListener('DOMContentLoaded', function() {
-                                                                    var tagsContainer = document.getElementById('pages-tags-{{$g->id}}');
-                                                                    var select = tagsContainer.previousElementSibling;
-                                                                    tagsContainer.querySelectorAll('.page-tag').forEach(function(tag) {
-                                                                        tag.addEventListener('click', function() {
-                                                                            var value = this.getAttribute('data-value');
-                                                                            var option = Array.from(select.options).find(opt => opt.value === value);
-                                                                            if(option.selected) {
-                                                                                option.selected = false;
-                                                                                this.classList.remove('badge-primary');
-                                                                                this.classList.add('badge-secondary');
-                                                                            } else {
-                                                                                option.selected = true;
-                                                                                this.classList.remove('badge-secondary');
-                                                                                this.classList.add('badge-primary');
-                                                                            }
-                                                                        });
-                                                                    });
-                                                                });
-                                                            </script>
-                                                            @error('pages')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
+                                                            <small class="text-muted">اختر الصلاحيات المطلوبة</small>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -607,7 +616,75 @@ $(document).ready(function() {
     }); 
 });
 </script>
-	
+
+<script>
+function filterPages(gid, q) {
+    var items = document.querySelectorAll('.page-item-' + gid);
+    q = q.toLowerCase();
+    items.forEach(function(item) {
+        var label = item.getAttribute('data-label') || '';
+        item.style.display = label.toLowerCase().includes(q) ? '' : 'none';
+    });
+}
+
+function syncSelect(gid) {
+    var select = document.getElementById('pages-select-' + gid);
+    var cbs = document.querySelectorAll('.page-cb-' + gid);
+    Array.from(select.options).forEach(function(opt) { opt.selected = false; });
+    cbs.forEach(function(cb) {
+        if (cb.checked) {
+            var opt = Array.from(select.options).find(o => o.value === cb.getAttribute('data-value'));
+            if (opt) opt.selected = true;
+        }
+    });
+    var all = document.getElementById('select-all-' + gid);
+    if (all) all.checked = Array.from(cbs).every(cb => cb.checked);
+}
+
+function toggleAll(gid, checked) {
+    var typeSelect = document.querySelector('select[name="type"]');
+    var isDelete = typeSelect && typeSelect.value == '2';
+    document.querySelectorAll('.page-cb-' + gid).forEach(function(cb) {
+        var isExisting = cb.getAttribute('data-existing') === '1';
+        // في الإضافة: حدد غير الموجودة فقط / في الحذف: حدد الموجودة فقط
+        if (isDelete) {
+            if (isExisting) cb.checked = checked;
+        } else {
+            if (!isExisting) cb.checked = checked;
+        }
+    });
+    syncSelect(gid);
+}
+
+function onTypeChange(gid, type) {
+    var cbs = document.querySelectorAll('.page-cb-' + gid);
+    var items = document.querySelectorAll('.page-item-' + gid);
+
+    if (type == '2') {
+        // وضع الحذف: أظهر الموجودة فقط وأخفي الباقي
+        items.forEach(function(item) {
+            var isExisting = item.getAttribute('data-existing') === '1';
+            item.style.display = isExisting ? '' : 'none';
+        });
+        // أزل التحديد من غير الموجودة
+        cbs.forEach(function(cb) {
+            if (cb.getAttribute('data-existing') !== '1') cb.checked = false;
+        });
+    } else {
+        // وضع الإضافة: أظهر غير الموجودة فقط
+        items.forEach(function(item) {
+            var isExisting = item.getAttribute('data-existing') === '1';
+            item.style.display = isExisting ? 'none' : '';
+        });
+        // أزل التحديد من الموجودة
+        cbs.forEach(function(cb) {
+            if (cb.getAttribute('data-existing') === '1') cb.checked = false;
+        });
+    }
+    syncSelect(gid);
+}
+</script>
+
 </body>
 </html>
 

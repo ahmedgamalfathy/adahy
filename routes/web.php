@@ -376,6 +376,29 @@ Route::post('/res_post', [Controller::class, 'res_post'])->name('res_post');
 
 Route::get('/get_sak_data', [Controller::class, 'get_sak_data'])->name('get_sak_data');
 
+Route::get('/search_client', function(\Illuminate\Http\Request $request) {
+    $q = $request->get('mobile');
+    $clients = DB::table('clients')
+        ->where('mob', 'LIKE', '%'.$q.'%')
+        ->orWhere('name', 'LIKE', '%'.$q.'%')
+        ->limit(8)->get();
+    if ($clients->count()) {
+        return response()->json([
+            'found'   => true,
+            'results' => $clients->map(fn($c) => [
+                'name'    => $c->name,
+                'mobile'  => $c->mob,
+                'mobile2' => $c->mob2    ?? '',
+                'mobile3' => $c->mob3    ?? '',
+                'zone'    => $c->zone    ?? '',
+                'address' => $c->address ?? '',
+                'city'    => $c->city    ?? '',
+            ])
+        ]);
+    }
+    return response()->json(['found' => false, 'results' => []]);
+})->middleware('auth');
+
 Route::get('/get_sak_data2', [Controller::class, 'get_sak_data2'])->name('get_sak_data2');
 Route::get('/get_sak_adahy', [Controller::class, 'get_sak_adahy'])->name('get_sak_adahy');
 
@@ -583,7 +606,6 @@ Route::get('/adahyt_r2', function (Request $request) {
     $name = htmlspecialchars($request->get('name'));
     $mobile = htmlspecialchars($request->get('mobile'));
  
-  
          $get = reservation::where(function($query) use ($rec,$name,$mobile) {
         if($rec){$query->where('rec', '=', $rec);}
         if($name){$query->where('name', 'LIKE', '%'.$name.'%');}
@@ -592,6 +614,26 @@ Route::get('/adahyt_r2', function (Request $request) {
       return view('adahyt_r2',compact('get','rec','name','mobile'));
        
 })->middleware('auth','per1');
+
+// حذف حجوزات الويب سايت المنتهية (أكثر من 24 ساعة)
+Route::get('/delete_expired_reservations', function (Request $request) {
+    $expired = reservation::where('emp', 'website')
+        ->where('pay', 0)
+        ->where('created_at', '<', \Carbon\Carbon::now()->subHours(24))
+        ->get();
+
+    $count = 0;
+    foreach ($expired as $res) {
+        $fakeRequest = new \Illuminate\Http\Request();
+        $fakeRequest->merge(['id' => $res->id]);
+        app(\App\Http\Controllers\AccountController::class)->del_resv($fakeRequest);
+        $count++;
+    }
+
+    session()->flash('sucess', "تم حذف $count حجز منتهي الصلاحية");
+    return redirect()->back();
+})->middleware('auth', 'per1');
+
 Route::get('/adahyt_r2_cairo', function (Request $request) {
    $rec = htmlspecialchars($request->get('rec'));
 $name = htmlspecialchars($request->get('name'));

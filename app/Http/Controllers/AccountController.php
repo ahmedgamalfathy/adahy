@@ -220,7 +220,7 @@ class AccountController extends Controller
             'day'       => 'required',
         ]);
         $data             = $request->all();
-        $data['resnum']   = time() . rand(100, 999);
+        $data['resnum']   = time() . rand(1000, 9999);
         $data['co_z']     = isset($data['co_z'])     ? $data['co_z']     : 0;
         $data['nots']     = isset($data['nots'])     ? $data['nots']     : 0;
         $data['history']  = isset($data['history'])  ? $data['history']  : 0;
@@ -275,7 +275,7 @@ $parts = $request->get('parts');
 
      $data['gov_type'] = $gov_type;
         foreach ($city as $key => $n) {
-            $cc               = rand(100, 999);
+            $cc               = rand(1000, 9999);
             $data['resnum2']  = (int)(time() / $cc) . rand(10, 99);
             $govs             = $gov[$key];
             $addresss         = $address[$key];
@@ -460,7 +460,7 @@ $parts = $request->get('parts');
      );  
            
      $data = $request->all();
-     $data['resnum'] = time().rand(100,999);//رقم الحجز
+     $data['resnum'] = time().rand(1000,9999);//رقم الحجز
         if(isset($data['co_z'])){}else{$data['co_z'] = 0;}
         if(isset($data['nots'])){}else{$data['nots'] = 0;}
         if(isset($data['history'])){}else{$data['history'] = 0;}
@@ -508,7 +508,7 @@ $parts = $request->get('parts');
 //  if(isset($whatsd)){}else{$whatsd=[0];}
 
         foreach($city as $key => $n ) { 
-          $cc = rand(100,999);
+          $cc = rand(1000,9999);
           $data['resnum2'] = (int)(time()/$cc).rand(10,99);
            $govs = $gov[$key]; 
            $addresss = $address[$key]; 
@@ -1661,7 +1661,7 @@ if($check1 > 0){$err = 1;}else{$err = 0;}
             'days' => 'required',
             'times' => 'required',
             'is_available'=>'required',
-            'gov'=>'required|in:01,12,24',
+            'gov'=>'required|in:01,12,24,13',
             '_token' => 'required',
         ], 
         [
@@ -3309,7 +3309,9 @@ if($check1 > 0){$err = 1;}else{}
         $id = 1;$type_frome = 2;$type = 2; // دائن 
         $this->create_new_treasury2($nots,$totals ,$id, $total,$type_frome,$type,$reason_t);
          $this->edit_adahyt_($data);
-         $this->ins_resv_del($data); 
+         $this->ins_resv_del($data);
+         // حذف الأجزاء الخاصة بالحجز من adahy_acc
+         DB::table('adahy_acc')->where('r_id', $info->rec)->delete();
          $this->del_resvd($data); 
          $this->del_sak_treasury($data);
         
