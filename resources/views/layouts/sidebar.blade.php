@@ -69,10 +69,12 @@
 							<li><a href="widget_cairo"> التقرير العام القاهرة</a></li>
 						
 						</ul>
+                      <ul aria-expanded="false">
+							<li><a href="widget_matri"> التقرير العام المطرية</a></li>
+						</ul>
                         <ul aria-expanded="false">
 							<li><a href="repo-supplier-opt"> تقارير الموردين تشفية وتصفية</a></li>
 						</ul>
-
                     </li>
                            @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->whereIN('page',['adahy','sak','days','adahyt'])->count();
@@ -117,6 +119,7 @@
                       <li><a href="/adahyt_r2">حجز ويب سيت الدقهلية </a></li>
                       <li><a href="/adahyt_r2_cairo">حجز ويب سيت القاهرة</a></li>
                       <li><a href="/adahyt_r2_mani">حجز ويب سيت منيا</a></li>
+                      <li><a href="/adahyt_r2_matri">حجز ويب سيت المطرية</a></li>
                             
                         </ul>
                     </li>
@@ -139,6 +142,9 @@
                         </ul>
                         <ul aria-expanded="false">
                             <li><a href="/sak_all_mani"> المنيا </a></li>
+                        </ul>
+                        <ul aria-expanded="false">
+                            <li><a href="/sak_all_matri"> المطرية </a></li>
                         </ul>
                         <ul aria-expanded="false">
                             <li><a href="/sak_parts"> الاجزاء </a></li>
@@ -451,6 +457,66 @@
                         @endif
                     </ul>
                 </li>
+                @endif
+
+                {{-- الفروع --}}
+                @if (DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/branches')->count() > 0)
+                @php
+                    $sidebarBranches = \App\Models\Safe::where('type','branch')->get();
+                    $sidebarBranchIds = $sidebarBranches->pluck('id')->toArray();
+                    $sbIn = \App\Models\SafeMovement::selectRaw("destination_safe_id as sid, SUM(amount) as total_in")
+                        ->whereIn('destination_safe_id', $sidebarBranchIds)->groupBy('destination_safe_id')->get()->keyBy('sid');
+                    $sbOut = \App\Models\SafeMovement::selectRaw("source_safe_id as sid, SUM(amount) as total_out")
+                        ->whereIn('source_safe_id', $sidebarBranchIds)->groupBy('source_safe_id')->get()->keyBy('sid');
+                @endphp
+                @if($sidebarBranches->count())
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-050-info"></i>
+                        <span class="nav-text">الفروع</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('financial.safes.branches') }}">كل الفروع</a></li>
+                        @foreach($sidebarBranches as $branch)
+                        <li>
+                            <a href="{{ route('financial.safes.transactions') }}?safe_id={{ $branch->id }}">
+                                {{ $branch->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endif
+                @endif
+
+                {{-- المناديب --}}
+                @if (DB::table('per')->where('u_id',Auth::user()->id)->where('page','financial/safes/representatives')->count() > 0)
+                @php
+                    $sidebarReps = \App\Models\Safe::where('type','representative')->get();
+                    $sidebarRepIds = $sidebarReps->pluck('id')->toArray();
+                    $srIn = \App\Models\SafeMovement::selectRaw("destination_safe_id as sid, SUM(amount) as total_in")
+                        ->whereIn('destination_safe_id', $sidebarRepIds)->groupBy('destination_safe_id')->get()->keyBy('sid');
+                    $srOut = \App\Models\SafeMovement::selectRaw("source_safe_id as sid, SUM(amount) as total_out")
+                        ->whereIn('source_safe_id', $sidebarRepIds)->groupBy('source_safe_id')->get()->keyBy('sid');
+                @endphp
+                @if($sidebarReps->count())
+                <li>
+                    <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-050-info"></i>
+                        <span class="nav-text">المناديب</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ route('financial.safes.representatives') }}">كل المناديب</a></li>
+                        @foreach($sidebarReps as $rep)
+                        <li>
+                            <a href="{{ route('financial.safes.transactions') }}?safe_id={{ $rep->id }}">
+                                {{ $rep->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endif
                 @endif
                                       @php
                     $check_list = DB::table('per')->where('u_id',Auth::user()->id)->where('page','reception')->count();

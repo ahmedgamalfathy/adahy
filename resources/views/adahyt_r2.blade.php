@@ -283,9 +283,9 @@
 				    إستلام نقدية
 				    <i class="las la-signal ms-3 scale5"></i></a>
 				    @php } @endphp
-				    <a href="/reservationsystem/{{$g->resnum}}" class="btn btn-primary light me-1 px-3" target="_blank">
+				    <!-- <a href="/reservationsystem/{{$g->resnum}}" class="btn btn-primary light me-1 px-3" target="_blank">
                                <i class="flaticon-072-printer"></i>
-                                    </a>
+                                    </a> -->
                                   
                                     @php
                                     if($c2 > 0){

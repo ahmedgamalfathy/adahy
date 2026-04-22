@@ -84,6 +84,8 @@ Route::prefix('financial')->name('financial.')->group(function () {
         Route::post('/payment', [SafeController::class, 'confirmPayment'])->name('payment');
         Route::get('/add-to-main', [SafeController::class, 'addToMainPage'])->name('add_to_main');
         Route::post('/add-to-main', [SafeController::class, 'addToMain'])->name('add_to_main.post');
+        Route::get('/branches', [SafeController::class, 'branchesPage'])->name('branches');
+        Route::get('/representatives', [SafeController::class, 'representativesPage'])->name('representatives');
         Route::get('/withdraw', [SafeController::class, 'withdrawPage'])->name('withdraw');
         Route::post('/withdraw', [SafeController::class, 'withdraw'])->name('withdraw.post');
         Route::get('/handover', [SafeController::class, 'handoverPage'])->name('handover');
@@ -530,6 +532,9 @@ Route::get('/widget_mani', function (){
 Route::get('/widget_cairo', function (){
    return view('widget_cairo');
 })->middleware('auth');
+Route::get('/widget_matri', function (){
+   return view('widget_matri');
+})->middleware('auth');
 // ->middleware('auth');
 
 // Route::group(['prefix' => 'admin',  'middleware' => 'per1'], function()
@@ -633,7 +638,20 @@ Route::get('/delete_expired_reservations', function (Request $request) {
     session()->flash('sucess', "تم حذف $count حجز منتهي الصلاحية");
     return redirect()->back();
 })->middleware('auth', 'per1');
+Route::get('/adahyt_r2_matri', function (Request $request) {
+   $rec = htmlspecialchars($request->get('rec'));
+$name = htmlspecialchars($request->get('name'));
+$mobile = htmlspecialchars($request->get('mobile'));
 
+
+     $get = reservation::where(function($query) use ($rec,$name,$mobile) {
+    if($rec){$query->where('rec', '=', $rec);}
+    if($name){$query->where('name', 'LIKE', '%'.$name.'%');}
+    if($mobile){$query->where('mobile', '=', $mobile);}
+})->where('emp','=','website')->where('gov_type',13)->get();
+  return view('adahyt_r2',compact('get','rec','name','mobile'));
+   
+})->middleware('auth','per1');
 Route::get('/adahyt_r2_cairo', function (Request $request) {
    $rec = htmlspecialchars($request->get('rec'));
 $name = htmlspecialchars($request->get('name'));
@@ -1116,6 +1134,47 @@ $reservation = adahyt::where('id','!=',0)->where('gov',24)->sum('reservation');
          if($type){$query->where('type', $type);}
       
    })->where('emp','!=','website')->where('gov_type',24)->orderBy('code','ASC')->paginate('30');
+
+
+//$get = reservation::where('id','!=',0)->orderBy('id','ASC')->paginate('10');
+
+return view('sak_all2', compact('get','free','reservation' , 'days2'));
+
+   
+   
+})->middleware('auth','per1');
+Route::get('/sak_all_matri', function (Request $request) {
+
+$free = adahyt::where('id','!=',0)->where('gov',13)->sum('free');
+$days2 = days::all();
+$reservation = adahyt::where('id','!=',0)->where('gov',13)->sum('reservation');
+
+
+   $name = htmlspecialchars($request->get('name'));
+   $mobile = htmlspecialchars($request->get('mobile'));
+   $mobile2 = htmlspecialchars($request->get('mobile2'));
+   $pay = htmlspecialchars($request->get('pay'));
+   $note = htmlspecialchars($request->get('note'));
+   $rec = htmlspecialchars($request->get('rec'));
+   $def = htmlspecialchars($request->get('def'));
+   $code = htmlspecialchars($request->get('code'));
+   $days = htmlspecialchars($request->get('days'));
+      $type = htmlspecialchars($request->get('type'));
+   
+   
+         $get = reservation::where(function($query) use ($name,$mobile,$mobile2,$pay,$note,$rec,$def,$code,$days,$type) {
+         if($name){$query->where('name','like', '%'.$name.'%');}
+         if($mobile){$query->where('mobile', '=', $mobile);}
+         if($mobile2){$query->where('mobile2', '=', $mobile2);}
+         if($pay){$query->where('pay', $pay);}
+         if($days){$query->where('days', $days);}
+         if($note){$query->where('note','like', '%'.$note.'%');}
+         if($rec){$query->where('rec', $rec);}
+         if($def){$query->where('def', $def);}
+         if($code){$query->where('code', $code);}
+         if($type){$query->where('type', $type);}
+      
+   })->where('emp','!=','website')->where('gov_type',13)->orderBy('code','ASC')->paginate('30');
 
 
 //$get = reservation::where('id','!=',0)->orderBy('id','ASC')->paginate('10');

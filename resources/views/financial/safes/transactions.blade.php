@@ -3,6 +3,45 @@
 
 @section('content')
 <div class="col-12" style="direction:rtl">
+
+    {{-- 3 كروت الإجماليات لو فيه فلتر خزنة --}}
+    @if(request('safe_id'))
+    @php
+        $filteredSafe = \App\Models\Safe::find(request('safe_id'));
+        $totalIn  = \App\Models\SafeMovement::where('destination_safe_id', request('safe_id'))->sum('amount');
+        $totalOut = \App\Models\SafeMovement::where('source_safe_id', request('safe_id'))->sum('amount');
+    @endphp
+    @if($filteredSafe)
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center py-3">
+                    <small class="text-muted d-block">الرصيد الحالي</small>
+                    <h4 style="color:#ffb800; margin:0">{{ number_format($filteredSafe->balance, 2) }} جنيه</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center py-3">
+                    <small class="text-muted d-block">↑ إجمالي الوارد</small>
+                    <h4 style="color:#2bc155; margin:0">{{ number_format($totalIn, 2) }} جنيه</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center py-3">
+                    <small class="text-muted d-block">↓ إجمالي الصادر</small>
+                    <h4 style="color:#f72b50; margin:0">{{ number_format($totalOut, 2) }} جنيه</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @endif
+
+    {{-- سجل الحركات --}}
     <div class="card">
         <div class="card-header border-0 pb-0" style="display:flex; justify-content:space-between; align-items:center">
             <h5 class="card-title mb-0">سجل الحركات المالية</h5>

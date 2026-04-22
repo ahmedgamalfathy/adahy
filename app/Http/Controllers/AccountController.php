@@ -368,7 +368,7 @@ $parts = $request->get('parts');
              if ($branchSafe) {
                  $branchSafe->increment('balance', $data['amount']);
                  \App\Models\SafeMovement::create([
-                     'amount'              => $data['note'] ,
+                     'amount'              => $data['amount'] ,
                     //  'amount'              => $data['amount'],
                      'type'                => 'payment',
                      'destination_safe_id' => $branchSafe->id,
@@ -733,7 +733,7 @@ $parts = $request->get('parts');
     {  date_default_timezone_set("Africa/Kampala");  
         $date=date('Y-m-d H:i');
         $time=date('H:i:s');
-       $tr_name = treasures::where('id',Auth::user()->t_id)->first()->name;
+       $tr_name = treasures::where('id',Auth::user()->t_id??12)->first()->name;
         
         return treasury_sak::create([
         'treasury_id' => htmlspecialchars($data['id']),
@@ -2497,7 +2497,7 @@ if($check1 > 0){$err = 1;}else{}
     {  date_default_timezone_set("Africa/Kampala");  
         $date=date('Y-m-d H:i');
         $time=date('H:i:s');
-      $tr_name = treasures::where('id',Auth::user()->t_id)->first()->name;
+      $tr_name = treasures::where('id',Auth::user()->t_id??12)->first()->name;
         
         return treasury_sak::create([
         'treasury_id' => htmlspecialchars($data['id']),
@@ -2588,40 +2588,25 @@ if($check1 > 0){$err = 1;}else{}
             }
             $check = treasury_sak::where('treasury_id',$g->id)->count();
           }
-          if($check > 0){
-            $data['amount'] = $g->loan;
-            $get = treasury_sak::where('treasury_id',$g->id)->orderBy('id','desc')->first();
-            $total = ($get->total + $data['amount']);
-          }else{
-            $data['amount'] = $g->loan;
-            $total =  (0 + $data['amount']) ; 
-          }
-          $data['id'] = $g->id;
-          $data['nots'] ="-";
-          $type_frome = 1; //الاكشن من انى صفحة
-          $type = 2; // دائن 
-          $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
-          $this->create_new_treasury_sak($data, $total, $type_frome, $type, $reason_t);  
-          
-        }
+         
 
                  ///////treasury_account///////////////////////////////////////
         // $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
-        $type_frome = 2; //الاكشن من انى صفحة
-        $type = 1; // دائن 
-      $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
-       // $data['amount'] = $sak_price;
+      //   $type_frome = 2; //الاكشن من انى صفحة
+      //   $type = 1; // دائن 
+      // $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
+      //  // $data['amount'] = $sak_price;
         
-        $data['nots'] = 'استلام نقدية من حساب أضحية ';
-         $check = treasury::where('treasury_id',Auth::user()->t_id)->count();
-         if($check > 0){
-             $data['amount'] = reservation::where('rec',$get_info->rec)->sum('loan');
-             $get = treasury::where('treasury_id',Auth::user()->t_id)->orderBy('id','desc')->first();
-             $total = ($get->total + $data['amount']);
-         }else{
-          $total =  0 + $data['amount'];  
-         }
-        $this->create_new_treasury_account($data,$total,$type_frome,$type,$reason_t); 
+      //   $data['nots'] = 'استلام نقدية من حساب أضحية ';
+      //    $check = treasury::where('treasury_id',Auth::user()->t_id)->count();
+      //    if($check > 0){
+      //        $data['amount'] = reservation::where('rec',$get_info->rec)->sum('loan');
+      //        $get = treasury::where('treasury_id',Auth::user()->t_id)->orderBy('id','desc')->first();
+      //        $total = ($get->total + $data['amount']);
+      //    }else{
+      //     $total =  0 + $data['amount'];  
+      //    }
+      //   $this->create_new_treasury_account($data,$total,$type_frome,$type,$reason_t); 
          
          
        
@@ -3246,7 +3231,7 @@ if($check1 > 0){$err = 1;}else{}
     {  date_default_timezone_set("Africa/Kampala");  
         $date=date('Y-m-d H:i');
         $time=date('H:i:s');
-      $tr_name = treasures::where('id',Auth::user()->t_id)->first()->name;
+      $tr_name = treasures::where('id',Auth::user()->t_id??12)->first()->name;
         $new_id = reservation::where('ad_id',$id)->orderBy('id','desc')->first()->id;
         return treasury_sak::create([
         'treasury_id' => $new_id,
@@ -3270,9 +3255,7 @@ if($check1 > 0){$err = 1;}else{}
            public function del_resv(Request $request)
     {
             $request->validate([
-         
             'id' => 'required'
-            
         ]);
         $rand = rand(1111,9999);
         $rands = rand(100001,999999);

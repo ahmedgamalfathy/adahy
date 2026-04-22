@@ -201,6 +201,60 @@ public function dashboard()
         }
     }
 
+    /** صفحة الفروع */
+    public function branchesPage(Request $request)
+    {
+        $safes = Safe::where('type', 'branch')->get();
+        $stats = $this->getSafesStats($safes);
+        $allBranches = $safes;
+        $safeId = null;
+        return view('financial.safes.branches', compact('safes', 'stats', 'allBranches', 'safeId'));
+    }
+
+    /** صفحة المناديب */
+    public function representativesPage(Request $request)
+    {
+        $safes = Safe::where('type', 'representative')->get();
+        $stats = $this->getSafesStats($safes);
+        $allReps = $safes;
+        $safeId = null;
+        return view('financial.safes.representatives', compact('safes', 'stats', 'allReps', 'safeId'));
+    }
+
+    /** إجماليات مجموعة خزائن */
+    private function getSafesStats($safes)
+    {
+        $ids = $safes->pluck('id')->toArray();
+        if (empty($ids)) return collect();
+
+        $incoming = SafeMovement::selectRaw("
+            destination_safe_id as safe_id,
+            SUM(CASE WHEN type IN('deposit','transfer') THEN amount ELSE 0 END) as total_in,
+            SUM(CASE WHEN type='payment' THEN amount ELSE 0 END) as total_payment
+        ")->whereIn('destination_safe_id', $ids)
+          ->groupBy('destination_safe_id')
+          ->get()->keyBy('safe_id');
+
+        $outgoing = SafeMovement::selectRaw("
+            source_safe_id as safe_id,
+            SUM(CASE WHEN type='transfer'   THEN amount ELSE 0 END) as total_out,
+            SUM(CASE WHEN type='withdrawal' THEN amount ELSE 0 END) as total_withdrawal
+        ")->whereIn('source_safe_id', $ids)
+          ->groupBy('source_safe_id')
+          ->get()->keyBy('safe_id');
+
+        return $safes->mapWithKeys(function($safe) use ($incoming, $outgoing) {
+            $in  = $incoming[$safe->id]  ?? null;
+            $out = $outgoing[$safe->id]  ?? null;
+            return [$safe->id => (object)[
+                'total_in'         => $in->total_in          ?? 0,
+                'total_payment'    => $in->total_payment      ?? 0,
+                'total_out'        => $out->total_out         ?? 0,
+                'total_withdrawal' => $out->total_withdrawal  ?? 0,
+            ]];
+        });
+    }
+
     /** صفحة سحب من الرئيسية للفرع */
     public function withdrawPage()
     {

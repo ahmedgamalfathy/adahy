@@ -2594,7 +2594,7 @@ if (sum > c || sum < c) {
                       											<div class="wrapper1">
                         												<div class="for-preview">المحمول 1</div>
                       											</div>
-																  <input name="mobile[]" id="mobile{{$x}}" maxlength="11" min="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="myField" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')">                    										</div>
+																  <input name="mobile[]" id="mobile{{$x}}" maxlength="11" minlength="11" pattern="[0-9]{11}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" required oninvalid="this.setCustomValidity('يجب إدخال 11 رقم بالضبط')" oninput="this.setCustomValidity('')">                    										</div>
                   									</div>
                   									<div class="select-item-parent">
                     										<div class="select-item1">
@@ -2610,14 +2610,14 @@ if (sum > c || sum < c) {
                       											<div class="wrapper1">
                         												<div class="for-preview">المحمول 2</div>
                       											</div>
-																  <input name="mobile2[]" id="mobile2{{$x}}"  maxlength="11" min="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="myField" required oninvalid="this.setCustomValidity('يرجى ملء هذا الحقل.')" oninput="this.setCustomValidity('')" >
+																  <input name="mobile2[]" id="mobile2{{$x}}" maxlength="11" minlength="11" pattern="[0-9]{11}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" required oninvalid="this.setCustomValidity('يجب إدخال 11 رقم بالضبط')" oninput="this.setCustomValidity('')" >
 																</div>
                   									</div>
                   									<div class="text-box-with-caption2">
                     										<div class="wrapper1">
                       											<div class="for-preview">رقم أرضي</div>
                     										</div>
-                    										<input name="mobile3[]" id="mobile3{{$x}}" maxlength="11" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" >
+                    										<input name="mobile3[]" id="mobile3{{$x}}" maxlength="10" minlength="10" pattern="[0-9]{10}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" oninvalid="this.setCustomValidity('يجب إدخال 10 أرقام بالضبط')" oninput="this.setCustomValidity('')" >
                   									</div>
                 								</div>
                 								<div class="title4">
