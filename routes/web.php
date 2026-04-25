@@ -983,8 +983,117 @@ $sak_info = sak::where('name',$get_info2->sak)->first();
 $get = treasury_sak::where('treasury_id',$id)->get();
  $total = @treasury_sak::where('treasury_id',$id)->orderBy('id','desc')->first()->total;
 $last_date = @treasury_sak::where('treasury_id',$id)->orderBy('id','desc')->first()->created_at;
-      return view('treasury_sak', compact('get','get_info' , 'get_info2' , 'total','last_date' , 'id' , 'sak_info' , 'adahy_type_info'));
+
+return view('treasury_sak', compact('get','get_info' , 'get_info2' , 'total','last_date' , 'id' , 'sak_info' , 'adahy_type_info'));
    }
+})->middleware('auth','per1');
+
+// صفحة حركات الخزنة الجديدة للحجز
+Route::get('/safe_movement/{id}', function (Request $request, int $id) {
+    $id = (int) htmlspecialchars($id);
+    $check = reservation::where('id', $id)->count();
+    if ($check > 0) {
+        $get_info  = reservation::where('id', $id)->first();
+        $get_info2 = adahyt::where('id', $get_info->ad_id)->first();
+        $sak_info  = sak::where('name', $get_info2->sak)->first();
+        $adahy_type_info = adahy_type::where('name', $get_info2->adahy)->first();
+
+        $get = \App\Models\SafeMovement::with(['sourceSafe','destinationSafe','creator'])
+            ->where('reservation_id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $total_paid = \App\Models\SafeMovement::where('reservation_id', $id)
+            ->where('type', 'payment')
+            ->sum('amount');
+
+        $branch_safe = \App\Models\Safe::where('type','branch')
+            ->where(function($q){ $q->where('branch_id', Auth::user()->t_id)->orWhere('user_id', Auth::user()->t_id); })
+            ->first();
+
+        return view('safe_movement', compact('get','get_info','get_info2','sak_info','adahy_type_info','id','total_paid','branch_safe'));
+    }
+})->middleware('auth');
+
+// إستلام نقدية في الخزنة الجديدة
+Route::post('/safe_movement_receive', function (Request $request) {
+    $request->validate(['reservation_id'=>'required','amount'=>'required|numeric|min:1']);
+    $res = reservation::findOrFail($request->reservation_id);
+    $branchSafe = \App\Models\Safe::where('type','branch')
+        ->where(function($q){ $q->where('branch_id', Auth::user()->t_id)->orWhere('user_id', Auth::user()->t_id); })
+        ->first();
+    if ($branchSafe) {
+        $branchSafe->increment('balance', $request->amount);
+    }
+    \App\Models\SafeMovement::create([
+        'amount'              => $request->amount,
+        'type'                => 'payment',
+        'destination_safe_id' => $branchSafe->id ?? null,
+        'reservation_id'      => $request->reservation_id,
+        'created_by'          => Auth::id(),
+        'notes'               => $request->notes ?? 'إستلام نقدية - ' . $res->name,
+    ]);
+    $res->increment('pay', $request->amount);
+    $res->loan = max(0, $res->loan - $request->amount);
+    $res->save();
+    session()->flash('sucess', 'تم إستلام النقدية بنجاح');
+    return redirect()->back();
+})->middleware('auth');
+
+// صرف نقدية من الخزنة الجديدة
+Route::post('/safe_movement_pay', function (Request $request) {
+    $request->validate(['reservation_id'=>'required','amount'=>'required|numeric|min:1']);
+    $res = reservation::findOrFail($request->reservation_id);
+    $branchSafe = \App\Models\Safe::where('type','branch')
+        ->where(function($q){ $q->where('branch_id', Auth::user()->t_id)->orWhere('user_id', Auth::user()->t_id); })
+        ->first();
+    if ($branchSafe && $branchSafe->balance < $request->amount) {
+        session()->flash('fail', 'رصيد الخزنة غير كافٍ');
+        return redirect()->back();
+    }
+    if ($branchSafe) {
+        $branchSafe->decrement('balance', $request->amount);
+    }
+    \App\Models\SafeMovement::create([
+        'amount'         => $request->amount,
+        'type'           => 'withdrawal',
+        'source_safe_id' => $branchSafe->id ?? null,
+        'reservation_id' => $request->reservation_id,
+        'created_by'     => Auth::id(),
+        'notes'          => $request->notes ?? 'صرف نقدية - ' . $res->name,
+    ]);
+    session()->flash('sucess', 'تم الصرف بنجاح');
+    return redirect()->back();
+})->middleware('auth');
+
+// حذف حركة من SafeMovement
+Route::post('/safe_movement_delete', function (Request $request) {
+    $request->validate(['movement_id' => 'required|exists:safe_movements,id']);
+
+    $movement = \App\Models\SafeMovement::findOrFail($request->movement_id);
+
+    // رجّع الرصيد
+    if ($movement->type === 'payment' && $movement->destination_safe_id) {
+        $safe = \App\Models\Safe::find($movement->destination_safe_id);
+        if ($safe) $safe->decrement('balance', $movement->amount);
+    } elseif ($movement->type === 'withdrawal' && $movement->source_safe_id) {
+        $safe = \App\Models\Safe::find($movement->source_safe_id);
+        if ($safe) $safe->increment('balance', $movement->amount);
+    }
+
+    // رجّع مدفوعات الحجز
+    if ($movement->reservation_id && $movement->type === 'payment') {
+        $res = reservation::find($movement->reservation_id);
+        if ($res) {
+            $res->pay = max(0, $res->pay - $movement->amount);
+            $res->loan += $movement->amount;
+            $res->save();
+        }
+    }
+
+    $movement->delete();
+    session()->flash('sucess', 'تم حذف الحركة بنجاح');
+    return redirect()->back();
 })->middleware('auth','per1');
 
 

@@ -86,7 +86,7 @@
                     <thead>
                         <tr>
                             <th>#</th><th>النوع</th><th>المبلغ</th><th>من</th><th>إلى</th>
-                            <th>الحجز</th><th>بواسطة</th><th>ملاحظات</th><th>التاريخ</th>
+                            <th>الحجز</th><th>بواسطة</th><th>ملاحظات</th><th>التاريخ</th><th>حذف</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,9 +109,17 @@
                             <td>{{ $m->creator->name ?? '-' }}</td>
                             <td><small>{{ $m->notes }}</small></td>
                             <td><small>{{ $m->created_at->format('d/m/Y H:i') }}</small></td>
+                            <td>
+                                <form method="POST" action="/safe_movement_delete"
+                                      onsubmit="return confirm('هل أنت متأكد من حذف هذه الحركة؟')">
+                                    @csrf
+                                    <input type="hidden" name="movement_id" value="{{ $m->id }}">
+                                    <button type="submit" class="btn btn-danger btn-xs">حذف</button>
+                                </form>
+                            </td>
                         </tr>
                         @empty
-                        <tr><td colspan="9" class="text-center">لا توجد حركات</td></tr>
+                        <tr><td colspan="10" class="text-center">لا توجد حركات</td></tr>
                         @endforelse
                     </tbody>
                 </table>

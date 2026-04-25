@@ -694,6 +694,61 @@ $x = date("D" , $dayss );
         Main wrapper end
     ***********************************-->
 
+    {{-- حركات الخزنة الجديدة --}}
+    @if(isset($safe_movements) && $safe_movements->count() > 0)
+    <div style="direction:rtl; padding:20px; margin:20px;">
+        <div class="card">
+            <div class="card-header border-0 pb-0">
+                <h5 class="card-title">حركات الخزنة
+                    @if(isset($branch_safe))
+                        - {{ $branch_safe->name }}
+                    @endif
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>النوع</th>
+                                <th>المبلغ</th>
+                                <th>من</th>
+                                <th>إلى</th>
+                                <th>بواسطة</th>
+                                <th>ملاحظات</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($safe_movements as $sm)
+                            <tr>
+                                <td>{{ $sm->id }}</td>
+                                <td>
+                                    @php
+                                    $types  = ['payment'=>'دفع','transfer'=>'تحويل','deposit'=>'إيداع','withdrawal'=>'سحب'];
+                                    $colors = ['payment'=>'success','transfer'=>'info','deposit'=>'primary','withdrawal'=>'danger'];
+                                    @endphp
+                                    <span class="badge badge-{{ $colors[$sm->type]??'secondary' }} light">
+                                        {{ $types[$sm->type]??$sm->type }}
+                                    </span>
+                                </td>
+                                <td><strong style="color:#2bc155">{{ number_format($sm->amount,2) }} جنيه</strong></td>
+                                <td>{{ $sm->sourceSafe->name ?? '-' }}</td>
+                                <td>{{ $sm->destinationSafe->name ?? '-' }}</td>
+                                <td>{{ $sm->creator->name ?? '-' }}</td>
+                                <td><small>{{ $sm->notes }}</small></td>
+                                <td><small>{{ $sm->created_at->format('d/m/Y H:i') }}</small></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!--**********************************
         Scripts
     ***********************************-->

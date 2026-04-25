@@ -2588,37 +2588,14 @@ if($check1 > 0){$err = 1;}else{}
             }
             $check = treasury_sak::where('treasury_id',$g->id)->count();
           }
+        } // end foreach
          
-
-                 ///////treasury_account///////////////////////////////////////
-        // $data['id'] = reservation::where('id','!=',0)->orderBy('id','desc')->first()->id;
-      //   $type_frome = 2; //الاكشن من انى صفحة
-      //   $type = 1; // دائن 
-      // $reason_t = "استلام نقدية - أضحية رقم" ."-".$get_info->ad_id." - ".$get_info->name;
-      //  // $data['amount'] = $sak_price;
-        
-      //   $data['nots'] = 'استلام نقدية من حساب أضحية ';
-      //    $check = treasury::where('treasury_id',Auth::user()->t_id)->count();
-      //    if($check > 0){
-      //        $data['amount'] = reservation::where('rec',$get_info->rec)->sum('loan');
-      //        $get = treasury::where('treasury_id',Auth::user()->t_id)->orderBy('id','desc')->first();
-      //        $total = ($get->total + $data['amount']);
-      //    }else{
-      //     $total =  0 + $data['amount'];  
-      //    }
-      //   $this->create_new_treasury_account($data,$total,$type_frome,$type,$reason_t); 
-         
-         
-       
-         
-         //////////////////////////////////////////////////
           $this->upd_res($get_info->rec); 
        session()->flash("sucess", "تم الإضافة بنجاح");
        DB::commit();
-            // return redirect("/adahyt_r2/");
             return redirect("reservationSystemWebsite/".$get_info->rec);
          }else{
-            DB::rollback();
+            DB::rollBack();
              session()->flash("fail", "لا يمكن الاضافة لهذا الرقم");
              return redirect("reservationSystemWebsite/".$get_info->rec);
             // return redirect("/adahyt_r2/");  
