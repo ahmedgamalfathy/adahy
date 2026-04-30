@@ -136,6 +136,7 @@
                     @php
                         $c1 = DB::table('per')->where('page','treasury_sak_p1')->where('u_id',Auth::user()->id)->count();
                         $c2 = DB::table('per')->where('page','treasury_sak_p2')->where('u_id',Auth::user()->id)->count();
+                        $check_agreement = \App\Models\agreement::where('r_id',$id)->count();
                     @endphp
 
                     <div class="col-xl-6 col-xxl-6 col-sm-6">
@@ -158,6 +159,19 @@
                                             @if($c1 > 0)
                                             <a href="javascript:void(0);" class="btn btn-danger d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modalPay">
                                                 صرف نقدية <i class="las la-signal ms-3 scale5"></i>
+                                            </a>
+                                            @endif
+
+                                            {{-- موافقة تسليم --}}
+                                            @if($check_agreement > 0)
+                                            <div style="margin-top:10px;">
+                                                <span class="badge badge-success" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#modalAgreementN">
+                                                    تمت الموافقة على التسليم
+                                                </span>
+                                            </div>
+                                            @else
+                                            <a href="javascript:void(0);" class="btn btn-info d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modalAgreement">
+                                                موافقة تسليم <i class="las la-signal ms-3 scale5"></i>
                                             </a>
                                             @endif
                                         </h4>
@@ -297,6 +311,52 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">أغلاق</button>
                         <button type="submit" class="btn btn-danger">صرف</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal موافقة تسليم --}}
+    <div class="modal fade" id="modalAgreement">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" action="/agreement">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$get_info->id}}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">موافقة تسليم</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="direction:rtl;font-size:18px;padding:25px;font-weight:bold;">
+                        <span>موافقة على تسليم الصك للعميل</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">أغلاق</button>
+                        <button type="submit" class="btn btn-primary">موافقة تسليم</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal رفض تسليم --}}
+    <div class="modal fade" id="modalAgreementN">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" action="/agreementn">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$get_info->id}}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">غير موافق على التسليم</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="direction:rtl;font-size:18px;padding:25px;font-weight:bold;">
+                        <span>غير موافق على التسليم للعميل</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">أغلاق</button>
+                        <button type="submit" class="btn btn-danger">رفض تسليم</button>
                     </div>
                 </form>
             </div>

@@ -2142,6 +2142,7 @@ Route::post('/c_perm', [AccountController::class, 'c_perm'])->name('c_perm');
 Route::post('/del_resv', [AccountController::class, 'del_resv'])->name('del_resv');
 /////////
 Route::post('/transfer_resv', [AccountController::class, 'transfer_resv'])->name('transfer_resv');
+Route::post('/transfer_resv_safe', [AccountController::class, 'transfer_resv_safe'])->name('transfer_resv_safe');
 ////////
 Route::get('/show_sak_select', [AccountController::class, 'show_sak_select'])->name('show_sak_select');
 //////////

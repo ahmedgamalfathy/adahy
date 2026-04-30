@@ -3147,6 +3147,84 @@ if($check1 > 0){$err = 1;}else{}
             
    }
        
+    }
+
+    // نقل صك مع تسجيل في الخزنة الجديدة
+    public function transfer_resv_safe(Request $request)
+    {
+        $request->validate([
+            'id'   => 'required',
+            'code' => 'required',
+            'pay'  => 'required',
+        ]);
+
+        $data      = $request->all();
+        $error     = "هذا الصك غير متاح";
+        $check_sak = adahyt::where('code', $data['code'])->where('free', '>', 0)->count();
+        $check     = reservation::where('id', $data['id'])->count();
+
+        if ($check == 0 || $check_sak == 0) {
+            session()->flash("fail", $error);
+            return redirect("sak_all");
+        }
+
+        $data['code']    = adahyt::where('code', $data['code'])->first()->id;
+        $total           = @treasury_sak::where('treasury_id', $data['id'])->orderBy('id','desc')->first()->total;
+        $get_new_sak     = adahyt::where('id', $data['code'])->first();
+        $get_res         = reservation::where('id', $data['id'])->first();
+        $get_adahyt      = adahyt::where('id', $get_res->ad_id)->first();
+        $get             = @treasury::where('treasury_id', 1)->orderBy('id','desc')->first();
+
+        // treasury القديم
+        $totals2   = ((int)$get->total + (int)$data['pay']);
+        $reason_t2 = "نقل صك " . $get_new_sak->sak . '-' . $get_new_sak->days . '-' . $get_res->name;
+        $nots2     = "نقل صك";
+        $id        = 1; $type_frome = 2; $type2 = 1;
+        $loan      = $get_new_sak->price - (int)$data['pay'];
+        $type_frome3 = 2; $type3 = 2;
+        $reason_t3   = "استلام نقدية";
+        $data['amount'] = $data['pay'];
+        $data['nots']   = 'دفعة';
+
+        $this->create_new_treasury2($nots2, $totals2, $id, (int)$data['pay'], $type_frome, $type2, $reason_t2);
+        $this->edit_adahyt2_((int)$data['code']);
+        $this->transfer_new_resv($data['code'], $data['id'], $data['pay'], $loan);
+        $this->transfer_sak_treasury($data['code'], $data['pay'], $data['nots'], $data['pay'], $type_frome3, $type3, $reason_t3);
+
+        // تسجيل في SafeMovement
+        if ((int)$data['pay'] > 0) {
+            $branchSafe = \App\Models\Safe::where('type', 'branch')
+                ->where(function($q) { $q->where('branch_id', Auth::user()->t_id)->orWhere('user_id', Auth::user()->t_id); })
+                ->first();
+            if ($branchSafe) {
+                $branchSafe->increment('balance', (int)$data['pay']);
+                \App\Models\SafeMovement::create([
+                    'amount'              => (int)$data['pay'],
+                    'type'                => 'payment',
+                    'destination_safe_id' => $branchSafe->id,
+                    'reservation_id'      => $data['id'],
+                    'created_by'          => Auth::id(),
+                    'notes'               => 'نقل صك - ' . $get_res->name . ' - ' . $get_new_sak->sak,
+                ]);
+            }
+        }
+
+        // treasury القديم
+        $get_old      = @treasury::where('treasury_id', 1)->orderBy('id','desc')->first();
+        $totals_old   = ((int)$get_old->total - (int)$total);
+        $reason_t_old = "نقل صك " . $get_adahyt->sak . '-' . $get_adahyt->days . '-' . $get_res->name;
+        $nots         = "نقل صك";
+        $id = 1; $type_frome = 2; $type = 2;
+
+        $this->create_new_treasury2($nots, $totals_old, $id, $total, $type_frome, $type, $reason_t_old);
+        $this->edit_adahyt_($data);
+        DB::table('adahy_acc')->where('r_id', $get_res->rec)->where('code_adahy',$get_res->ad_id)->delete();
+        $this->ins_resv_del($data);
+        $this->del_resvd($data);
+        $this->del_sak_treasury($data);
+
+        session()->flash("sucess", "تم نقل الحجز بنجاح");
+        return redirect("sak_all");
     }  
     
     
@@ -3271,7 +3349,7 @@ if($check1 > 0){$err = 1;}else{}
          $this->edit_adahyt_($data);
          $this->ins_resv_del($data);
          // حذف الأجزاء الخاصة بالحجز من adahy_acc
-         DB::table('adahy_acc')->where('r_id', $info->rec)->delete();
+         DB::table('adahy_acc')->where('r_id', $info->rec)->where('code_adahy',$info->ad_id)->delete();
          $this->del_resvd($data); 
          $this->del_sak_treasury($data);
         

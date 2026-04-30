@@ -284,14 +284,64 @@
 							</div>
 						</div>
 					</div>
-			
-			
-	
-	
-	
-	
 
+					{{-- إجماليات الأنواع باليوم --}}
 					<div class="col-xl-12 col-xxl-12" style="direction: rtl;">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">إجماليات الأضاحى حسب النوع واليوم</h4>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									@php
+									$animalTypes = [
+									    'بقرى'       => ['label'=>'العجول البقري',  'color'=>'bg-warning'],
+									    'جمسى'       => ['label'=>'الجاموس',         'color'=>'bg-info'],
+									    'ماعز'       => ['label'=>'الماعز',          'color'=>'bg-secondary'],
+									    'خراف'       => ['label'=>'الأغنام',         'color'=>'bg-success'],
+									    'من الخارج'  => ['label'=>'من الخارج',       'color'=>'bg-danger'],
+									];
+									$days3 = ['اليوم الأول','اليوم الثانى','اليوم الثالث'];
+									$dayColors = ['bg-blue','bg-success','bg-warning'];
+									@endphp
+
+									@foreach($animalTypes as $type => $info)
+									<div class="col-md-2">
+										<h4 class="card-title">{{ $info['label'] }}</h4>
+										<ul class="card-list mt-3">
+											@foreach($days3 as $di => $day)
+											<li>
+												<span class="{{ $dayColors[$di] }} circle"></span>
+												{{ $day }}
+												<span>
+												@php
+												$op = str_contains($day,'الثالث') ? 'LIKE' : '=';
+												$val = str_contains($day,'الثالث') ? '%الثالث%' : $day;
+												echo DB::table('adahyt')
+												    ->where('gov',12)
+												    ->where('adahy',$type)
+												    ->where('days',$op,$val)
+												    ->count();
+												@endphp
+												</span>
+											</li>
+											@endforeach
+											<li style="border-top:1px solid #eee; margin-top:5px; padding-top:5px;">
+												<span class="bg-secondary circle"></span>
+												<strong>الإجمالي</strong>
+												<span>
+												@php
+												echo DB::table('adahyt')->where('gov',12)->where('adahy',$type)->count();
+												@endphp
+												</span>
+											</li>
+										</ul>
+									</div>
+									@endforeach
+								</div>
+							</div>
+						</div>
+					</div>
 						<div class="card">
 							<div class="card-body">
 								<div class="row align-items-center">
